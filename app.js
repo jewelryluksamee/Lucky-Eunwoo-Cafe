@@ -12,6 +12,9 @@ const TICKET_PHOTOS = [ // 🎟 TICKET_PHOTOS
 
 const MAX_STAMPS = 3;
 
+// ══ API ══
+const API_BASE='http://localhost:3000';
+
 // ══ LANDING TICKER ══
 const lwMsg = 'Happy Lee Dongmin Day \u2003 차은우 \u2003 30 March 2026 \u2003 Aroha ♡ Astro \u2003 Lucky Eunwoo ☘︎  \u2003 Our Shining Star \u2003 19970330 \u2003 ♡ ♥︎ ♡ ♥︎ ♡ ♥︎ ♡ ♥︎ \u2003 Birthday Cafe \u2003 ᯓ★ ';
 document.getElementById('lwTicker').textContent = lwMsg + lwMsg;
@@ -199,15 +202,33 @@ function showTicket(){
 function closeTicket(e){const overlay=document.getElementById('ticketOverlay');if(!e||e.target===overlay||e.target.classList.contains('ticket-close'))overlay.classList.remove('show');}
 
 // ══ MESSAGE WALL ══
-let wallItems=JSON.parse(localStorage.getItem('luckyWall')||'[]');
+// wallItems = items fetched from API (stickies + stickers)
+// localPolaroids = polaroids stored locally (image upload stays offline)
+let wallItems=[];
+let localPolaroids=JSON.parse(localStorage.getItem('luckyWall_pol')||'[]');
 let dragOX=0,dragOY=0;
-function saveWall(){try{localStorage.setItem('luckyWall',JSON.stringify(wallItems));}catch(e){}}
+
+function savePolaroids(){try{localStorage.setItem('luckyWall_pol',JSON.stringify(localPolaroids));}catch(e){}}
+function deterministicRot(id,range){let h=0;for(const c of String(id))h=(h*31+c.charCodeAt(0))&0x7fffffff;return((h%(range*200))-range*100)/100;}
 function expandCanvas(){
   const canvas=document.getElementById('wallCanvas'); let maxBottom=window.innerHeight-56;
   canvas.querySelectorAll('.sticky,.wall-sticker,.wall-pol').forEach(el=>{const bottom=parseFloat(el.style.top)+el.offsetHeight+60;if(bottom>maxBottom)maxBottom=bottom;});
   canvas.style.minHeight=maxBottom+'px';
 }
-function renderWall(){const canvas=document.getElementById('wallCanvas');canvas.innerHTML='';wallItems.forEach((item,i)=>{if(item.type==='sticky')buildSticky(item,i);if(item.type==='sticker')buildWallSticker(item,i);if(item.type==='polaroid')buildWallPolaroid(item,i);});expandCanvas();}
+async function renderWall(){
+  const canvas=document.getElementById('wallCanvas');canvas.innerHTML='';
+  try{
+    const res=await fetch(`${API_BASE}/api/wall`);
+    if(res.ok){
+      const data=await res.json();
+      const arr=Array.isArray(data)?data:(data.items||data.wall||data.data||[]);
+      wallItems=arr.map(item=>({...item,rot:item.rot??deterministicRot(item.id,item.type==='sticker'?15:6)}));
+    }
+  }catch(e){console.warn('Wall API unavailable',e);wallItems=[];}
+  const allItems=[...wallItems,...localPolaroids];
+  allItems.forEach((item,i)=>{if(item.type==='sticky')buildSticky(item,i);if(item.type==='sticker')buildWallSticker(item);if(item.type==='polaroid')buildWallPolaroid(item);});
+  expandCanvas();
+}
 
 // ══ STICKY COLORS ══
 const STICKY_COLORS=['#fffde0','#e8f5e9','#fce4ec','#e3f2fd','#fff3e0'];
@@ -223,20 +244,29 @@ STICKY_COLORS.forEach((color,i)=>{
 function openStickyModal(){document.getElementById('stickyModal').classList.add('open');document.getElementById('sText').focus();}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 
-function addSticky(){
+async function addSticky(){
   const author=visitorName;
   const text=document.getElementById('sText').value.trim();
   if(!text){alert('Please write something!');return;}
   const canvas=document.getElementById('wallCanvas');
-  const item={type:'sticky',id:Date.now(),author,text,color:STICKY_COLORS[stickyColorIdx],x:60+Math.random()*(canvas.offsetWidth-220),y:20+Math.random()*(canvas.offsetHeight-200),rot:Math.random()*12-6};
-  wallItems.push(item);saveWall();buildSticky(item,wallItems.length-1);expandCanvas();
+  const x=60+Math.random()*(canvas.offsetWidth-220);
+  const y=20+Math.random()*(canvas.offsetHeight-200);
+  const color=STICKY_COLORS[stickyColorIdx];
   document.getElementById('sText').value='';closeModal('stickyModal');
+  try{
+    const res=await fetch(`${API_BASE}/api/wall/sticky`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({author,text,color})});
+    if(!res.ok)throw new Error(res.status);
+    const data=await res.json();
+    const item={...data,type:'sticky',x,y,rot:deterministicRot(data.id,6)};
+    await fetch(`${API_BASE}/api/wall/${data.id}/position`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({x,y})});
+    wallItems.push(item);buildSticky(item,wallItems.length-1);expandCanvas();
+  }catch(e){alert('ไม่สามารถเชื่อมต่อ server ได้ กรุณาลองใหม่');console.error(e);}
 }
 function buildSticky(item,idx){
   const el=document.createElement('div');el.className='sticky c'+(1+idx%5);
-  el.style.cssText=`background:${item.color};left:${item.x}px;top:${item.y}px;transform:rotate(${item.rot}deg)`;el.dataset.idx=idx;
-  el.innerHTML=`<div class="sticky-tape"></div><div class="sticky-author">${esc(item.author)}</div><div class="sticky-text">${esc(item.text)}</div><button class="sticky-del" onclick="deleteItem(${idx},event)">✕</button>`;
-  makeDraggable(el,idx);document.getElementById('wallCanvas').appendChild(el);
+  el.style.cssText=`background:${item.color};left:${item.x}px;top:${item.y}px;transform:rotate(${item.rot}deg)`;
+  el.innerHTML=`<div class="sticky-tape"></div><div class="sticky-author">${esc(item.author)}</div><div class="sticky-text">${esc(item.text)}</div><button class="sticky-del" onclick="deleteItem('${item.id}',event)">✕</button>`;
+  makeDraggable(el,item);document.getElementById('wallCanvas').appendChild(el);
 }
 
 // ══ STICKER ══
@@ -254,20 +284,28 @@ function openStickerModal(){
   });
   document.getElementById('stickerModal').classList.add('open');
 }
-function addSticker(src){
+async function addSticker(src){
   const canvas=document.getElementById('wallCanvas');
   const size=80+Math.floor(Math.random()*40);
-  const item={type:'sticker',id:Date.now(),src,x:60+Math.random()*(canvas.offsetWidth-160),y:60+Math.random()*300,size,rot:Math.random()*30-15};
-  wallItems.push(item);saveWall();buildWallSticker(item,wallItems.length-1);expandCanvas();
+  const x=60+Math.random()*(canvas.offsetWidth-160);
+  const y=60+Math.random()*300;
+  try{
+    const res=await fetch(`${API_BASE}/api/wall/sticker`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({src,size})});
+    if(!res.ok)throw new Error(res.status);
+    const data=await res.json();
+    const item={...data,type:'sticker',x,y,size,rot:deterministicRot(data.id,15)};
+    await fetch(`${API_BASE}/api/wall/${data.id}/position`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({x,y})});
+    wallItems.push(item);buildWallSticker(item);expandCanvas();
+  }catch(e){alert('ไม่สามารถเชื่อมต่อ server ได้ กรุณาลองใหม่');console.error(e);}
 }
-function buildWallSticker(item,idx){
+function buildWallSticker(item){
   const el=document.createElement('div');el.className='wall-sticker';
-  el.style.cssText=`left:${item.x}px;top:${item.y}px;width:${item.size}px;height:${item.size}px;transform:rotate(${item.rot}deg)`;el.dataset.idx=idx;
-  el.innerHTML=`<img src="${item.src}" alt=""/><button class="wall-sticker-del" onclick="deleteItem(${idx},event)">✕</button>`;
-  makeDraggable(el,idx);document.getElementById('wallCanvas').appendChild(el);
+  el.style.cssText=`left:${item.x}px;top:${item.y}px;width:${item.size}px;height:${item.size}px;transform:rotate(${item.rot}deg)`;
+  el.innerHTML=`<img src="${item.src}" alt=""/><button class="wall-sticker-del" onclick="deleteItem('${item.id}',event)">✕</button>`;
+  makeDraggable(el,item);document.getElementById('wallCanvas').appendChild(el);
 }
 
-// ══ POLAROID ══
+// ══ POLAROID (local only — image upload stays offline) ══
 let polFileDataUrl=null;
 function openPolaroidModal(){
   polFileDataUrl=null;
@@ -292,36 +330,52 @@ function addPolaroid(){
   const author=visitorName;
   const caption=document.getElementById('polCaption').value.trim();
   const canvas=document.getElementById('wallCanvas');
-  const item={type:'polaroid',id:Date.now(),src:polFileDataUrl,author,caption,x:60+Math.random()*Math.max(0,canvas.offsetWidth-210),y:40+Math.random()*300,rot:Math.random()*14-7};
-  wallItems.push(item);saveWall();buildWallPolaroid(item,wallItems.length-1);expandCanvas();
+  const item={type:'polaroid',_local:true,id:'pol_'+Date.now(),src:polFileDataUrl,author,caption,x:60+Math.random()*Math.max(0,canvas.offsetWidth-210),y:40+Math.random()*300,rot:Math.random()*14-7};
+  localPolaroids.push(item);savePolaroids();buildWallPolaroid(item);expandCanvas();
   closeModal('polaroidModal');
 }
-function buildWallPolaroid(item,idx){
+function buildWallPolaroid(item){
   const el=document.createElement('div');el.className='wall-pol';
-  el.style.cssText=`left:${item.x}px;top:${item.y}px;transform:rotate(${item.rot}deg);width:150px;`;el.dataset.idx=idx;
+  el.style.cssText=`left:${item.x}px;top:${item.y}px;transform:rotate(${item.rot}deg);width:150px;`;
   const capLine=item.caption?`<div class="pol-cap">${esc(item.caption)}</div>`:'';
   const authLine=item.author?`<div style="position:absolute;bottom:${item.caption?'17px':'4px'};left:0;right:0;text-align:center;font-family:var(--f-hand);font-size:.7rem;color:#aaa;">${esc(item.author)}</div>`:'';
-  el.innerHTML=`<div class="pol-tape-t"></div><img src="${item.src}" alt="" style="width:136px;height:130px;display:block;object-fit:cover;"/>${capLine}${authLine}<button class="wall-pol-del" onclick="deleteItem(${idx},event)">✕</button>`;
-  makeDraggable(el,idx);document.getElementById('wallCanvas').appendChild(el);
+  el.innerHTML=`<div class="pol-tape-t"></div><img src="${item.src}" alt="" style="width:136px;height:130px;display:block;object-fit:cover;"/>${capLine}${authLine}<button class="wall-pol-del" onclick="deleteItem('${item.id}',event)">✕</button>`;
+  makeDraggable(el,item);document.getElementById('wallCanvas').appendChild(el);
 }
 
 // ══ DRAG ══
-function makeDraggable(el,idx){
+function makeDraggable(el,item){
   const isDelBtn=e=>e.target.classList.contains('sticky-del')||e.target.classList.contains('wall-pol-del')||e.target.classList.contains('wall-sticker-del');
-  el.addEventListener('mousedown',e=>{if(!isDelBtn(e))startDrag(e,el,idx,'mouse');});
-  el.addEventListener('touchstart',e=>{if(!isDelBtn(e))startDrag(e,el,idx,'touch');},{passive:false});
+  el.addEventListener('mousedown',e=>{if(!isDelBtn(e))startDrag(e,el,item,'mouse');});
+  el.addEventListener('touchstart',e=>{if(!isDelBtn(e))startDrag(e,el,item,'touch');},{passive:false});
 }
-function startDrag(e,el,idx,type){
+function startDrag(e,el,item,type){
   e.preventDefault();el.classList.add('selected');el.style.zIndex='50';
   const rect=document.getElementById('wallCanvas').getBoundingClientRect();
   const cx=type==='mouse'?e.clientX:e.touches[0].clientX;const cy=type==='mouse'?e.clientY:e.touches[0].clientY;
   dragOX=cx-rect.left-parseFloat(el.style.left);dragOY=cy-rect.top-parseFloat(el.style.top);
-  function onMove(ev){const ex=ev.clientX||(ev.touches&&ev.touches[0].clientX)||0;const ey=ev.clientY||(ev.touches&&ev.touches[0].clientY)||0;el.style.left=Math.max(0,ex-rect.left-dragOX)+'px';el.style.top=Math.max(0,ey-rect.top-dragOY)+'px';wallItems[idx].x=Math.max(0,ex-rect.left-dragOX);wallItems[idx].y=Math.max(0,ey-rect.top-dragOY);}
-  function onUp(){el.classList.remove('selected');el.style.zIndex='10';saveWall();expandCanvas();document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);document.removeEventListener('touchmove',onMove);document.removeEventListener('touchend',onUp);}
+  function onMove(ev){const ex=ev.clientX||(ev.touches&&ev.touches[0].clientX)||0;const ey=ev.clientY||(ev.touches&&ev.touches[0].clientY)||0;el.style.left=Math.max(0,ex-rect.left-dragOX)+'px';el.style.top=Math.max(0,ey-rect.top-dragOY)+'px';item.x=Math.max(0,ex-rect.left-dragOX);item.y=Math.max(0,ey-rect.top-dragOY);}
+  async function onUp(){
+    el.classList.remove('selected');el.style.zIndex='10';expandCanvas();
+    if(item._local){savePolaroids();}
+    else{try{await fetch(`${API_BASE}/api/wall/${item.id}/position`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({x:item.x,y:item.y})});}catch(e){console.warn('Position save failed',e);}}
+    document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);document.removeEventListener('touchmove',onMove);document.removeEventListener('touchend',onUp);
+  }
   document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
   document.addEventListener('touchmove',onMove,{passive:false});document.addEventListener('touchend',onUp);
 }
-function deleteItem(idx,e){e.stopPropagation();wallItems.splice(idx,1);saveWall();renderWall();}
+async function deleteItem(itemId,e){
+  e.stopPropagation();
+  const apiItem=wallItems.find(i=>String(i.id)===String(itemId));
+  if(apiItem){
+    try{await fetch(`${API_BASE}/api/wall/${itemId}`,{method:'DELETE'});}catch(err){console.warn('Delete failed',err);}
+    wallItems=wallItems.filter(i=>String(i.id)!==String(itemId));
+  }else{
+    localPolaroids=localPolaroids.filter(i=>String(i.id)!==String(itemId));
+    savePolaroids();
+  }
+  renderWall();
+}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 // ══ HEADER SLIDESHOW ══
