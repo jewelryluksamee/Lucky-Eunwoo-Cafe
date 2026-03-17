@@ -13,7 +13,7 @@ const TICKET_PHOTOS = [ // 🎟 TICKET_PHOTOS
 const MAX_STAMPS = 3;
 
 // ══ API ══
-const API_BASE='https://backend-lucky-eunwoo-cafe.vercel.app/';
+const API_BASE='https://backend-lucky-eunwoo-cafe.vercel.app';
 
 // ══ LANDING TICKER ══
 const lwMsg = 'Happy Lee Dongmin Day \u2003 차은우 \u2003 30 March 2026 \u2003 Aroha ♡ Astro \u2003 Lucky Eunwoo ☘︎  \u2003 Our Shining Star \u2003 19970330 \u2003 ♡ ♥︎ ♡ ♥︎ ♡ ♥︎ ♡ ♥︎ \u2003 Birthday Cafe \u2003 ᯓ★ ';
