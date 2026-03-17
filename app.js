@@ -153,6 +153,7 @@ function luckyDraw(){
           img.onerror=()=>{img.style.display='none';ph.style.display='flex';ph.textContent='✨';};
           result.classList.remove('vis'); void result.offsetWidth; result.classList.add('vis');
           result.scrollIntoView({behavior:'smooth',block:'nearest'});
+          tryAutoStamp('card');
         },700);
       },500);
     },400);
@@ -171,6 +172,15 @@ lcBuildDeck();
 
 // ══ STAMP CARD ══
 let stampCount=parseInt(localStorage.getItem('luckyStamps')||'0');
+// Auto-stamp triggers (one stamp per action type per session)
+let stampedForMessage=false;
+let stampedForCard=false;
+let stampedForScroll=false;
+function tryAutoStamp(trigger){
+  if(trigger==='message'&&!stampedForMessage){stampedForMessage=true;addStamp();}
+  else if(trigger==='card'&&!stampedForCard){stampedForCard=true;addStamp();}
+  else if(trigger==='scroll'&&!stampedForScroll){stampedForScroll=true;addStamp();}
+}
 function buildStampGrid(){
   const grid=document.getElementById('stampGrid');if(!grid)return;grid.innerHTML='';
   for(let i=0;i<MAX_STAMPS;i++){const cell=document.createElement('div');cell.className='stamp-cell'+(i<stampCount?' stamped':'');cell.textContent=i<stampCount?'👀':String(i+1);grid.appendChild(cell);}
@@ -180,6 +190,17 @@ function buildStampGrid(){
 function addStamp(){if(stampCount>=MAX_STAMPS){showTicket();return;}stampCount++;localStorage.setItem('luckyStamps',stampCount);buildStampGrid();if(stampCount===MAX_STAMPS)setTimeout(showTicket,600);}
 function resetStamps(){stampCount=0;localStorage.setItem('luckyStamps','0');buildStampGrid();}
 buildStampGrid();
+
+// Auto-stamp when user scrolls to bottom of pgCafe
+(function(){
+  const cafe=document.getElementById('pgCafe');
+  if(!cafe)return;
+  cafe.addEventListener('scroll',function(){
+    if(cafe.scrollTop+cafe.clientHeight>=cafe.scrollHeight-60){
+      tryAutoStamp('scroll');
+    }
+  },{passive:true});
+})();
 
 // ══ TICKET ══
 function shufflePick(arr,n){const copy=[...arr];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]];}return copy.slice(0,Math.min(n,copy.length));}
@@ -215,8 +236,21 @@ function expandCanvas(){
   canvas.querySelectorAll('.sticky,.wall-sticker,.wall-pol').forEach(el=>{const bottom=parseFloat(el.style.top)+el.offsetHeight+60;if(bottom>maxBottom)maxBottom=bottom;});
   canvas.style.minHeight=maxBottom+'px';
 }
+function showActionLoader(msg='กำลังบันทึก...'){
+  const el=document.getElementById('actionLoading');
+  const msgEl=document.getElementById('actionLoadingMsg');
+  if(msgEl)msgEl.textContent=msg;
+  if(el)el.classList.add('show');
+}
+function hideActionLoader(){
+  const el=document.getElementById('actionLoading');
+  if(el)el.classList.remove('show');
+}
+
 async function renderWall(){
   const canvas=document.getElementById('wallCanvas');canvas.innerHTML='';
+  const loading=document.getElementById('wallLoading');
+  if(loading)loading.classList.remove('hidden');
   try{
     const res=await fetch(`${API_BASE}/api/wall`);
     if(res.ok){
@@ -228,6 +262,7 @@ async function renderWall(){
   const allItems=[...wallItems,...localPolaroids];
   allItems.forEach((item,i)=>{if(item.type==='sticky')buildSticky(item,i);if(item.type==='sticker')buildWallSticker(item);if(item.type==='polaroid')buildWallPolaroid(item);});
   expandCanvas();
+  if(loading)loading.classList.add('hidden');
 }
 
 // ══ STICKY COLORS ══
@@ -253,6 +288,7 @@ async function addSticky(){
   const y=20+Math.random()*(canvas.offsetHeight-200);
   const color=STICKY_COLORS[stickyColorIdx];
   document.getElementById('sText').value='';closeModal('stickyModal');
+  showActionLoader('กำลังโพสต์ข้อความ...');
   try{
     const res=await fetch(`${API_BASE}/api/wall/sticky`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({author,text,color})});
     if(!res.ok)throw new Error(res.status);
@@ -260,7 +296,9 @@ async function addSticky(){
     const item={...data,type:'sticky',x,y,rot:deterministicRot(data.id,6)};
     await fetch(`${API_BASE}/api/wall/${data.id}/position`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({x,y})});
     wallItems.push(item);buildSticky(item,wallItems.length-1);expandCanvas();
+    tryAutoStamp('message');
   }catch(e){alert('ไม่สามารถเชื่อมต่อ server ได้ กรุณาลองใหม่');console.error(e);}
+  finally{hideActionLoader();}
 }
 function buildSticky(item,idx){
   const el=document.createElement('div');el.className='sticky c'+(1+idx%5);
@@ -289,6 +327,7 @@ async function addSticker(src){
   const size=80+Math.floor(Math.random()*40);
   const x=60+Math.random()*(canvas.offsetWidth-160);
   const y=60+Math.random()*300;
+  showActionLoader('กำลังเพิ่ม sticker...');
   try{
     const res=await fetch(`${API_BASE}/api/wall/sticker`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({src,size})});
     if(!res.ok)throw new Error(res.status);
@@ -297,6 +336,7 @@ async function addSticker(src){
     await fetch(`${API_BASE}/api/wall/${data.id}/position`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({x,y})});
     wallItems.push(item);buildWallSticker(item);expandCanvas();
   }catch(e){alert('ไม่สามารถเชื่อมต่อ server ได้ กรุณาลองใหม่');console.error(e);}
+  finally{hideActionLoader();}
 }
 function buildWallSticker(item){
   const el=document.createElement('div');el.className='wall-sticker';
@@ -375,6 +415,7 @@ async function confirmDelete(){
   closeModal('deleteConfirmModal');
   _pendingDeleteId=null;
   if(!itemId)return;
+  showActionLoader('กำลังลบ...');
   const apiItem=wallItems.find(i=>String(i.id)===String(itemId));
   if(apiItem){
     try{await fetch(`${API_BASE}/api/wall/${itemId}`,{method:'DELETE'});}catch(err){console.warn('Delete failed',err);}
@@ -383,6 +424,7 @@ async function confirmDelete(){
     localPolaroids=localPolaroids.filter(i=>String(i.id)!==String(itemId));
     savePolaroids();
   }
+  hideActionLoader();
   renderWall();
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
