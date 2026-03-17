@@ -254,9 +254,17 @@ let dragOX=0,dragOY=0;
 function savePolaroids(){try{localStorage.setItem('luckyWall_pol',JSON.stringify(localPolaroids));}catch(e){}}
 function deterministicRot(id,range){let h=0;for(const c of String(id))h=(h*31+c.charCodeAt(0))&0x7fffffff;return((h%(range*200))-range*100)/100;}
 function expandCanvas(){
-  const canvas=document.getElementById('wallCanvas'); let maxBottom=window.innerHeight-56;
-  canvas.querySelectorAll('.sticky,.wall-sticker,.wall-pol').forEach(el=>{const bottom=parseFloat(el.style.top)+el.offsetHeight+60;if(bottom>maxBottom)maxBottom=bottom;});
+  const canvas=document.getElementById('wallCanvas');
+  let maxBottom=window.innerHeight-56;
+  let maxRight=canvas.parentElement.clientWidth||window.innerWidth;
+  canvas.querySelectorAll('.sticky,.wall-sticker,.wall-pol').forEach(el=>{
+    const bottom=parseFloat(el.style.top)+el.offsetHeight+60;
+    const right=parseFloat(el.style.left)+el.offsetWidth+60;
+    if(bottom>maxBottom)maxBottom=bottom;
+    if(right>maxRight)maxRight=right;
+  });
   canvas.style.minHeight=maxBottom+'px';
+  canvas.style.minWidth=maxRight+'px';
 }
 function showActionLoader(msg='กำลังบันทึก...'){
   const el=document.getElementById('actionLoading');
@@ -413,10 +421,19 @@ function makeDraggable(el,item){
 }
 function startDrag(e,el,item,type){
   e.preventDefault();el.classList.add('selected');el.style.zIndex='50';
+  const scroller=document.getElementById('pgWall');
   const rect=document.getElementById('wallCanvas').getBoundingClientRect();
+  const scrollX=scroller.scrollLeft;const scrollY=scroller.scrollTop;
   const cx=type==='mouse'?e.clientX:e.touches[0].clientX;const cy=type==='mouse'?e.clientY:e.touches[0].clientY;
   dragOX=cx-rect.left-parseFloat(el.style.left);dragOY=cy-rect.top-parseFloat(el.style.top);
-  function onMove(ev){const ex=ev.clientX||(ev.touches&&ev.touches[0].clientX)||0;const ey=ev.clientY||(ev.touches&&ev.touches[0].clientY)||0;el.style.left=Math.max(0,ex-rect.left-dragOX)+'px';el.style.top=Math.max(0,ey-rect.top-dragOY)+'px';item.x=Math.max(0,ex-rect.left-dragOX);item.y=Math.max(0,ey-rect.top-dragOY);}
+  function onMove(ev){
+    const ex=ev.clientX||(ev.touches&&ev.touches[0].clientX)||0;
+    const ey=ev.clientY||(ev.touches&&ev.touches[0].clientY)||0;
+    const dScrollX=scroller.scrollLeft-scrollX;const dScrollY=scroller.scrollTop-scrollY;
+    el.style.left=Math.max(0,ex-rect.left-dragOX+dScrollX)+'px';
+    el.style.top=Math.max(0,ey-rect.top-dragOY+dScrollY)+'px';
+    item.x=parseFloat(el.style.left);item.y=parseFloat(el.style.top);
+  }
   async function onUp(){
     el.classList.remove('selected');el.style.zIndex='10';expandCanvas();
     if(item._local){savePolaroids();}
