@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lucky Eunwoo Cafe ☘️</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Mitr:wght@400;500;600&family=Sacramento&family=Caveat:wght@500;700&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet"/>
+<!--
+  🔧 QUICK EDIT GUIDE
+
+  🎵 เพลง       → หา "SONG_IDS"      แล้วเพิ่ม/เปลี่ยน YouTube Video ID
+  🖼 รูป gallery → หา "eunwoo1.jpg"  แล้วเปลี่ยน src
+  🧋 เมนู        → หา "DRINK MENU"   แล้วแก้ชื่อ/ราคา
+  🎟 รูปในตั๋ว   → หา "TICKET_PHOTOS" แล้วเพิ่ม/ลด object
+  📅 วันเกิด    → หา "BIRTHDAY"      แล้วเปลี่ยนวันที่
+===================================================== -->
+
+<style>
+:root {
+  --green:       #4a7c5f;
+  --green-dark:  #2d5a3d;
+  --green-mid:   #4a6e55;
+  --green-light: #8fbfa0;
+  --green-pale:  #c8e8d4;
+  --green-ghost: #e6f4eb;
+  --cream: #fdfaf2;
+  --warm:  #f7f0e2;
+  --blush: #fce8ef;
+  --brown: #8b5e3c;
+  --brick: #c8917a;
+  --blue:       #3a90cc;
+  --blue-dark:  #2060a0;
+  --blue-mid:   #5a90b8;
+  --blue-pale:  #c8e8f8;
+  --blue-ghost: #e8f4fc;
+  --text: #1d3828;
+  --pill: 999px;
+  --f-script: 'Nunito', sans-serif;
+  --f-hand:   'Caveat',    cursive;
+  --f-cute:   'Mitr',      sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Mitr', sans-serif !important; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--text);
+  overflow-x: hidden;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='4' fill='%234a7c5f' opacity='.5'/%3E%3C/svg%3E") 12 12, auto;
+}
+
+#floaties { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.floatie  { position: absolute; opacity: .12; animation: floatUp linear infinite; }
+@keyframes floatUp {
+  0%   { transform: translateY(105vh) rotate(0deg);  opacity: 0; }
+  6%   { opacity: .12; }
+  94%  { opacity: .12; }
+  100% { transform: translateY(-6vh) rotate(400deg); opacity: 0; }
+}
+
+.page        { position: fixed; inset: 0; z-index: 10; transition: opacity .8s, transform .8s; }
+.page.hidden { opacity: 0; pointer-events: none; transform: scale(.98); }
+.page.gone   { display: none; }
+
+/* ════ NAME OVERLAY ════ */
+#nameOverlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(20,45,30,.72); backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: center;
+}
+.name-card {
+  background: var(--cream); border-radius: 32px;
+  padding: 44px 36px 38px; width: min(400px,92vw);
+  text-align: center; box-shadow: 0 24px 70px rgba(0,0,0,.28);
+  animation: popIn .5s cubic-bezier(.36,1.56,.64,1) both;
+}
+.name-card .nc-icon { display: block; margin: 0 auto 16px; width: 90px; height: 90px; border-radius: 50%; overflow: hidden; border: 3px solid var(--green-pale); box-shadow: 0 4px 16px rgba(45,90,61,.15); animation: floatY 2s ease-in-out infinite; background: var(--green-ghost); }
+.name-card .nc-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.name-card h2 { font-size: clamp(1.5rem,5vw,2rem); color: var(--green-dark); margin-bottom: 6px; line-height: 1.3; }
+.name-card p  { font-size: .93rem; color: var(--green-mid); margin-bottom: 22px; line-height: 1.5; }
+.name-input {
+  width: 100%; font-size: 1.05rem; background: #fff;
+  border: 2.5px solid var(--green-pale); border-radius: 16px;
+  padding: 12px 18px; color: var(--text); outline: none;
+  margin-bottom: 16px; text-align: center;
+  transition: border-color .2s, box-shadow .2s;
+}
+.name-input:focus { border-color: var(--green-light); box-shadow: 0 0 0 4px rgba(143,191,160,.2); }
+.name-submit-btn {
+  width: 100%; font-size: 1.05rem; font-weight: 600;
+  background: linear-gradient(135deg, var(--green), var(--green-dark)); color: #fff;
+  border: none; border-radius: var(--pill); padding: 13px 24px; cursor: pointer;
+  box-shadow: 0 6px 20px rgba(45,90,61,.35); transition: transform .2s;
+}
+.name-submit-btn:hover { transform: translateY(-3px) scale(1.03); }
+
+/* ════════════════════════════════════════
+   PAGE 1 — LANDING
+════════════════════════════════════════ */
+#pgLanding {
+  background: #f2ede0;
+  display: flex; flex-direction: column; align-items: center;
+  overflow-y: auto; overflow-x: hidden;
+}
+
+.lw-ticker-wrap { width:100%; background:#2d5a3d; overflow:hidden; white-space:nowrap; padding:8px 0; z-index:30; flex-shrink:0; border-bottom:2px solid #1e3d28; }
+.lw-ticker-track { display:inline-block; animation:lwScroll 32s linear infinite; font-size:.78rem; letter-spacing:1.8px; color:rgba(255,255,255,.9); font-weight:500; }
+@keyframes lwScroll { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.lw-awning-stripes { width:100%; height:100px; background:repeating-linear-gradient(90deg,#3a7a4a 0px,#3a7a4a 40px,#f0e8d8 40px,#f0e8d8 60px); position:relative; }
+.lw-awning-stripes::before { content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.13) 0%,rgba(0,0,0,.03) 70%,transparent 100%); }
+.lw-awning-bottom-bar { width:100%; height:5px; background:#1a3d28; }
+.lw-awning-scallop { width:100%; overflow:hidden; line-height:0; }
+.lw-awning-scallop svg { display:block; width:100%; height:34px; }
+
+.lw-body { width:100%; flex:1; background:#f2ede0; display:flex; flex-direction:column; align-items:center; position:relative; }
+.lw-deco-band { width:100%; padding:10px 0 6px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:.75rem; letter-spacing:2px; color:#7a9a80; }
+.lw-deco-band .dl { flex:1; height:1px; max-width:110px; background:linear-gradient(90deg,transparent,rgba(74,124,95,.25)); }
+.lw-deco-band .dr { flex:1; height:1px; max-width:110px; background:linear-gradient(270deg,transparent,rgba(74,124,95,.25)); }
+
+.lw-side-photos { position:absolute; display:flex; flex-direction:column; gap:14px; top:50%; transform:translateY(-46%); z-index:4; }
+.lw-side-photos.left { left:2%; }
+.lw-side-photos.right { right:2%; }
+.lw-photo-frame { width:clamp(68px,9vw,96px); background:#fff; padding:5px 5px 22px; box-shadow:3px 5px 16px rgba(0,0,0,.14); border-radius:2px; position:relative; cursor:pointer; transition:transform .2s; }
+.lw-photo-frame:nth-child(1) { transform:rotate(-3deg); }
+.lw-photo-frame:nth-child(2) { transform:rotate(2.5deg); }
+.lw-photo-frame:hover { transform:rotate(0) scale(1.07) !important; }
+.lw-photo-tape { position:absolute; top:-8px; left:50%; transform:translateX(-50%); width:34px; height:12px; background:rgba(255,240,180,.8); border-radius:2px; }
+.lw-photo-img { width:100%; aspect-ratio:1; background:linear-gradient(135deg,#e8f5ee,#c8e8d4); display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
+.lw-photo-img img { width:100%; height:100%; object-fit:cover; display:block; }
+
+.lw-name-block { text-align:center; padding:14px 16px 0; position:relative; z-index:2; width:100%; }
+.lw-main-name { font-family:'Nunito',sans-serif !important; font-size:clamp(3.4rem,14vw,6.2rem); font-weight:900; color:#2d5a3d; line-height:1.0; display:block; letter-spacing:-1px; }
+.lw-cafe-word { font-family:'Sacramento',cursive !important; font-size:clamp(2rem,8vw,3.6rem); color:#4a7c5f; display:block; margin-top:0; letter-spacing:1px; }
+.lw-deco-icons { display:flex; align-items:center; gap:10px; margin:10px auto 0; width:min(280px,72vw); }
+.lw-deco-icons span { flex:1; height:1.5px; background:linear-gradient(90deg,transparent,rgba(74,124,95,.28),transparent); }
+.lw-deco-icons em { font-style:normal; font-size:.9rem; opacity:.55; }
+
+.lw-cd-hero { text-align:center; margin-top:18px; position:relative; z-index:2; }
+.lw-cd-title-txt { font-size:.8rem; font-weight:600; color:#4a7c5f; letter-spacing:.5px; margin-bottom:10px; display:block; }
+.lw-cd-units { display:inline-flex; gap:6px; background:rgba(255,255,255,.72); backdrop-filter:blur(8px); border:1.5px solid rgba(143,191,160,.8); border-radius:20px; padding:10px 18px; box-shadow:0 4px 18px rgba(74,124,95,.12); }
+.lw-cd-unit { text-align:center; min-width:48px; }
+.lw-cd-num { font-size:clamp(1.8rem,5vw,2.8rem); font-weight:700; color:#2d5a3d; line-height:1; display:block; }
+.lw-cd-sep { font-size:1.6rem; font-weight:700; color:#4a7c5f; align-self:flex-start; margin-top:5px; }
+.lw-cd-label-s { font-size:.62rem; color:#4a6e55; letter-spacing:1.5px; text-transform:uppercase; margin-top:3px; display:block; }
+
+.lw-greeting { margin-top:14px; text-align:center; display:none; animation:greetFade .8s ease both; }
+.lw-greeting-hi { font-size:clamp(1.2rem,4vw,1.7rem); font-weight:700; color:#2d5a3d; display:block; }
+.lw-greeting-sub { font-size:.82rem; color:#4a6e55; background:rgba(255,255,255,.75); border-radius:var(--pill); padding:3px 14px; margin-top:4px; display:inline-block; }
+@keyframes greetFade { 0%{opacity:0;transform:translateY(10px);} 100%{opacity:1;transform:translateY(0);} }
+
+.lw-facade-lower { width:100%; border-top:4px solid #c8b888; background:linear-gradient(180deg,#f8f2e4,#f0ead0); flex:1; display:flex; flex-direction:column; align-items:center; padding:20px 16px 0; margin-top:20px; position:relative; }
+.lw-win-door-row { display:flex; align-items:flex-end; justify-content:center; gap:18px; width:min(520px,96vw); }
+.lw-window { width:88px; border:3px solid #b8a880; border-radius:6px 6px 0 0; overflow:hidden; background:#fff; flex-shrink:0; }
+.lw-win-glass { height:96px; background:linear-gradient(135deg,#d8eeff,#c0dcf4,#d8eeff); display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; }
+.lw-win-pane { border:1.5px solid rgba(160,140,100,.3); }
+.lw-win-sill { height:10px; background:#c8b888; }
+.lw-door-col { display:flex; flex-direction:column; align-items:center; flex-shrink:0; position:relative; }
+.lw-door-msg-wrap { position:absolute; right:calc(100% + 10px); top:50%; transform:translateY(-50%); }
+.lw-door-msg { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; background:#fff; border:2.5px solid #4a7c5f; border-radius:16px; padding:10px 12px; font-size:.78rem; font-weight:700; color:#2d5a3d; line-height:1.5; box-shadow:0 5px 18px rgba(45,90,61,.16); animation:lwMsgBob 2.2s ease-in-out infinite; pointer-events:none; z-index:30; position:relative; }
+.lw-door-msg::after { content:''; position:absolute; top:50%; right:-10px; transform:translateY(-50%); border-top:8px solid transparent; border-bottom:8px solid transparent; border-left:9px solid #4a7c5f; }
+@keyframes lwMsgBob { 0%,100%{transform:translateX(0);} 50%{transform:translateX(4px);} }
+.lw-door-inner { display:flex; flex-direction:column; align-items:center; }
+.lw-double-door { display:flex; cursor:pointer; filter:drop-shadow(0 8px 22px rgba(0,0,0,.2)); transition:filter .2s; }
+.lw-double-door:hover { filter:drop-shadow(0 8px 22px rgba(0,0,0,.2)) brightness(1.1); }
+.lw-door-leaf { width:76px; height:168px; background:linear-gradient(180deg,#a06030 0%,#7a4820 50%,#5a3010 100%); border:3px solid #3d2008; position:relative; }
+.lw-door-leaf.left { border-right:1.5px solid #3d2008; }
+.lw-door-leaf.right { border-left:1.5px solid #3d2008; }
+.lw-dp-top,.lw-dp-bot { position:absolute; left:8px; right:8px; border:2px solid rgba(255,255,255,.14); border-radius:3px; }
+.lw-dp-top { top:14px; height:54px; } .lw-dp-bot { top:80px; bottom:16px; }
+.lw-d-knob-r { position:absolute; left:6px; top:50%; transform:translateY(-50%); width:11px; height:11px; background:radial-gradient(circle at 35% 30%,#ffe082,#c89010); border-radius:50%; box-shadow:0 1px 4px rgba(0,0,0,.35); }
+.lw-d-knob-l { position:absolute; right:6px; top:50%; transform:translateY(-50%); width:11px; height:11px; background:radial-gradient(circle at 35% 30%,#ffe082,#c89010); border-radius:50%; box-shadow:0 1px 4px rgba(0,0,0,.35); }
+.lw-d-peep { position:absolute; top:10px; left:50%; transform:translateX(-50%); width:10px; height:10px; background:radial-gradient(circle at 35% 30%,#c89010,#8b5e00); border-radius:50%; }
+.lw-door-mat { width:200px; height:20px; background:repeating-linear-gradient(90deg,#2d5a3d 0,#2d5a3d 9px,#4a7c5f 9px,#4a7c5f 18px); border-radius:3px; }
+.lw-door-mat-txt { font-size:.5rem; color:rgba(255,255,255,.8); text-align:center; letter-spacing:2.5px; margin-top:-20px; }
+.lw-ground { width:100%; height:52px; flex-shrink:0; background:linear-gradient(180deg,#a0d070,#5a9030); position:relative; }
+.lw-path { width:168px; height:100%; margin:0 auto; background:repeating-linear-gradient(180deg,#d4c09a 0,#d4c09a 17px,#c2ae88 17px,#c2ae88 19px); }
+.lw-fc { position:absolute; pointer-events:none; opacity:0; animation:lwFcFall linear infinite; }
+@keyframes lwFcFall { 0%{opacity:0;transform:translateY(-10px) rotate(0);} 8%{opacity:.5;} 90%{opacity:.3;} 100%{opacity:0;transform:translateY(820px) rotate(400deg);} }
+
+
+/* ════════════════════════════════════════
+   PAGE 2 — MAIN CAFE
+════════════════════════════════════════ */
+#pgCafe { background: var(--cream); overflow-y: auto; overflow-x: hidden; display: block; }
+.cafe-hdr { color:#fff; text-align:center; padding:56px 20px 68px; position:relative; overflow:hidden; background:#2d5a3d; }
+.cafe-hdr-slides { position:absolute; inset:0; z-index:0; }
+.cafe-hdr-slide { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 1.2s ease-in-out; }
+.cafe-hdr-slide.active { opacity:1; }
+.cafe-hdr-slide::after { content:''; position:absolute; inset:0; background:linear-gradient(160deg,rgba(20,50,30,.65),rgba(45,90,61,.55),rgba(74,124,95,.45)); }
+.cafe-hdr::after { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='2.5' fill='%23fff' fill-opacity='0.04'/%3E%3C/svg%3E"); z-index:1; pointer-events:none; }
+.hdr-inner { position:relative; z-index:2; }
+.hdr-flag  { display:inline-block; background:rgba(255,255,255,.16); border:1.5px solid rgba(255,255,255,.28); border-radius:var(--pill); padding:4px 18px; font-size:.85rem; margin-bottom:10px; }
+.hdr-name  { font-family: var(--f-cute)!important; font-size:clamp(3rem,8vw,5.5rem); line-height:1; margin-bottom:4px; }
+.hdr-sub   { font-family: var(--f-cute)!important; font-size:1rem; opacity:.78; font-weight:500; margin: 20px; }
+.hdr-cd    { display:inline-flex; gap:12px; align-items:center; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.2); border-radius:var(--pill); padding:10px 28px; margin-top:20px; }
+.hcd-item  { text-align:center; }
+.hcd-n     { font-size:1.6rem; font-weight:800; line-height:1; display:block; }
+.hcd-l     { font-size:.62rem; opacity:.7; letter-spacing:1px; text-transform:uppercase; }
+.hcd-sep   { font-size:1.4rem; opacity:.5; }
+.hdr-spark { position:absolute; width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,.6); animation:twinkle 2s ease-in-out infinite; }
+@keyframes twinkle { 0%,100%{ opacity:.1; transform:scale(.5); } 50%{ opacity:1; transform:scale(1.4); } }
+.wave-sep     { display:block; width:100%; overflow:hidden; line-height:0; margin-top:-1px; }
+.wave-sep svg { display:block; width:100%; height:48px; }
+.music-bar { display:flex; align-items:center; justify-content:center; gap:12px; padding:9px 18px; background:var(--green-ghost); font-size:.9rem; color:var(--green-dark); font-weight:600; }
+.note-icon { font-size:1.1rem; animation:noteBounce .8s ease-in-out infinite alternate; }
+@keyframes noteBounce { 0%{ transform:translateY(0); } 100%{ transform:translateY(-3px); } }
+#musicBtn  { background:var(--green); color:#fff; border:none; border-radius:var(--pill); padding:5px 18px; font-size:.88rem; font-weight:600; cursor:pointer; transition:background .2s; }
+#musicBtn:hover { background: var(--green-dark); }
+.section { max-width:1000px; margin:0 auto; padding:52px 20px; }
+.sec-hd  { font-family:  var(--f-hand)!important; font-size:clamp(4rem,5vw,2.8rem); color:var(--green-dark); text-align:center; margin-bottom:20px; }
+.sec-sd  { text-align:center; color:var(--green-mid); font-size:.96rem; margin-bottom:32px; font-weight:500; }
+.leaf-div { text-align:center; font-size:1rem; opacity:.35; letter-spacing:10px; margin:6px 0; }
+.pol-grid { display:flex; flex-wrap:wrap; gap:24px; justify-content:center; }
+.pol-card { background:#fff; padding:9px 9px 36px; box-shadow:4px 6px 24px rgba(0,0,0,.14); border-radius:2px; width:min(188px,42vw); position:relative; transition:transform .25s,box-shadow .28s; }
+.pol-card:nth-child(1){ transform:rotate(-2.8deg); }
+.pol-card:nth-child(2){ transform:rotate(1.8deg); }
+.pol-card:nth-child(3){ transform:rotate(-1.4deg); }
+.pol-card:nth-child(4){ transform:rotate(2.6deg); }
+.pol-card:nth-child(5){ transform:rotate(-2.1deg); }
+.pol-card:nth-child(6){ transform:rotate(1.3deg); }
+.pol-card:hover { transform:rotate(0) scale(1.08)!important; box-shadow:8px 14px 40px rgba(0,0,0,.19); z-index:10; }
+.pol-card img  { width:100%; height:166px; object-fit:cover; background:var(--green-ghost); display:block; }
+.pol-card .cap { position:absolute; bottom:5px; left:0; right:0; text-align:center; font-family:var(--f-hand)!important; font-size:1.05rem; color:#666; }
+.wall-card-btn { display:flex; align-items:center; gap:16px; background:linear-gradient(135deg,var(--warm),var(--blush)); border:2.5px solid #f9d0de; border-radius:28px; padding:28px 36px; cursor:pointer; box-shadow:0 8px 30px rgba(45,90,61,.1); transition:transform .2s,box-shadow .2s; width:100%; max-width:560px; margin:0 auto; text-align:left; }
+.wall-card-btn:hover { transform:translateY(-5px); box-shadow:0 16px 40px rgba(45,90,61,.18); }
+.wall-icon { font-size:3.5rem; flex-shrink:0; animation:floatY 2.5s ease-in-out infinite; }
+.wt1 { font-family: var(--f-script)!important; font-size:2rem; color:var(--green-dark); margin-bottom:4px; }
+.wt2 { font-size:.9rem; color:var(--green-mid); }
+.drink-bg  { background:linear-gradient(135deg,var(--warm),var(--blush)); border-radius:36px; padding:38px 28px; }
+.ing-grid  { display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin-bottom:22px; }
+.ing-btn   { display:flex; flex-direction:column; align-items:center; gap:2px; background:#fff; border:2px solid var(--green-pale); border-radius:20px; padding:10px 16px; font-size:.9rem; font-weight:500; color:var(--green-mid); cursor:pointer; min-width:78px; transition:all .16s; }
+.ing-btn .i { font-size:1.5rem; }
+.ing-btn:hover { border-color:var(--green-light); transform:translateY(-3px); }
+.ing-btn.sel   { background:var(--green-ghost); border-color:var(--green); color:var(--green-dark); font-weight:700; transform:scale(1.06); }
+.blend-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.blend-btn { background:linear-gradient(135deg,var(--green),var(--green-dark)); color:#fff; font-size:1.05rem; font-weight:600; padding:13px 40px; border:none; border-radius:var(--pill); cursor:pointer; box-shadow:0 6px 20px rgba(45,90,61,.3); transition:transform .18s; }
+.blend-btn:hover { transform:translateY(-4px) scale(1.04); }
+.blend-reset-btn { background:#fff; color:var(--green-mid); font-size:.9rem; font-weight:600; padding:13px 22px; border:2px solid var(--green-pale); border-radius:var(--pill); cursor:pointer; transition:background .15s,transform .15s; }
+.blend-reset-btn:hover { background:var(--green-ghost); transform:scale(1.03); }
+.drink-result    { display:none; margin-top:26px; background:#fff; border-radius:36px; padding:26px 20px; text-align:center; box-shadow:0 8px 26px rgba(45,90,61,.12); animation:popIn .5s cubic-bezier(.36,1.56,.64,1) both; }
+.drink-result.vis{ display:block; }
+.res-name { font-family: var(--f-script)!important; font-size:2.2rem; color:var(--green-dark); margin-bottom:12px; }
+.res-img  { margin:0 auto 12px; width:148px; height:148px; border-radius:50%; overflow:hidden; border:4px solid var(--green-pale); background:var(--green-ghost); display:flex; align-items:center; justify-content:center; }
+.res-img img { width:100%; height:100%; object-fit:cover; }
+.res-ph   { font-size:3rem; }
+.res-tag  { display:inline-block; background:var(--green-ghost); color:var(--green-dark); border-radius:var(--pill); padding:2px 11px; font-size:.8rem; margin:2px; font-weight:700; }
+.res-msg  { font-size:1rem; color:var(--green-mid); background:#f9f6ff; border-radius:16px; padding:9px 16px; display:inline-block; font-weight:500; }
+.drink-menu-section { max-width:1000px; margin:0 auto; padding:32px 20px; text-align:center; }
+.drink-menu-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:16px; margin-top:24px; }
+.drink-menu-card { background:#fff; border-radius:20px; padding:16px 12px 14px; box-shadow:0 4px 16px rgba(45,90,61,.1); border:2px solid var(--green-pale); transition:transform .2s; text-align:center; }
+.drink-menu-card:hover { transform:translateY(-4px); }
+.drink-menu-img  { width:100%; height:130px; background:var(--green-ghost); border-radius:12px; margin-bottom:10px; display:flex; align-items:center; justify-content:center; font-size:2.5rem; overflow:hidden; }
+.drink-menu-img img { width:100%; height:100%; object-fit:cover; border-radius:12px; }
+.drink-menu-name { font-weight:600; font-size:.88rem; color:var(--text); margin-bottom:4px; line-height:1.3; }
+.drink-menu-price { font-weight:800; font-size:.95rem; color:var(--green-dark); }
+.auto-gallery-section { padding:48px 0; overflow:hidden; background:linear-gradient(135deg,var(--warm),var(--blush)); }
+.auto-gallery-title { font-family: var(--f-script)!important; font-size:clamp(2rem,5vw,2.8rem); color:var(--green-dark); text-align:center; margin-bottom:8px; }
+.auto-gallery-sub   { text-align:center; color:var(--green-mid); font-size:.94rem; margin-bottom:28px; font-weight:500; }
+.scroll-track-wrap  { overflow:hidden; width:100%; position:relative; }
+.scroll-track-wrap::before,.scroll-track-wrap::after { content:''; position:absolute; top:0; bottom:0; z-index:2; width:80px; pointer-events:none; }
+.scroll-track-wrap::before { left:0;  background:linear-gradient(90deg,var(--warm),transparent); }
+.scroll-track-wrap::after  { right:0; background:linear-gradient(-90deg,var(--warm),transparent); }
+.scroll-track { display:flex; gap:18px; width:max-content; animation:scrollLeft 36s linear infinite; padding:10px 0; }
+.scroll-track:hover { animation-play-state:paused; }
+@keyframes scrollLeft { 0%{ transform:translateX(0); } 100%{ transform:translateX(-50%); } }
+.scroll-pol { background:#fff; padding:7px 7px 32px; border-radius:2px; box-shadow:4px 6px 20px rgba(0,0,0,.14); flex-shrink:0; width:150px; position:relative; transition:transform .2s; }
+.scroll-pol:hover { transform:scale(1.06) rotate(1deg); }
+.scroll-pol img   { width:100%; height:130px; object-fit:cover; background:var(--green-ghost); display:block; }
+.scroll-pol .scap { position:absolute; bottom:5px; left:0; right:0; text-align:center; font-family:var(--f-hand)!important; font-size:.88rem; color:#888; }
+.stamp-section   { max-width:500px; margin:0 auto; padding:52px 20px; text-align:center; }
+.stamp-card-wrap { background:#f0f8ff; border:2.5px solid #c8e0f4; border-radius:32px; padding:32px 28px 36px; box-shadow:0 8px 32px rgba(80,140,220,.12); }
+.stamp-card-title { font-size:1.6rem; font-weight:800; color:var(--blue-dark); margin-bottom:4px; }
+.stamp-card-sub   { font-size:.88rem; color:var(--blue-mid); margin-bottom:26px; font-weight:500; }
+.stamp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:20px; max-width:280px; margin-left:auto; margin-right:auto; }
+.stamp-cell { width:76px; height:76px; border-radius:50%; background:#dff0fa; border:3px dashed #90c8e8; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:700; color:#90c8e8; user-select:none; position:relative; }
+.stamp-cell.stamped { background:linear-gradient(135deg,#c8e8f8,#a8d8f0); border:3px solid #50a0d0; color:var(--blue-dark); font-size:1.8rem; animation:stampPop .4s cubic-bezier(.36,1.56,.64,1) both; }
+.stamp-cell.stamped::after { content:''; position:absolute; inset:4px; border-radius:50%; border:2px solid rgba(42,96,144,.25); }
+@keyframes stampPop { 0%{ transform:scale(0) rotate(-15deg); opacity:0; } 60%{ transform:scale(1.18) rotate(4deg); } 100%{ transform:scale(1) rotate(0); opacity:1; } }
+.stamp-progress { font-size:.95rem; font-weight:700; color:var(--blue-mid); margin-bottom:18px; }
+.stamp-progress strong { color:var(--blue-dark); }
+.stamp-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.stamp-btn  { font-size:1rem; font-weight:700; background:linear-gradient(135deg,var(--blue),var(--blue-dark)); color:#fff; border:none; border-radius:var(--pill); padding:13px 32px; cursor:pointer; box-shadow:0 5px 18px rgba(42,96,160,.35); transition:transform .18s; display:flex; align-items:center; gap:8px; }
+.stamp-btn:hover { transform:translateY(-3px) scale(1.04); }
+.stamp-reset-btn { font-size:.9rem; font-weight:600; background:var(--blue-ghost); color:var(--blue-mid); border:2px solid var(--blue-pale); border-radius:var(--pill); padding:13px 22px; cursor:pointer; transition:background .18s,transform .15s; }
+.stamp-reset-btn:hover { background:var(--blue-pale); transform:scale(1.03); }
+#ticketOverlay      { position:fixed; inset:0; z-index:300; background:rgba(10,20,40,.82); backdrop-filter:blur(16px); display:none; align-items:center; justify-content:center; padding:16px; }
+#ticketOverlay.show { display:flex; animation:fadeIn .4s both; }
+@keyframes fadeIn   { 0%{ opacity:0; } 100%{ opacity:1; } }
+.ticket { background:#fff; border-radius:28px; width:min(380px,96vw); animation:ticketSlide .65s cubic-bezier(.36,1.56,.64,1) both; overflow:hidden; max-height:90vh; overflow-y:auto; }
+@keyframes ticketSlide { 0%{ transform:translateY(90px) scale(.88); opacity:0; } 100%{ transform:translateY(0) scale(1); opacity:1; } }
+.ticket-top  { background:linear-gradient(135deg,var(--blue-dark),var(--blue)); padding:24px 24px 38px; text-align:center; position:relative; }
+.ticket-top::after { content:''; position:absolute; bottom:-14px; left:0; right:0; height:28px; background:radial-gradient(circle at 50% 0,transparent 13px,#fff 13px) repeat-x; background-size:28px 100%; pointer-events:none; }
+.ticket-cafe-name  { font-size:.82rem; color:rgba(255,255,255,.8); font-weight:600; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px; }
+.ticket-main-title { font-family: var(--f-script)!important; font-size:2.8rem; color:#fff; line-height:1.1; }
+.ticket-body { padding:30px 24px 22px; text-align:center; }
+.ticket-photos { display:flex; justify-content:center; gap:8px; margin:0 -8px 18px; padding:0 8px; }
+.ticket-pol    { background:#fff; padding:5px 5px 22px; box-shadow:3px 4px 14px rgba(0,0,0,.14); border-radius:2px; flex:0 0 auto; width:90px; position:relative; transition:transform .2s; }
+.ticket-pol:hover { transform:rotate(0) scale(1.07)!important; z-index:5; }
+.ticket-pol img   { width:100%; height:80px; object-fit:cover; display:block; background:#dff0fa; }
+.ticket-pol-ph    { width:100%; height:80px; background:linear-gradient(135deg,#dff0fa,#c8e8f8); display:none; align-items:center; justify-content:center; font-size:1.6rem; }
+.tpol-cap         { position:absolute; bottom:3px; left:0; right:0; text-align:center; font-family:var(--f-hand)!important; font-size:.7rem; color:#888; }
+.ticket-checkin-label { font-size:.72rem; font-weight:700; color:var(--blue-mid); letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; }
+.ticket-name          { font-family: var(--f-script)!important; font-size:2.8rem; color:var(--blue-dark); margin-bottom:2px; line-height:1; }
+.ticket-checkin-msg   { font-size:.86rem; color:var(--blue-mid); margin-bottom:6px; font-weight:500; }
+.ticket-date          { font-size:.8rem; color:#7aaac8; margin-bottom:16px; }
+.ticket-stamp-row     { display:flex; justify-content:center; gap:5px; margin-bottom:14px; }
+.ticket-s             { font-size:1.4rem; }
+.ticket-reward  { background:var(--blue-ghost); border:2px dashed #90c8e8; border-radius:14px; padding:10px 16px; font-size:.88rem; font-weight:600; color:var(--blue-dark); margin-bottom:18px; }
+.ticket-barcode { display:flex; gap:2px; justify-content:center; opacity:.15; margin-bottom:12px; }
+.ticket-barcode span { display:inline-block; width:3px; background:#333; border-radius:1px; }
+.ticket-close   { font-size:.88rem; font-weight:600; background:var(--blue-ghost); color:var(--blue-dark); border:1.5px solid var(--blue-pale); border-radius:var(--pill); padding:8px 32px; cursor:pointer; transition:background .15s; }
+.ticket-close:hover { background:var(--blue-pale); }
+.ticket-bottom  { background:linear-gradient(135deg,#f0f8ff,#e0f0f8); padding:12px; border-top:2px dashed #b8d8f0; text-align:center; font-family:var(--f-cute)!important; font-size:.70rem; color:var(--blue-mid); }
+
+/* ════ PAGE 3 — MESSAGE WALL ════ */
+#pgWall        { background:transparent; overflow-y:auto; overflow-x:hidden; z-index:30; }
+#pgWall.hidden { opacity:0; transform:scale(.98); pointer-events:none; }
+.wall-bg-bricks { position:fixed; inset:0; z-index:0; background-color:#c4836a; background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(0,0,0,.08) 28px,rgba(0,0,0,.08) 30px),repeating-linear-gradient(90deg,transparent,transparent 52px,rgba(0,0,0,.05) 52px,rgba(0,0,0,.05) 54px); }
+.wall-bg-bricks::after { content:''; position:fixed; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,.04) 30%,rgba(0,0,0,.04) 70%,rgba(0,0,0,.2) 100%); }
+.wall-toolbar      { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(30,20,15,.75); backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,.12); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; padding:8px 14px; gap:6px; }
+.wall-toolbar-left { display:flex; align-items:center; gap:8px; flex-wrap:wrap; flex:1; min-width:0; }
+.wall-title { font-family: var(--f-script)!important; font-size:1rem; color:#fff; white-space:nowrap; flex-shrink:0; }
+.tb-btn { font-size:.8rem; font-weight:600; color:#fff; background:rgba(255,255,255,.14); border:1.5px solid rgba(255,255,255,.25); border-radius:var(--pill); padding:5px 12px; cursor:pointer; transition:background .2s; white-space:nowrap; flex-shrink:0; }
+.tb-btn:hover      { background:rgba(255,255,255,.25); }
+.tb-btn.green      { background:rgba(74,124,95,.7); }
+.tb-btn.green:hover{ background:rgba(74,124,95,.9); }
+.tb-btn.pink       { background:rgba(180,80,120,.55); border-color:rgba(210,110,150,.5); }
+.tb-btn.pink:hover { background:rgba(180,80,120,.75); }
+.tb-btn.back       { background:rgba(200,150,80,.2); border-color:rgba(200,150,80,.4); flex-shrink:0; }
+.tb-btn.back:hover { background:rgba(200,150,80,.4); }
+#wallCanvas { position:relative; min-height:calc(100vh - 48px); width:100%; margin-top:48px; z-index:1; padding-bottom:80px; }
+.sticky        { position:absolute; width:160px; background:#fffde0; border-radius:4px; padding:10px 10px 8px; box-shadow:4px 6px 20px rgba(0,0,0,.35); cursor:grab; user-select:none; z-index:10; }
+.sticky:active { cursor:grabbing; z-index:50; }
+.sticky.selected { outline:2.5px solid #ffe082; z-index:50; }
+.sticky-tape   { position:absolute; top:-9px; left:50%; transform:translateX(-50%); width:40px; height:14px; background:rgba(255,240,180,.7); border-radius:3px; }
+.sticky-author { font-family:var(--f-hand)!important; font-size:.88rem; font-weight:700; color:var(--green-dark); margin-bottom:3px; }
+.sticky-text   { font-family:var(--f-hand)!important; font-size:.82rem; color:#333; line-height:1.35; word-break:break-word; }
+.sticky-del    { position:absolute; top:3px; right:4px; font-size:.75rem; color:rgba(0,0,0,.3); cursor:pointer; background:none; border:none; }
+.sticky-del:hover { color:rgba(200,60,60,.7); }
+.wall-pol      { position:absolute; background:#fff; padding:7px 7px 30px; border-radius:2px; box-shadow:4px 8px 22px rgba(0,0,0,.35); cursor:grab; user-select:none; z-index:10; }
+.wall-pol:active { cursor:grabbing; z-index:50; }
+.pol-tape-t    { position:absolute; top:-10px; left:50%; transform:translateX(-50%); width:48px; height:15px; background:rgba(255,240,180,.7); border-radius:3px; }
+.wall-pol img  { display:block; object-fit:cover; background:var(--green-ghost); }
+.pol-cap       { position:absolute; bottom:4px; left:0; right:0; text-align:center; font-family:var(--f-hand)!important; font-size:.82rem; color:#666; }
+.wall-pol-del  { position:absolute; top:2px; right:4px; font-size:.72rem; color:rgba(0,0,0,.28); cursor:pointer; background:none; border:none; }
+.wall-pol-del:hover { color:rgba(200,60,60,.7); }
+.modal-overlay      { position:fixed; inset:0; z-index:200; background:rgba(0,0,0,.55); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .25s; }
+.modal-overlay.open { opacity:1; pointer-events:all; }
+.modal              { background:var(--cream); border-radius:28px; padding:32px 28px; width:min(420px,92vw); box-shadow:0 20px 60px rgba(0,0,0,.3); animation:popIn .3s cubic-bezier(.36,1.56,.64,1) both; }
+.modal h3           { font-family: var(--f-script)!important; font-size:1.9rem; color:var(--green-dark); margin-bottom:18px; text-align:center; }
+.modal input, .modal textarea { width:100%; font-size:1rem; background:#fff; border:2px solid var(--green-pale); border-radius:14px; padding:9px 13px; color:var(--text); outline:none; margin-bottom:12px; display:block; transition:border-color .2s; }
+.modal input:focus, .modal textarea:focus { border-color:var(--green-light); }
+.modal textarea { height:80px; resize:none; }
+.modal-btns { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+.modal-btns button { font-size:1rem; font-weight:600; padding:10px 28px; border:none; border-radius:var(--pill); cursor:pointer; transition:transform .15s; }
+.btn-ok     { background:linear-gradient(135deg,var(--green),var(--green-dark)); color:#fff; }
+.btn-cancel { background:var(--warm); color:var(--green-mid); border:1.5px solid var(--green-pale); }
+.modal-btns button:hover { transform:scale(1.05); }
+.color-row  { display:flex; gap:8px; margin-bottom:14px; justify-content:center; }
+.col-opt    { width:28px; height:28px; border-radius:50%; cursor:pointer; border:2.5px solid transparent; transition:transform .14px; }
+.col-opt:hover  { transform:scale(1.2); }
+.col-opt.active { border-color:var(--green-dark); }
+.img-drop   { width:100%; height:90px; border:2.5px dashed var(--green-pale); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:.9rem; color:var(--green-mid); cursor:pointer; margin-bottom:12px; background:var(--green-ghost); flex-direction:column; gap:4px; }
+.img-drop:hover { border-color:var(--green); background:var(--green-pale); }
+.img-drop-preview { width:100%; height:120px; border-radius:14px; object-fit:cover; margin-bottom:12px; display:none; border:2px solid var(--green-pale); }
+.sticker-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px; }
+.sticker-opt { width:100%; aspect-ratio:1; border-radius:12px; border:2.5px solid var(--green-pale); background:var(--green-ghost); cursor:pointer; overflow:hidden; transition:transform .15s,border-color .15s; display:flex; align-items:center; justify-content:center; }
+.sticker-opt:hover { transform:scale(1.08); border-color:var(--green); }
+.sticker-opt img { width:100%; height:100%; object-fit:contain; padding:6px; }
+.wall-sticker { position:absolute; cursor:grab; user-select:none; z-index:10; transition:box-shadow .14s; }
+.wall-sticker:active { cursor:grabbing; z-index:50; }
+.wall-sticker.selected { outline:2.5px solid #ffe082; z-index:50; }
+.wall-sticker img { width:100%; height:100%; object-fit:contain; display:block; pointer-events:none; }
+.wall-sticker-del { position:absolute; top:-8px; right:-8px; width:20px; height:20px; background:#fff; border:1.5px solid #ddd; border-radius:50%; font-size:.65rem; color:rgba(0,0,0,.4); cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; }
+.wall-sticker-del:hover { color:rgba(200,60,60,.8); border-color:rgba(200,60,60,.4); }
+.cafe-footer { background:var(--green-dark); color:rgba(255,255,255,.7); text-align:center; padding:28px 20px; font-size:.88rem; }
+.cafe-footer strong { color:#fff; }
+
+@keyframes popIn  { 0%{ opacity:0; transform:scale(.85) translateY(20px); } 100%{ opacity:1; transform:scale(1) translateY(0); } }
+@keyframes floatY { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-6px); } }
+
+/* ════ LUCKY CARD DRAW ════ */
+.card-draw-bg { background:linear-gradient(135deg,var(--warm),var(--blush)); border-radius:36px; padding:40px 28px 32px; }
+.card-deck-area { position:relative; height:220px; display:flex; align-items:center; justify-content:center; margin-bottom:24px; perspective:900px; }
+.lc-card { width:120px; height:172px; border-radius:14px; position:absolute; cursor:pointer; transform-style:preserve-3d; transition:transform .7s cubic-bezier(.4,0,.2,1), opacity .4s, left .5s cubic-bezier(.4,0,.2,1), top .5s cubic-bezier(.4,0,.2,1); }
+.lc-card-inner { width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .75s cubic-bezier(.4,0,.2,1); }
+.lc-card.flipped .lc-card-inner { transform:rotateY(180deg); }
+.lc-card-front,.lc-card-back { position:absolute; inset:0; border-radius:14px; backface-visibility:hidden; -webkit-backface-visibility:hidden; overflow:hidden; }
+.lc-card-back { background:linear-gradient(145deg,#2d5a3d,#4a7c5f); border:3px solid #8fbfa0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; box-shadow:3px 6px 20px rgba(0,0,0,.28); }
+.lc-card-back::before { content:''; position:absolute; inset:8px; border:1.5px solid rgba(255,255,255,.18); border-radius:8px; pointer-events:none; }
+.lc-card-back .lcb-icon { font-size:2rem; }
+.lc-card-back .lcb-txt { font-size:.52rem; color:rgba(255,255,255,.65); letter-spacing:2.5px; text-transform:uppercase; }
+.lc-card-front { background:#fff; border:2.5px solid #f9d0de; transform:rotateY(180deg); display:flex; flex-direction:column; align-items:center; box-shadow:3px 6px 20px rgba(0,0,0,.22); }
+.lc-card-front .lcf-img { width:100%; height:112px; object-fit:cover; display:block; background:var(--green-ghost); flex-shrink:0; }
+.lc-card-front .lcf-img-ph { width:100%; height:112px; display:flex; align-items:center; justify-content:center; font-size:2.4rem; flex-shrink:0; }
+.lc-card-front .lcf-name { font-size:.72rem; font-weight:600; color:#2d5a3d; padding:6px 8px 2px; text-align:center; line-height:1.3; }
+.lc-card-front .lcf-msg { font-size:.62rem; color:#4a6e55; padding:0 8px 8px; text-align:center; line-height:1.4; }
+.card-draw-btns { text-align:center; }
+.card-draw-btn { background:linear-gradient(135deg,var(--green),var(--green-dark)); color:#fff; font-size:1.05rem; font-weight:600; padding:13px 44px; border:none; border-radius:var(--pill); cursor:pointer; box-shadow:0 6px 20px rgba(45,90,61,.3); transition:transform .18s; }
+.card-draw-btn:hover { transform:translateY(-4px) scale(1.04); }
+.card-draw-btn:disabled { opacity:.55; cursor:not-allowed; transform:none; }
+.card-draw-hint { text-align:center; font-size:.85rem; color:var(--green-mid); margin-top:10px; min-height:1.4rem; font-weight:500; }
+@keyframes shuffleWiggle { 0%{transform:translateX(0) rotate(var(--br));} 25%{transform:translateX(-8px) rotate(calc(var(--br) - 4deg));} 50%{transform:translateX(8px) rotate(calc(var(--br) + 4deg));} 75%{transform:translateX(-4px) rotate(var(--br));} 100%{transform:translateX(0) rotate(var(--br));} }
+
+@media(max-width:600px){
+  .pol-grid { gap:14px; }
+  .pol-card { width:calc(50% - 8px); }
+  .drink-bg { padding:24px 14px; }
+  .ing-btn  { padding:8px 11px; min-width:66px; }
+  .hdr-cd   { gap:7px; padding:8px 18px; }
+  .hcd-n    { font-size:1.3rem; }
+  .drink-menu-grid { grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); }
+  .lw-side-photos { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div id="floaties"></div>
+
+<!-- ══════════════════════════════════════
+     🎵 YOUTUBE MUSIC SYSTEM
+     แก้แค่ SONG_IDS อย่างเดียว!
+     ใส่ YouTube Video ID ได้เลย เพิ่ม/ลดได้ตามใจ
+     ตัวอย่าง: "dQw4w9WgXcQ" คือ ID จาก https://youtube.com/watch?v=dQw4w9WgXcQ
+══════════════════════════════════════ -->
+<div id="ytPlayer" style="position:fixed;bottom:0;right:0;width:1px;height:1px;opacity:0;pointer-events:none;z-index:-1;"></div>
+<script>
+// 🎵 ใส่ YouTube Video ID ที่นี่ได้เลย — เพิ่ม/ลบ/เปลี่ยนได้ตามใจ
+const SONG_IDS = [
+'VqmICoje0Kc',
+"-PQGsN_Xx9o",
+"G1GHK3rjuNo",
+"QOmClDj0TuQ",
+"mGbTM_FEtWE",
+"2YSZzXb2PZE",
+"Tq5z6h_XMI4",
+"scrB6fATyxU",
+"u_auw5KyA_Q",
+"Zt9kTHEyRME", 
+"r9NARyvF2qY",
+"IjB-FYPSnO4",
+"poPyPjhEm9E"
+];
+
+
+
+var ytPlayer;
+var ytReady = false;
+var currentSongIdx = -1;
+var isPlaying = false;
+
+// โหลด YouTube IFrame API
+var ytTag = document.createElement('script');
+ytTag.src = "https://www.youtube.com/iframe_api";
+document.head.appendChild(ytTag);
+
+function onYouTubeIframeAPIReady() {
+  ytPlayer = new YT.Player('ytPlayer', {
+    height: '1', width: '1',
+    playerVars: { autoplay: 0, controls: 0, rel: 0, playsinline: 1 },
+    events: {
+      onReady: function() {
+        ytReady = true;
+        // ถ้า startMusic() ถูกเรียกก่อน API พร้อม ให้เริ่มเล่นทันที
+        if (window._pendingPlay) {
+          window._pendingPlay = false;
+          _doPlay();
+        }
+      },
+      onStateChange: function(e) {
+        if (e.data === YT.PlayerState.ENDED) {
+          playNextSong(); // เพลงจบ → เล่นเพลงถัดไป (สุ่มไม่ซ้ำ)
+        }
+        if (e.data === YT.PlayerState.PLAYING) {
+          isPlaying = true;
+          var btn = document.getElementById('musicBtn');
+          if (btn) btn.textContent = '⏸ Pause';
+        }
+        if (e.data === YT.PlayerState.PAUSED) {
+          isPlaying = false;
+          var btn = document.getElementById('musicBtn');
+          if (btn) btn.textContent = '▶ Play';
+        }
+      }
+    }
+  });
+}
+
+function getRandomIdx() {
+  if (SONG_IDS.length === 1) return 0;
+  var next;
+  do { next = Math.floor(Math.random() * SONG_IDS.length); }
+  while (next === currentSongIdx);
+  return next;
+}
+
+function playNextSong() {
+  currentSongIdx = getRandomIdx();
+  if (ytReady && ytPlayer && ytPlayer.loadVideoById) {
+    ytPlayer.loadVideoById(SONG_IDS[currentSongIdx]);
+  }
+}
+
+function _doPlay() {
+  currentSongIdx = getRandomIdx(); // สุ่มเพลงใหม่ทุกครั้งที่กด Enter
+  if (ytPlayer && ytPlayer.loadVideoById) {
+    ytPlayer.loadVideoById(SONG_IDS[currentSongIdx]);
+  }
+}
+
+// เรียกจากปุ่ม "เข้าไปกันเลยย" — สุ่มเพลงใหม่ทุกครั้ง
+function startMusic() {
+  if (ytReady) {
+    _doPlay();
+  } else {
+    window._pendingPlay = true; // รอ API พร้อมแล้วค่อยเล่น
+  }
+}
+
+// ปุ่ม Play/Pause ใน music bar
+function toggleMusic() {
+  if (!ytPlayer || !ytReady) return;
+  if (isPlaying) {
+    ytPlayer.pauseVideo();
+  } else {
+    if (currentSongIdx === -1) {
+      _doPlay();
+    } else {
+      ytPlayer.playVideo();
+    }
+  }
+}
+</script>
+
+<!-- OVERLAY — กรอกชื่อก่อนเข้า -->
+<div id="nameOverlay">
+  <div class="name-card">
+    <span class="nc-icon"><img src="name1.jpg" alt="" onerror="this.style.opacity='0'"/></span>
+    <h2> You're invited to Lucky Eunwoo Cafe! </h2>
+    <p>Before you enter the cafe<br/>What would you like us to call you?</p>
+    <input id="visitorNameInput" class="name-input" type="text" placeholder="กรอกชื่อของคุณ..." maxlength="30"/>
+    <button class="name-submit-btn" onclick="submitName()">เข้าไปกันเลยย &lt;3 </button>
+  </div>
+</div>
+
+<!-- PAGE 1 — LANDING -->
+<div class="page" id="pgLanding">
+  <div class="lw-ticker-wrap"><span class="lw-ticker-track" id="lwTicker"></span></div>
+  <div class="lw-awning-top-bar"></div>
+  <div class="lw-awning-stripes"></div>
+  <div class="lw-awning-bottom-bar"></div>
+
+  <div class="lw-body">
+    <div class="lw-deco-band">
+      <div class="dl"></div>♡&nbsp;03301997&nbsp;♡<div class="dr"></div>
+    </div>
+    <div class="lw-name-block">
+      <span class="lw-main-name">Lucky<br>Eunwoo</span>
+      <div class="lw-deco-icons"><span></span><em>2026</em><span></span></div>
+      <span class="lw-cafe-word"> Birthday Cafe</span>
+    </div>
+    <div class="lw-cd-hero">
+      <div class="lw-cd-units">
+        <div class="lw-cd-unit"><span class="lw-cd-num" id="cdD">00</span><span class="lw-cd-label-s">Days</span></div>
+        <span class="lw-cd-sep">:</span>
+        <div class="lw-cd-unit"><span class="lw-cd-num" id="cdH">00</span><span class="lw-cd-label-s">Hours</span></div>
+        <span class="lw-cd-sep">:</span>
+        <div class="lw-cd-unit"><span class="lw-cd-num" id="cdM">00</span><span class="lw-cd-label-s">Mins</span></div>
+        <span class="lw-cd-sep">:</span>
+        <div class="lw-cd-unit"><span class="lw-cd-num" id="cdS">00</span><span class="lw-cd-label-s">Secs</span></div>
+      </div>
+      <div id="greetingBanner" class="lw-greeting">
+        <span class="lw-greeting-hi">Hellooo คุณ <span id="greetingNameText" style="font-weight:800"></span></span>
+        <span class="lw-greeting-sub">เพื่อน ๆ โรฮ่ารออยู่น้า ถ้าพร้อมแล้วก็เข้าไปกันเถอะ! •ᴗ•</span>
+      </div>
+    </div>
+    <div class="lw-facade-lower">
+      <div class="lw-win-door-row">
+        <div class="lw-window"><div class="lw-win-glass"><div class="lw-win-pane"></div><div class="lw-win-pane"></div><div class="lw-win-pane"></div><div class="lw-win-pane"></div></div><div class="lw-win-sill"></div></div>
+        <div class="lw-door-col">
+          <div class="lw-door-msg-wrap">
+            <div class="lw-door-msg"><span> ก้อก <br> ก้อก</span></div>
+          </div>
+          <div class="lw-door-inner">
+            <div class="lw-double-door" onclick="enterCafe()">
+              <div class="lw-door-leaf left"><div class="lw-d-peep"></div><div class="lw-dp-top"></div><div class="lw-dp-bot"></div><div class="lw-d-knob-l"></div></div>
+              <div class="lw-door-leaf right"><div class="lw-dp-top"></div><div class="lw-dp-bot"></div><div class="lw-d-knob-r"></div></div>
+            </div>
+            <div class="lw-door-mat"></div>
+            <div class="lw-door-mat-txt">AROHA♡</div>
+          </div>
+        </div>
+        <div class="lw-window">
+          <div class="lw-win-glass"><div class="lw-win-pane"></div><div class="lw-win-pane"></div><div class="lw-win-pane"></div><div class="lw-win-pane"></div></div>
+          <div class="lw-win-sill"></div>
+        </div>
+      </div>
+    </div>
+    <div class="lw-ground"><div class="lw-path"></div></div>
+  </div>
+</div><!-- /pgLanding -->
+
+
+<!-- PAGE 2 — MAIN CAFE -->
+<div class="page hidden gone" id="pgCafe">
+  <header class="cafe-hdr">
+    <div class="cafe-hdr-slides">
+      <div class="cafe-hdr-slide" style="background-image:url('slide1.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide2.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide3.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide4.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide5.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide6.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide7.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide8.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide9.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide10.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide11.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide12.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide13.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide14.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide15.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide16.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide17.jpg')"></div>
+    </div>
+    <div id="hdrSparks"></div>
+    <div class="hdr-inner" style="position:relative;z-index:2;">
+      <div class="hdr-flag">♡&nbsp; 19970330 &nbsp;♡</div>
+      <h1 class="hdr-name">Happy Eunwoo's Day</h1>
+      <p class="hdr-sub">Thank you for becoming our shining star ᯓ★</p>
+      <div class="hdr-cd">
+        <div class="hcd-item"><span class="hcd-n" id="hD">00</span><span class="hcd-l">Days</span></div>
+        <span class="hcd-sep">:</span>
+        <div class="hcd-item"><span class="hcd-n" id="hH">00</span><span class="hcd-l">Hrs</span></div>
+        <span class="hcd-sep">:</span>
+        <div class="hcd-item"><span class="hcd-n" id="hM">00</span><span class="hcd-l">Min</span></div>
+        <span class="hcd-sep">:</span>
+        <div class="hcd-item"><span class="hcd-n" id="hS">00</span><span class="hcd-l">Sec</span></div>
+      </div>
+    </div>
+  </header>
+  <span class="wave-sep"><svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,48 C360,0 1080,0 1440,48 L1440,48 L0,48Z" fill="#fdfaf2"/></svg></span>
+  <div class="music-bar">
+    <span class="note-icon">🎵</span> Now Playing Music
+    <button id="musicBtn" onclick="toggleMusic()">▶ Play</button>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="section">
+    <h2 class="sec-hd">Shining Eunwoo</h2>
+    <p class="sec-sd">ขอบคุณที่เติบโตมาอย่างดีเลยนะ เด็กชายอีดงมิน &lt;3 </p>
+    <div class="pol-grid">
+      <div class="pol-card"><img src="images/eunwoo1.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
+      <div class="pol-card"><img src="images/eunwoo2.jpg" alt="" onerror="this.style.background='var(--blush)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
+      <div class="pol-card"><img src="images/eunwoo3.jpg" alt="" onerror="this.style.background='var(--warm)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
+      <div class="pol-card"><img src="images/eunwoo4.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
+      <div class="pol-card"><img src="images/eunwoo5.jpg" alt="" onerror="this.style.background='var(--blush)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
+      <div class="pol-card"><img src="images/eunwoo6.jpg" alt="" onerror="this.style.background='var(--warm)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
+    </div>
+  </div>
+  <div class="leaf-div">♡ ♥︎ ♡ ♥︎ ♡ ♥︎ ♡ ♥︎</div>
+
+  <!-- MESSAGE WALL -->
+  <div class="section" style="padding-top:32px;padding-bottom:32px">
+    <h2 class="sec-hd">Wishing Wall</h2>
+    <button class="wall-card-btn" onclick="openWall()">
+      <div class="wall-icon">💌</div>
+      <div><div class="wt1">Let's leave a birthday wish for Eunwoo! →</div><div class="wt2">Write on a post-it &amp; polaroids · drag freely · decorate the wall </div></div>
+    </button>
+  </div>
+
+  <!-- LUCKY CARD DRAW -->
+  <div class="section">
+    <h2 class="sec-hd"> Lucky Eunwoo Cards</h2>
+    <p class="sec-sd"> Try your luck with Eunwoo's fortune cards! 👀✨ <br> How to play : ร้องเพลง Astro หรือ เพลงของชาอึนอูมา 1 ท่อน <br> ก่อนที่จะเริ่มกดปุ่มทำนาย เพื่อความโชคดี! </p>
+    <div class="card-draw-bg">
+      <div class="card-deck-area" id="cardDeckArea"></div>
+      <div class="card-draw-btns">
+        <button class="card-draw-btn" id="cardDrawBtn" onclick="luckyDraw()">✨ Draw a Card ✨ </button>
+      </div>
+      <div class="card-draw-hint" id="cardDrawHint">ให้อึนอูทำนายกันนนนนน!</div>
+      <div class="drink-result" id="cardResult">
+        <div class="res-name" id="cardResName"></div>
+        <div class="res-img">
+          <img id="cardResImg" src="" alt="" style="display:none" onerror="this.style.display='none';document.getElementById('cardResPh').style.display='flex'"/>
+          <span class="res-ph" id="cardResPh" style="display:none">✨</span>
+        </div>
+        <div class="res-msg" id="cardResMsg"></div>
+        <button class="blend-reset-btn" style="margin-top:14px" onclick="resetLuckyDraw()">↺ Draw Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTO-SCROLL GALLERY -->
+  <div class="auto-gallery-section">
+    <div class="scroll-track-wrap">
+      <div class="scroll-track">
+        <div class="scroll-pol"><img src="images/g1.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g2.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g3.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g4.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g5.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g6.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g7.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g8.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g9.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g10.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g11.jpg" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g12.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+      </div>
+      <div class="scroll-track">
+        <div class="scroll-pol"><img src="images/g1.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g2.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g3.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g4.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g5.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g6.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g7.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g8.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g9.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g10.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g11.jpg" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g12.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+      </div>
+      <div class="scroll-track">
+        <div class="scroll-pol"><img src="images/g1.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g2.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g3.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g4.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g5.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g6.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g7.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g8.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g9.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g10.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g11.jpg" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="images/g12.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAMP CARD -->
+  <div class="stamp-section">
+    <h2 class="sec-hd">Lucky Eunwoo Ticket</h2>
+    <p class="sec-sd"> กดที่ปุ่มสามครั้ง เพื่อปลดล็อกตั๋วที่ระลึกสุดพิเศษของคุณ!</p>
+    <div class="stamp-card-wrap">
+      <div class="stamp-card-title">Lucky Eunwoo Cafe</div>
+      <div class="stamp-card-sub"> Special Ticket for AROHA💜 </div>
+      <div class="stamp-grid" id="stampGrid"></div>
+      <div class="stamp-progress" id="stampProgress">Stamps: <strong>0 / 3</strong></div>
+      <div class="stamp-btns">
+        <button class="stamp-btn" id="stampMainBtn" onclick="addStamp()">Get a Stamp!</button>
+        <button class="stamp-reset-btn" onclick="resetStamps()">↺ Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="cafe-footer">
+    <p> ♡ Made with love <strong>#LuckyEunwooCafe</strong> ♡</p>
+    <p style="margin-top:5px;font-size:.8rem">This Website developed by Jewelry</p>
+    <p style="margin-top:5px;font-size:.8rem">and special thank to พี่ ๆ AROHA ทุกคน for supporting this project! </p>
+  </footer>
+</div><!-- /pgCafe -->
+
+
+<!-- PAGE 3 — MESSAGE WALL -->
+<div class="page hidden gone" id="pgWall">
+  <div class="wall-bg-bricks"></div>
+  <div class="wall-toolbar">
+    <div class="wall-toolbar-left">
+      <button class="tb-btn green" onclick="openStickyModal()">Add Message</button>
+      <button class="tb-btn green" onclick="openStickerModal()">Add Sticker</button>
+      <button class="tb-btn pink" onclick="openPolaroidModal()">Add Image</button>
+      <button class="tb-btn back" onclick="closeWall()">← Back</button>
+    </div>
+  </div>
+  <div id="wallCanvas"></div>
+</div>
+
+<!-- TICKET OVERLAY -->
+<div id="ticketOverlay" onclick="closeTicket(event)">
+  <div class="ticket">
+    <div class="ticket-top">
+      <div class="ticket-cafe-name"> ♡ HAPPY EUNWOO's DAY 2026 ♡</div>
+      <div class="ticket-main-title">Lucky Eunwoo Birthday Cafe </div>
+    </div>
+    <div class="ticket-body">
+      <div class="ticket-photos" id="ticketPhotos"></div>
+      <div class="ticket-checkin-label">✔ CHECKED IN</div>
+      <div class="ticket-name" id="ticketName">—</div>
+      <div class="ticket-date" id="ticketDate">—</div>
+      <div class="ticket-stamp-row" id="ticketStamps"></div>
+      <div class="ticket-reward">Thank you for joining, See you next year!</div>
+      <div class="ticket-barcode" id="ticketBarcode"></div>
+      <button class="ticket-close" onclick="closeTicket()">Close ✕</button>
+    </div>
+    <div class="ticket-bottom">Have a Nice Day and Nice Year! <br> Developed by Jewelry</div>
+  </div>
+</div>
+
+<!-- MODAL sticky -->
+<div class="modal-overlay" id="stickyModal">
+  <div class="modal">
+    <h3>Write a Birthday Message</h3>
+    <textarea id="sText" placeholder="เขียนคำอวยพรให้อึนอูกัน..." maxlength="200"></textarea>
+    <div class="color-row" id="colorRow"></div>
+    <div class="modal-btns">
+      <button class="btn-ok" onclick="addSticky()">Send it</button>
+      <button class="btn-cancel" onclick="closeModal('stickyModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL sticker -->
+<div class="modal-overlay" id="stickerModal">
+  <div class="modal">
+    <h3>Choose a Sticker</h3>
+    <div class="sticker-grid" id="stickerGrid"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('stickerModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL polaroid -->
+<div class="modal-overlay" id="polaroidModal">
+  <div class="modal">
+    <h3>Add an Image</h3>
+    <div class="img-drop" id="polDropZone" onclick="document.getElementById('polFileInput').click()">
+      <span style="font-size:1.4rem">📷</span>
+      <span>คลิกเพื่ออัปโหลดรูป</span>
+    </div>
+    <img class="img-drop-preview" id="polPreview" src="" alt="preview"/>
+    <input type="file" id="polFileInput" accept="image/*" style="display:none" onchange="handlePolFile(event)"/>
+    <input id="polCaption" class="name-input" type="text" placeholder="Caption (optional)" maxlength="40" style="margin-bottom:12px;text-align:left;padding:9px 13px;border-radius:14px;border:2px solid var(--green-pale);font-size:1rem;"/>
+    <div class="modal-btns">
+      <button class="btn-ok" onclick="addPolaroid()">Send it</button>
+      <button class="btn-cancel" onclick="closeModal('polaroidModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ══ CONFIG ══
+const BIRTHDAY = new Date('2026-03-30T00:00:00'); // 📅 BIRTHDAY
+
+const TICKET_PHOTOS = [ // 🎟 TICKET_PHOTOS
+  { src:'c1.jpg', cap:'♡' },
+  { src:'c2.jpg', cap:'♡' },
+  { src:'c3.jpg', cap:'♡' },
+  { src:'c4.jpg', cap:'♡' },
+  { src:'c5.jpg', cap:'♡' },
+  { src:'images/ticket6.jpg', cap:'♡' },
+];
+
+const MAX_STAMPS = 3;
+
+// ══ LANDING TICKER ══
+const lwMsg = 'Happy Lee Dongmin Day \u2003 차은우 \u2003 30 March 2026 \u2003 Aroha ♡ Astro \u2003 Lucky Eunwoo ☘︎  \u2003 Our Shining Star \u2003 19970330 \u2003 ♡ ♥︎ ♡ ♥︎ ♡ ♥︎ ♡ ♥︎ \u2003 Birthday Cafe \u2003 ᯓ★ ';
+document.getElementById('lwTicker').textContent = lwMsg + lwMsg;
+
+// ══ LANDING FALLING ITEMS ══
+const lwFcs=['☘️','ᯓ★','♡','♥︎','★','⭐','🍵','👀','🐰','☁️'];
+const lwRoot=document.getElementById('pgLanding');
+function spawnLwFC(){
+  const p=document.createElement('div'); p.className='lw-fc';
+  const dur=9+Math.random()*11;
+  p.textContent=lwFcs[Math.floor(Math.random()*lwFcs.length)];
+  Object.assign(p.style,{left:Math.random()*100+'%',fontSize:(.5+Math.random()*.5)+'rem',animationDuration:dur+'s',animationDelay:(Math.random()*-dur)+'s'});
+  lwRoot.appendChild(p);
+  setTimeout(()=>p.remove(),(dur+2)*1000);
+}
+for(let i=0;i<14;i++) spawnLwFC();
+setInterval(spawnLwFC,1900);
+
+// ══ NAME & GREETING ══
+let visitorName='';
+function submitName(){
+  const val=document.getElementById('visitorNameInput').value.trim();
+  if(!val){alert('โรฮ่าจ๋าา กรอกชื่อก่อนน้า~');return;}
+  visitorName=val;
+  const overlay=document.getElementById('nameOverlay');
+  overlay.style.transition='opacity .5s';
+  overlay.style.opacity='0';
+  overlay.style.pointerEvents='none';
+  setTimeout(()=>overlay.style.display='none',500);
+  document.getElementById('greetingNameText').textContent=val;
+  document.getElementById('greetingBanner').style.display='block';
+  // 🎵 เริ่มเพลงทันทีที่กด "เข้าไปกันเลยย"
+  startMusic();
+}
+document.getElementById('visitorNameInput').addEventListener('keydown',e=>{if(e.key==='Enter')submitName();});
+
+// ══ COUNTDOWN ══
+function pad(n){return String(n).padStart(2,'0');}
+function tick(){
+  let diff=BIRTHDAY-new Date(); if(diff<0)diff=0;
+  const d=Math.floor(diff/86400000);diff-=d*86400000;
+  const h=Math.floor(diff/3600000);diff-=h*3600000;
+  const m=Math.floor(diff/60000);diff-=m*60000;
+  const s=Math.floor(diff/1000);
+  const vals=[d,h,m,s];
+  ['cdD','cdH','cdM','cdS'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.textContent=pad(vals[i]);});
+  ['hD','hH','hM','hS'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.textContent=pad(vals[i]);});
+}
+tick(); setInterval(tick,1000);
+
+// ══ FLOATIES ══
+const FLOAT_EMOJIS=['🌿','✨','🍃','☕','🌸','🎂','🍵','💚','⭐','🌱','🍀','☘️'];
+function spawnFloatie(){
+  const el=document.createElement('span'); const dur=12+Math.random()*12;
+  el.className='floatie'; el.textContent=FLOAT_EMOJIS[Math.floor(Math.random()*FLOAT_EMOJIS.length)];
+  el.style.left=Math.random()*100+'vw'; el.style.fontSize=(0.9+Math.random()*1.1)+'rem';
+  el.style.animationDuration=dur+'s'; el.style.animationDelay=(Math.random()*-dur)+'s';
+  document.getElementById('floaties').appendChild(el);
+  setTimeout(()=>el.remove(),(dur+2)*1000);
+}
+for(let i=0;i<14;i++)spawnFloatie(); setInterval(spawnFloatie,2800);
+
+const sparksEl=document.getElementById('hdrSparks');
+if(sparksEl){for(let i=0;i<22;i++){const s=document.createElement('div');s.className='hdr-spark';s.style.top=Math.random()*100+'%';s.style.left=Math.random()*100+'%';s.style.animationDelay=(Math.random()*2)+'s';s.style.animationDuration=(1.4+Math.random()*1.5)+'s';sparksEl.appendChild(s);}}
+
+// ══ PAGE ROUTING ══
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden','gone'));const pg=document.getElementById(id);pg.classList.remove('gone');requestAnimationFrame(()=>requestAnimationFrame(()=>pg.classList.remove('hidden')));}
+function enterCafe(){
+  if(!visitorName){
+    const ov=document.getElementById('nameOverlay');
+    ov.style.display='flex';ov.style.opacity='1';ov.style.pointerEvents='all';ov.style.transition='';
+    document.getElementById('visitorNameInput').focus();
+    return;
+  }
+  showPage('pgCafe');
+}
+function openWall(){showPage('pgWall');renderWall();}
+function closeWall(){showPage('pgCafe');}
+
+// ══ LUCKY CARD DRAW ══
+const LUCKY_CARDS = [
+  { name:'Lucky Eunwoo ◡̈', img:'c1.jpg', msg:'เอ้ะๆๆ เหมือนคนแถวนี้้จะมีดวงกับเมนนะ!' },
+  { name:'Lucky Eunwoo ◡̈', img:'c2.jpg', msg:'วันนี้จะเจอแต่เรื่องดีแน่นอน รอรับได้เลยยยย~' },
+  { name:'Lucky Eunwoo ◡̈', img:'c3.jpg', msg:'ความสุขกำลังจะมาถึง เตรียมรับมันด้วยรอยยิ้มน้าาาาา ♡' },
+  { name:'Lucky Eunwoo ◡̈', img:'c4.jpg', msg:'อย่าหักโหมตัวเองมากไป พักผ่อนเยอะๆ ดูแลตัวเองด้วยน้า ♡' },
+  { name:'Lucky Eunwoo ◡̈', img:'c5.jpg', msg:'ความโชคดีอยู่ใกล้กว่าที่คิด ขอให้ทำอะไรก็สำเร็จ คิดอะไรก็สมปราถนา พ่อหมออึนอูเป็นกำลังใจให้อยู่นะ!' },
+];
+
+let lcDrawn = false;
+const LC_ANGLES  = [-12, -6, 0, 6, 12];
+const LC_OFFSETS = [-56,-28, 0,28, 56];
+
+function lcBuildDeck(){
+  const area=document.getElementById('cardDeckArea'); area.innerHTML='';
+  LUCKY_CARDS.forEach((c,i)=>{
+    const card=document.createElement('div'); card.className='lc-card'; card.id='lcCard'+i;
+    card.style.setProperty('--br',LC_ANGLES[i]+'deg');
+    card.style.cssText+=`left:calc(50% + ${LC_OFFSETS[i]}px - 60px);top:24px;transform:rotate(${LC_ANGLES[i]}deg);z-index:${i+1};`;
+    card.innerHTML=`<div class="lc-card-inner">
+      <div class="lc-card-back"><div class="lcb-icon">☘️</div><div class="lcb-txt">Lucky Eunwoo</div></div>
+      <div class="lc-card-front">
+        <img class="lcf-img" src="${c.img}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="lcf-img-ph" style="display:none">✨</div>
+        <div class="lcf-name">${c.name}</div>
+        <div class="lcf-msg">${c.msg}</div>
+      </div>
+    </div>`;
+    area.appendChild(card);
+  });
+}
+
+function luckyDraw(){
+  if(lcDrawn)return; lcDrawn=true;
+  const btn=document.getElementById('cardDrawBtn'); btn.disabled=true;
+  const hint=document.getElementById('cardDrawHint'); hint.textContent='กำลังสับไพ่...รอแป๊บนะ!';
+  LUCKY_CARDS.forEach((_,i)=>{const card=document.getElementById('lcCard'+i);card.style.animation=`shuffleWiggle .55s ease ${i*.07}s 2`;});
+  setTimeout(()=>{
+    hint.textContent='อึนอูเลือกการ์ดให้แล้วนะ เปิดดูเลย! ';
+    const idx=Math.floor(Math.random()*LUCKY_CARDS.length);
+    LUCKY_CARDS.forEach((_,i)=>{
+      const card=document.getElementById('lcCard'+i); card.style.animation='';
+      if(i!==idx){const dir=LC_OFFSETS[i]>=0?1:-1;card.style.transition='transform .5s cubic-bezier(.4,0,.2,1), opacity .4s';card.style.transform=`translateX(${dir*180}px) rotate(${LC_ANGLES[i]*2}deg) translateY(40px)`;card.style.opacity='0';}
+    });
+    setTimeout(()=>{
+      const picked=document.getElementById('lcCard'+idx);
+      picked.style.transition='left .45s cubic-bezier(.4,0,.2,1), top .45s cubic-bezier(.4,0,.2,1), transform .45s cubic-bezier(.4,0,.2,1)';
+      picked.style.left='calc(50% - 60px)'; picked.style.top='20px'; picked.style.transform='rotate(0deg) translateY(-12px) scale(1.08)'; picked.style.zIndex='20';
+      setTimeout(()=>{
+        picked.classList.add('flipped');
+        setTimeout(()=>{
+          const c=LUCKY_CARDS[idx]; const result=document.getElementById('cardResult');
+          const img=document.getElementById('cardResImg'); const ph=document.getElementById('cardResPh');
+          document.getElementById('cardResName').textContent=c.name;
+          document.getElementById('cardResMsg').textContent=c.msg;
+          ph.style.display='none'; img.style.display='block'; img.src=c.img;
+          img.onerror=()=>{img.style.display='none';ph.style.display='flex';ph.textContent='✨';};
+          result.classList.remove('vis'); void result.offsetWidth; result.classList.add('vis');
+          result.scrollIntoView({behavior:'smooth',block:'nearest'});
+        },700);
+      },500);
+    },400);
+  },1300);
+}
+
+function resetLuckyDraw(){
+  lcDrawn=false;
+  document.getElementById('cardDrawBtn').disabled=false;
+  document.getElementById('cardDrawHint').textContent='ให้อึนอูทำนายกันนนนนน!';
+  document.getElementById('cardResult').classList.remove('vis');
+  lcBuildDeck();
+}
+
+lcBuildDeck();
+
+// ══ STAMP CARD ══
+let stampCount=parseInt(localStorage.getItem('luckyStamps')||'0');
+function buildStampGrid(){
+  const grid=document.getElementById('stampGrid');if(!grid)return;grid.innerHTML='';
+  for(let i=0;i<MAX_STAMPS;i++){const cell=document.createElement('div');cell.className='stamp-cell'+(i<stampCount?' stamped':'');cell.textContent=i<stampCount?'👀':String(i+1);grid.appendChild(cell);}
+  document.getElementById('stampProgress').innerHTML=`Stamps: <strong>${stampCount} / ${MAX_STAMPS}</strong>`;
+  const btn=document.getElementById('stampMainBtn');if(btn)btn.textContent=stampCount>=MAX_STAMPS?'See your Ticket!!':'Get a Stamp!';
+}
+function addStamp(){if(stampCount>=MAX_STAMPS){showTicket();return;}stampCount++;localStorage.setItem('luckyStamps',stampCount);buildStampGrid();if(stampCount===MAX_STAMPS)setTimeout(showTicket,600);}
+function resetStamps(){stampCount=0;localStorage.setItem('luckyStamps','0');buildStampGrid();}
+buildStampGrid();
+
+// ══ TICKET ══
+function shufflePick(arr,n){const copy=[...arr];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]];}return copy.slice(0,Math.min(n,copy.length));}
+function showTicket(){
+  document.getElementById('ticketName').textContent=visitorName||'Guest';
+  const now=new Date();
+  document.getElementById('ticketDate').textContent=now.toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'})+' · '+now.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+  const strip=document.getElementById('ticketPhotos');strip.innerHTML='';
+  shufflePick(TICKET_PHOTOS,3).forEach((photo,i)=>{
+    const pol=document.createElement('div');pol.className='ticket-pol';pol.style.transform=`rotate(${[-3,0.5,2.5][i]}deg)`;if(i===1)pol.style.marginTop='-6px';
+    pol.innerHTML=`<img src="${photo.src}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="ticket-pol-ph" style="display:none">♡</div><div class="tpol-cap">${photo.cap}</div>`;
+    strip.appendChild(pol);
+  });
+  const stampRow=document.getElementById('ticketStamps');stampRow.innerHTML='';
+  for(let i=0;i<MAX_STAMPS;i++){const s=document.createElement('span');s.className='ticket-s';s.textContent='🍀';stampRow.appendChild(s);}
+  const bc=document.getElementById('ticketBarcode');bc.innerHTML='';
+  [28,18,26,14,30,22,18,28,16,24,30,18,26,20,28,14,24,18,30,22].forEach(h=>{const bar=document.createElement('span');bar.style.height=h+'px';bc.appendChild(bar);});
+  document.getElementById('ticketOverlay').classList.add('show');
+}
+function closeTicket(e){const overlay=document.getElementById('ticketOverlay');if(!e||e.target===overlay||e.target.classList.contains('ticket-close'))overlay.classList.remove('show');}
+
+// ══ MESSAGE WALL ══
+let wallItems=JSON.parse(localStorage.getItem('luckyWall')||'[]');
+let dragOX=0,dragOY=0;
+function saveWall(){try{localStorage.setItem('luckyWall',JSON.stringify(wallItems));}catch(e){}}
+function expandCanvas(){
+  const canvas=document.getElementById('wallCanvas'); let maxBottom=window.innerHeight-56;
+  canvas.querySelectorAll('.sticky,.wall-sticker,.wall-pol').forEach(el=>{const bottom=parseFloat(el.style.top)+el.offsetHeight+60;if(bottom>maxBottom)maxBottom=bottom;});
+  canvas.style.minHeight=maxBottom+'px';
+}
+function renderWall(){const canvas=document.getElementById('wallCanvas');canvas.innerHTML='';wallItems.forEach((item,i)=>{if(item.type==='sticky')buildSticky(item,i);if(item.type==='sticker')buildWallSticker(item,i);if(item.type==='polaroid')buildWallPolaroid(item,i);});expandCanvas();}
+
+// ══ STICKY COLORS ══
+const STICKY_COLORS=['#fffde0','#e8f5e9','#fce4ec','#e3f2fd','#fff3e0'];
+let stickyColorIdx=0;
+const colorRow=document.getElementById('colorRow');
+STICKY_COLORS.forEach((color,i)=>{
+  const dot=document.createElement('div');dot.className='col-opt'+(i===0?' active':'');
+  dot.style.background=color;dot.style.border='2.5px solid '+(i===0?'var(--green-dark)':'transparent');
+  dot.onclick=()=>{stickyColorIdx=i;colorRow.querySelectorAll('.col-opt').forEach((x,j)=>{x.classList.toggle('active',j===i);x.style.border='2.5px solid '+(j===i?'var(--green-dark)':'transparent');});};
+  colorRow.appendChild(dot);
+});
+
+function openStickyModal(){document.getElementById('stickyModal').classList.add('open');document.getElementById('sText').focus();}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+function addSticky(){
+  const author=visitorName;
+  const text=document.getElementById('sText').value.trim();
+  if(!text){alert('Please write something!');return;}
+  const canvas=document.getElementById('wallCanvas');
+  const item={type:'sticky',id:Date.now(),author,text,color:STICKY_COLORS[stickyColorIdx],x:60+Math.random()*(canvas.offsetWidth-220),y:20+Math.random()*(canvas.offsetHeight-200),rot:Math.random()*12-6};
+  wallItems.push(item);saveWall();buildSticky(item,wallItems.length-1);expandCanvas();
+  document.getElementById('sText').value='';closeModal('stickyModal');
+}
+function buildSticky(item,idx){
+  const el=document.createElement('div');el.className='sticky c'+(1+idx%5);
+  el.style.cssText=`background:${item.color};left:${item.x}px;top:${item.y}px;transform:rotate(${item.rot}deg)`;el.dataset.idx=idx;
+  el.innerHTML=`<div class="sticky-tape"></div><div class="sticky-author">${esc(item.author)}</div><div class="sticky-text">${esc(item.text)}</div><button class="sticky-del" onclick="deleteItem(${idx},event)">✕</button>`;
+  makeDraggable(el,idx);document.getElementById('wallCanvas').appendChild(el);
+}
+
+// ══ STICKER ══
+const STICKERS=[
+  'images/sticker1.png','images/sticker2.png','images/sticker3.png',
+  'images/sticker4.png','images/sticker5.png','images/sticker6.png',
+];
+function openStickerModal(){
+  const grid=document.getElementById('stickerGrid');grid.innerHTML='';
+  STICKERS.forEach((src,i)=>{
+    const btn=document.createElement('div');btn.className='sticker-opt';
+    btn.innerHTML=`<img src="${src}" alt="sticker ${i+1}"/>`;
+    btn.onclick=()=>{addSticker(src);closeModal('stickerModal');};
+    grid.appendChild(btn);
+  });
+  document.getElementById('stickerModal').classList.add('open');
+}
+function addSticker(src){
+  const canvas=document.getElementById('wallCanvas');
+  const size=80+Math.floor(Math.random()*40);
+  const item={type:'sticker',id:Date.now(),src,x:60+Math.random()*(canvas.offsetWidth-160),y:60+Math.random()*300,size,rot:Math.random()*30-15};
+  wallItems.push(item);saveWall();buildWallSticker(item,wallItems.length-1);expandCanvas();
+}
+function buildWallSticker(item,idx){
+  const el=document.createElement('div');el.className='wall-sticker';
+  el.style.cssText=`left:${item.x}px;top:${item.y}px;width:${item.size}px;height:${item.size}px;transform:rotate(${item.rot}deg)`;el.dataset.idx=idx;
+  el.innerHTML=`<img src="${item.src}" alt=""/><button class="wall-sticker-del" onclick="deleteItem(${idx},event)">✕</button>`;
+  makeDraggable(el,idx);document.getElementById('wallCanvas').appendChild(el);
+}
+
+// ══ POLAROID ══
+let polFileDataUrl=null;
+function openPolaroidModal(){
+  polFileDataUrl=null;
+  document.getElementById('polFileInput').value='';
+  document.getElementById('polCaption').value='';
+  document.getElementById('polPreview').style.display='none';
+  document.getElementById('polDropZone').style.display='flex';
+  document.getElementById('polaroidModal').classList.add('open');
+}
+function handlePolFile(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=(ev)=>{
+    polFileDataUrl=ev.target.result;
+    const preview=document.getElementById('polPreview');preview.src=polFileDataUrl;preview.style.display='block';
+    document.getElementById('polDropZone').style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+function addPolaroid(){
+  if(!polFileDataUrl){alert('โรฮ่าจ๋aaaา เพิ่มรูปก่อนนะ');return;}
+  const author=visitorName;
+  const caption=document.getElementById('polCaption').value.trim();
+  const canvas=document.getElementById('wallCanvas');
+  const item={type:'polaroid',id:Date.now(),src:polFileDataUrl,author,caption,x:60+Math.random()*Math.max(0,canvas.offsetWidth-210),y:40+Math.random()*300,rot:Math.random()*14-7};
+  wallItems.push(item);saveWall();buildWallPolaroid(item,wallItems.length-1);expandCanvas();
+  closeModal('polaroidModal');
+}
+function buildWallPolaroid(item,idx){
+  const el=document.createElement('div');el.className='wall-pol';
+  el.style.cssText=`left:${item.x}px;top:${item.y}px;transform:rotate(${item.rot}deg);width:150px;`;el.dataset.idx=idx;
+  const capLine=item.caption?`<div class="pol-cap">${esc(item.caption)}</div>`:'';
+  const authLine=item.author?`<div style="position:absolute;bottom:${item.caption?'17px':'4px'};left:0;right:0;text-align:center;font-family:var(--f-hand);font-size:.7rem;color:#aaa;">${esc(item.author)}</div>`:'';
+  el.innerHTML=`<div class="pol-tape-t"></div><img src="${item.src}" alt="" style="width:136px;height:130px;display:block;object-fit:cover;"/>${capLine}${authLine}<button class="wall-pol-del" onclick="deleteItem(${idx},event)">✕</button>`;
+  makeDraggable(el,idx);document.getElementById('wallCanvas').appendChild(el);
+}
+
+// ══ DRAG ══
+function makeDraggable(el,idx){
+  const isDelBtn=e=>e.target.classList.contains('sticky-del')||e.target.classList.contains('wall-pol-del')||e.target.classList.contains('wall-sticker-del');
+  el.addEventListener('mousedown',e=>{if(!isDelBtn(e))startDrag(e,el,idx,'mouse');});
+  el.addEventListener('touchstart',e=>{if(!isDelBtn(e))startDrag(e,el,idx,'touch');},{passive:false});
+}
+function startDrag(e,el,idx,type){
+  e.preventDefault();el.classList.add('selected');el.style.zIndex='50';
+  const rect=document.getElementById('wallCanvas').getBoundingClientRect();
+  const cx=type==='mouse'?e.clientX:e.touches[0].clientX;const cy=type==='mouse'?e.clientY:e.touches[0].clientY;
+  dragOX=cx-rect.left-parseFloat(el.style.left);dragOY=cy-rect.top-parseFloat(el.style.top);
+  function onMove(ev){const ex=ev.clientX||(ev.touches&&ev.touches[0].clientX)||0;const ey=ev.clientY||(ev.touches&&ev.touches[0].clientY)||0;el.style.left=Math.max(0,ex-rect.left-dragOX)+'px';el.style.top=Math.max(0,ey-rect.top-dragOY)+'px';wallItems[idx].x=Math.max(0,ex-rect.left-dragOX);wallItems[idx].y=Math.max(0,ey-rect.top-dragOY);}
+  function onUp(){el.classList.remove('selected');el.style.zIndex='10';saveWall();expandCanvas();document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);document.removeEventListener('touchmove',onMove);document.removeEventListener('touchend',onUp);}
+  document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
+  document.addEventListener('touchmove',onMove,{passive:false});document.addEventListener('touchend',onUp);
+}
+function deleteItem(idx,e){e.stopPropagation();wallItems.splice(idx,1);saveWall();renderWall();}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ══ HEADER SLIDESHOW ══
+(function(){
+  let hdrIdx=0;
+  const hdrSlides=document.querySelectorAll('.cafe-hdr-slide');
+  if(hdrSlides.length>1){
+    hdrSlides[0].classList.add('active');
+    setInterval(function(){
+      hdrSlides[hdrIdx].classList.remove('active');
+      hdrIdx=(hdrIdx+1)%hdrSlides.length;
+      hdrSlides[hdrIdx].classList.add('active');
+    },2500);
+  }
+})();
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('stickyModal');closeModal('stickerModal');closeModal('polaroidModal');}});
+['stickyModal','stickerModal','polaroidModal'].forEach(id=>{document.getElementById(id).addEventListener('click',function(e){if(e.target===this)closeModal(id);});});
+</script>
+</body>
+</html>
