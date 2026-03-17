@@ -185,9 +185,10 @@ function buildStampGrid(){
   const grid=document.getElementById('stampGrid');if(!grid)return;grid.innerHTML='';
   for(let i=0;i<MAX_STAMPS;i++){const cell=document.createElement('div');cell.className='stamp-cell'+(i<stampCount?' stamped':'');cell.textContent=i<stampCount?'👀':String(i+1);grid.appendChild(cell);}
   document.getElementById('stampProgress').innerHTML=`Stamps: <strong>${stampCount} / ${MAX_STAMPS}</strong>`;
-  const btn=document.getElementById('stampMainBtn');if(btn)btn.textContent=stampCount>=MAX_STAMPS?'See your Ticket!!':'Get a Stamp!';
+  const btn=document.getElementById('stampMainBtn');
+  if(btn){btn.style.display=stampCount>=MAX_STAMPS?'':'none';btn.textContent='See your Ticket!!';}
 }
-function addStamp(){if(stampCount>=MAX_STAMPS){showTicket();return;}stampCount++;localStorage.setItem('luckyStamps',stampCount);buildStampGrid();if(stampCount===MAX_STAMPS)setTimeout(showTicket,600);}
+function addStamp(){if(stampCount>=MAX_STAMPS)return;stampCount++;localStorage.setItem('luckyStamps',stampCount);buildStampGrid();}
 function resetStamps(){stampCount=0;localStorage.setItem('luckyStamps','0');buildStampGrid();}
 buildStampGrid();
 
