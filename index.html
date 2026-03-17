@@ -283,6 +283,33 @@ body {
 .stamp-btn:hover { transform:translateY(-3px) scale(1.04); }
 .stamp-reset-btn { font-size:.9rem; font-weight:600; background:var(--blue-ghost); color:var(--blue-mid); border:2px solid var(--blue-pale); border-radius:var(--pill); padding:13px 22px; cursor:pointer; transition:background .18s,transform .15s; }
 .stamp-reset-btn:hover { background:var(--blue-pale); transform:scale(1.03); }
+
+/* ════ STAMP NOTIFICATION ════ */
+#stampNotif {
+  position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(120px);
+  z-index:350; pointer-events:none;
+  transition:transform .45s cubic-bezier(.36,1.4,.64,1), opacity .35s;
+  opacity:0;
+}
+#stampNotif.show {
+  transform:translateX(-50%) translateY(0);
+  opacity:1;
+}
+.sn-card {
+  background:#fff;
+  border-radius:24px;
+  padding:14px 24px 14px 18px;
+  box-shadow:0 8px 32px rgba(42,96,160,.22), 0 2px 8px rgba(0,0,0,.08);
+  display:flex; align-items:center; gap:14px;
+  border:2px solid var(--blue-pale);
+  min-width:240px; max-width:88vw;
+  white-space:nowrap;
+}
+.sn-icon { font-size:2rem; line-height:1; flex-shrink:0; }
+.sn-body { display:flex; flex-direction:column; gap:2px; }
+.sn-title { font-size:.82rem; font-weight:700; color:var(--blue-mid); letter-spacing:.03em; text-transform:uppercase; }
+.sn-msg   { font-size:1rem; font-weight:800; color:var(--blue-dark); }
+
 #ticketOverlay      { position:fixed; inset:0; z-index:300; background:rgba(10,20,40,.82); backdrop-filter:blur(16px); display:none; align-items:center; justify-content:center; padding:16px; }
 #ticketOverlay.show { display:flex; animation:fadeIn .4s both; }
 @keyframes fadeIn   { 0%{ opacity:0; } 100%{ opacity:1; } }
