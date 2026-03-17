@@ -188,7 +188,28 @@ function buildStampGrid(){
   const btn=document.getElementById('stampMainBtn');
   if(btn){btn.style.display=stampCount>=MAX_STAMPS?'':'none';btn.textContent='See your Ticket!!';}
 }
-function addStamp(){if(stampCount>=MAX_STAMPS)return;stampCount++;localStorage.setItem('luckyStamps',stampCount);buildStampGrid();}
+let _stampNotifTimer=null;
+function showStampNotif(icon,title,msg){
+  const el=document.getElementById('stampNotif');
+  if(!el)return;
+  document.getElementById('stampNotifIcon').textContent=icon;
+  document.getElementById('stampNotifTitle').textContent=title;
+  document.getElementById('stampNotifMsg').textContent=msg;
+  el.classList.add('show');
+  if(_stampNotifTimer)clearTimeout(_stampNotifTimer);
+  _stampNotifTimer=setTimeout(()=>el.classList.remove('show'),3200);
+}
+function addStamp(){
+  if(stampCount>=MAX_STAMPS)return;
+  stampCount++;
+  localStorage.setItem('luckyStamps',stampCount);
+  buildStampGrid();
+  if(stampCount>=MAX_STAMPS){
+    showStampNotif('🎟️','Ticket Ready!','Your lucky ticket is waiting~ ✨');
+  } else {
+    showStampNotif('🍀','Stamp Get!',`${stampCount} / ${MAX_STAMPS} stamps collected!`);
+  }
+}
 function resetStamps(){stampCount=0;localStorage.setItem('luckyStamps','0');buildStampGrid();}
 buildStampGrid();
 
