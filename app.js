@@ -364,8 +364,17 @@ function startDrag(e,el,item,type){
   document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
   document.addEventListener('touchmove',onMove,{passive:false});document.addEventListener('touchend',onUp);
 }
-async function deleteItem(itemId,e){
+let _pendingDeleteId=null;
+function deleteItem(itemId,e){
   e.stopPropagation();
+  _pendingDeleteId=itemId;
+  document.getElementById('deleteConfirmModal').classList.add('open');
+}
+async function confirmDelete(){
+  const itemId=_pendingDeleteId;
+  closeModal('deleteConfirmModal');
+  _pendingDeleteId=null;
+  if(!itemId)return;
   const apiItem=wallItems.find(i=>String(i.id)===String(itemId));
   if(apiItem){
     try{await fetch(`${API_BASE}/api/wall/${itemId}`,{method:'DELETE'});}catch(err){console.warn('Delete failed',err);}
@@ -377,6 +386,13 @@ async function deleteItem(itemId,e){
   renderWall();
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ══ SCROLL TRACK INFINITE LOOP ══
+// Duplicate each track's items so translateX(-50%) loops seamlessly forever
+document.querySelectorAll('.scroll-track').forEach(track=>{
+  const items=[...track.children];
+  items.forEach(item=>track.appendChild(item.cloneNode(true)));
+});
 
 // ══ HEADER SLIDESHOW ══
 (function(){
