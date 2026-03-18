@@ -624,6 +624,66 @@ body {
   .exhibit-frame.sm { width: 84px; }
   .exhibit-frame.sm img { height: 74px; }
 }
+
+/* ════ TABLET RESPONSIVE (768px – 1024px) ════ */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  /* — Name overlay — */
+  .name-card { width: min(480px, 90vw); padding: 52px 44px 46px; }
+
+  /* — Landing: widen the door/window facade row — */
+  .lw-win-door-row  { width: min(680px, 92vw); gap: 28px; }
+  .lw-window        { width: 110px; }
+  .lw-win-glass     { height: 118px; }
+  .lw-door-leaf     { width: 90px; height: 200px; }
+  .lw-dp-top        { height: 64px; }
+  .lw-dp-bot        { top: 94px; }
+  .lw-door-mat      { width: 240px; }
+
+  /* — Landing: side polaroid frames — */
+  .lw-photo-frame   { width: clamp(88px, 11vw, 112px); }
+
+  /* — Section containers — */
+  .section            { padding: 52px 40px; }
+  .drink-menu-section { padding: 32px 40px; }
+
+  /* — Polaroid gallery — */
+  .pol-grid           { gap: 28px; }
+  .pol-card           { width: min(210px, 28vw); }
+  .pol-card img       { height: 190px; }
+
+  /* — Wall card button — */
+  .wall-card-btn      { max-width: 680px; }
+
+  /* — Header countdown — */
+  .hdr-cd             { gap: 16px; padding: 12px 36px; }
+  .hcd-n              { font-size: 1.85rem; }
+
+  /* — Drink builder — */
+  .drink-bg           { padding: 44px 36px; }
+
+  /* — Drink menu grid — */
+  .drink-menu-grid    { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 20px; }
+  .drink-menu-img     { height: 150px; }
+
+  /* — Auto-scroll gallery — */
+  .scroll-pol         { width: 180px; }
+  .scroll-pol img     { height: 155px; }
+
+  /* — Stamp card — */
+  .stamp-section      { max-width: 620px; }
+  .stamp-grid         { max-width: 340px; gap: 18px; }
+  .stamp-cell         { width: 92px; height: 92px; font-size: 2rem; }
+
+  /* — Photo exhibition — */
+  .exhibit-rope-row   { gap: 28px; }
+  .exhibit-frame.lg   { width: 196px; }
+  .exhibit-frame.lg img { height: 183px; }
+  .exhibit-frame.md   { width: 166px; }
+  .exhibit-frame.md img { height: 152px; }
+  .exhibit-frame.sm   { width: 132px; }
+  .exhibit-frame.sm img { height: 120px; }
+}
 </style>
 </head>
 <body>
