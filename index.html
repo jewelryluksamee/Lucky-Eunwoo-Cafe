@@ -216,8 +216,8 @@ body {
 .sec-hd  { font-family:  var(--f-hand)!important; font-size:clamp(4rem,5vw,2.8rem); color:var(--green-dark); text-align:center; margin-bottom:20px; }
 .sec-sd  { text-align:center; color:var(--green-mid); font-size:.96rem; margin-bottom:32px; font-weight:500; }
 .leaf-div { text-align:center; font-size:1rem; opacity:.35; letter-spacing:10px; margin:6px 0; }
-.pol-grid { display:flex; flex-wrap:wrap; gap:24px; justify-content:center; }
-.pol-card { background:#fff; padding:9px 9px 36px; box-shadow:4px 6px 24px rgba(0,0,0,.14); border-radius:2px; width:min(188px,42vw); position:relative; transition:transform .25s,box-shadow .28s; }
+.pol-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; max-width:660px; margin:0 auto; }
+.pol-card { background:#fff; padding:9px 9px 36px; box-shadow:4px 6px 24px rgba(0,0,0,.14); border-radius:2px; width:100%; position:relative; transition:transform .25s,box-shadow .28s; }
 .pol-card:nth-child(1){ transform:rotate(-2.8deg); }
 .pol-card:nth-child(2){ transform:rotate(1.8deg); }
 .pol-card:nth-child(3){ transform:rotate(-1.4deg); }
@@ -513,8 +513,8 @@ body {
 @keyframes shuffleWiggle { 0%{transform:translateX(0) rotate(var(--br));} 25%{transform:translateX(-8px) rotate(calc(var(--br) - 4deg));} 50%{transform:translateX(8px) rotate(calc(var(--br) + 4deg));} 75%{transform:translateX(-4px) rotate(var(--br));} 100%{transform:translateX(0) rotate(var(--br));} }
 
 @media(max-width:600px){
-  .pol-grid { gap:14px; }
-  .pol-card { width:calc(50% - 8px); }
+  .pol-grid { gap:14px; grid-template-columns:repeat(3,1fr); }
+  .pol-card { width:100%; }
   .drink-bg { padding:24px 14px; }
   .ing-btn  { padding:8px 11px; min-width:66px; }
   .hdr-cd   { gap:7px; padding:8px 18px; }
@@ -661,8 +661,7 @@ body {
   .drink-menu-section { padding: 32px 40px; }
 
   /* — Polaroid gallery — */
-  .pol-grid           { gap: 28px; }
-  .pol-card           { width: min(210px, 28vw); }
+  .pol-grid           { gap: 28px; max-width: 740px; }
   .pol-card img       { height: 190px; }
 
   /* — Wall card button — */
@@ -830,12 +829,12 @@ body {
     <h2 class="sec-hd">Shining Eunwoo</h2>
     <p class="sec-sd">ขอบคุณที่เติบโตมาอย่างดีเลยนะ เด็กชายอีดงมิน &lt;3 </p>
     <div class="pol-grid">
-      <div class="pol-card"><img src="img/name1.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
-      <div class="pol-card"><img src="img/name1.jpg" alt="" onerror="this.style.background='var(--blush)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
-      <div class="pol-card"><img src="img/name1.jpg" alt="" onerror="this.style.background='var(--warm)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
-      <div class="pol-card"><img src="img/name4.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
-      <div class="pol-card"><img src="img/name5.jpg" alt="" onerror="this.style.background='var(--blush)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
-      <div class="pol-card"><img src="img/name6.jpg" alt="" onerror="this.style.background='var(--warm)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
+      <div class="pol-card"><img src="kid/k1.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
+      <div class="pol-card"><img src="kid/k2.jpg" alt="" onerror="this.style.background='var(--blush)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
+      <div class="pol-card"><img src="kid/k3.jpg" alt="" onerror="this.style.background='var(--warm)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
+      <div class="pol-card"><img src="kid/k4.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
+      <div class="pol-card"><img src="kid/k5.jpg" alt="" onerror="this.style.background='var(--blush)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
+      <div class="pol-card"><img src="kid/k6.jpg" alt="" onerror="this.style.background='var(--warm)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
     </div>
   </div>
   <!-- PHOTO EXHIBITION — 11 frames | เปลี่ยนรูปที่ src="img/exhibit1.jpg" ถึง exhibit11.jpg -->
