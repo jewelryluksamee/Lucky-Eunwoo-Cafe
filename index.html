@@ -631,17 +631,30 @@ body {
   /* — Name overlay — */
   .name-card { width: min(480px, 90vw); padding: 52px 44px 46px; }
 
-  /* — Landing: widen the door/window facade row — */
-  .lw-win-door-row  { width: min(680px, 92vw); gap: 28px; }
-  .lw-window        { width: 110px; }
-  .lw-win-glass     { height: 118px; }
-  .lw-door-leaf     { width: 90px; height: 200px; }
-  .lw-dp-top        { height: 64px; }
-  .lw-dp-bot        { top: 94px; }
-  .lw-door-mat      { width: 240px; }
+  /* ——— Landing section: parent container + proportional fill ———
+     Root problem: .lw-win-door-row is capped at min(520px,96vw) = 520px
+     on a 768px tablet, leaving ~124px of empty facade on each side.
+     Fix: expand the row container to 90vw AND scale inner elements
+     proportionally (1.4×) so they actually fill the wider space.        */
 
-  /* — Landing: side polaroid frames — */
-  .lw-photo-frame   { width: clamp(88px, 11vw, 112px); }
+  /* 1. Expand the row container (was min(520px,96vw)) */
+  .lw-win-door-row { width: 90vw; max-width: 920px; gap: 28px; }
+
+  /* 2. Reduce facade lower side padding so the row reaches near the edges */
+  .lw-facade-lower { padding-left: 4%; padding-right: 4%; }
+
+  /* 3. Scale windows proportionally to fill the wider row (1.4×) */
+  .lw-window    { width: 124px; }
+  .lw-win-glass { height: 134px; }
+
+  /* 4. Scale door proportionally (1.4×) */
+  .lw-door-leaf { width: 106px; height: 234px; }
+  .lw-dp-top    { height: 74px; }
+  .lw-dp-bot    { top: 110px; }
+  .lw-door-mat  { width: 278px; }
+
+  /* 5. Side polaroid frames: slightly larger on tablet */
+  .lw-photo-frame { width: clamp(92px, 11.5vw, 122px); }
 
   /* — Section containers — */
   .section            { padding: 52px 40px; }
