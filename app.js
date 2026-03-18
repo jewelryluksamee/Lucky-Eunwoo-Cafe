@@ -339,9 +339,10 @@ function buildSticky(item,idx){
 
 // ══ STICKER ══
 const STICKERS=[
-  'images/sticker1.png','images/sticker2.png','images/sticker3.png',
-  'images/sticker4.png','images/sticker5.png','images/sticker6.png',
-];
+  'sticker/1.png','sticker/2.png','sticker/3.png',
+  'sticker/4.png','sticker/5.png','sticker/6.png','sticker/7.png',
+  'sticker/8.png','sticker/9.png','sticker/10.png','sticker/11.png','sticker/12.png'];
+
 function openStickerModal(){
   const grid=document.getElementById('stickerGrid');grid.innerHTML='';
   STICKERS.forEach((src,i)=>{
