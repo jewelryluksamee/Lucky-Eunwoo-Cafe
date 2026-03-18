@@ -4,7 +4,13 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Lucky Eunwoo Cafe ☘️</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Mitr:wght@400;500;600&family=Sacramento&family=Caveat:wght@500;700&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Mitr:wght@400;500;600&family=Mali:wght@400;500;600&family=Sacramento&family=Caveat:wght@500;700&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* Mali เฉพาะภาษาไทย (U+0E00–U+0E7F) เท่านั้น */
+@font-face { font-family:'MaliThai'; font-weight:400; font-style:normal; src:url(https://fonts.gstatic.com/s/mali/v13/N0ba2SRONuN4eCo.ttf) format('truetype'); unicode-range:U+0E00-U+0E7F; }
+@font-face { font-family:'MaliThai'; font-weight:500; font-style:normal; src:url(https://fonts.gstatic.com/s/mali/v13/N0bV2SRONuN4QN7nKlQ.ttf) format('truetype'); unicode-range:U+0E00-U+0E7F; }
+@font-face { font-family:'MaliThai'; font-weight:600; font-style:normal; src:url(https://fonts.gstatic.com/s/mali/v13/N0bV2SRONuN4QPLgKlQ.ttf) format('truetype'); unicode-range:U+0E00-U+0E7F; }
+</style>
 <!--
   🔧 QUICK EDIT GUIDE
 
@@ -37,10 +43,10 @@
   --pill: 999px;
   --f-script: 'Nunito', sans-serif;
   --f-hand:   'Caveat',    cursive;
-  --f-cute:   'Mitr',      sans-serif;
+  --f-cute:   'MaliThai', 'Mitr', sans-serif;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Mitr', sans-serif !important; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: 'MaliThai', 'Mitr', sans-serif !important; }
 html { scroll-behavior: smooth; }
 body {
   background: var(--cream);
@@ -189,8 +195,8 @@ body {
 .cafe-hdr-slide::after { content:''; position:absolute; inset:0; background:linear-gradient(160deg,rgba(20,50,30,.65),rgba(45,90,61,.55),rgba(74,124,95,.45)); }
 .cafe-hdr::after { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='2.5' fill='%23fff' fill-opacity='0.04'/%3E%3C/svg%3E"); z-index:1; pointer-events:none; }
 .hdr-inner { position:relative; z-index:2; }
-.hdr-flag  { display:inline-block; background:rgba(255,255,255,.16); border:1.5px solid rgba(255,255,255,.28); border-radius:var(--pill); padding:4px 18px; font-size:.85rem; margin-bottom:10px; }
-.hdr-name  { font-family: var(--f-cute)!important; font-size:clamp(3rem,8vw,5.5rem); line-height:1; margin-bottom:4px; }
+.hdr-flag  { display:inline-block; background:rgba(255,255,255,.16); border:1.5px solid rgba(255,255,255,.28); border-radius:var(--pill); padding:4px 18px; font-size:.85rem; margin-bottom:10px; font-family:'Mali',sans-serif !important; }
+.hdr-name  { font-family:'Mitr',sans-serif !important; font-size:clamp(3rem,8vw,5.5rem); line-height:1; margin-bottom:4px; }
 .hdr-sub   { font-family: var(--f-cute)!important; font-size:1rem; opacity:.78; font-weight:500; margin: 20px; }
 .hdr-cd    { display:inline-flex; gap:12px; align-items:center; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.2); border-radius:var(--pill); padding:10px 28px; margin-top:20px; }
 .hcd-item  { text-align:center; }
@@ -399,7 +405,7 @@ body {
 .modal-overlay.open { opacity:1; pointer-events:all; }
 .modal              { background:var(--cream); border-radius:28px; padding:32px 28px; width:min(420px,92vw); box-shadow:0 20px 60px rgba(0,0,0,.3); animation:popIn .3s cubic-bezier(.36,1.56,.64,1) both; }
 .modal h3           { font-family: var(--f-script)!important; font-size:1.9rem; color:var(--green-dark); margin-bottom:18px; text-align:center; }
-.modal input, .modal textarea { width:100%; font-size:1rem; background:#fff; border:2px solid var(--green-pale); border-radius:14px; padding:9px 13px; color:var(--text); outline:none; margin-bottom:12px; display:block; transition:border-color .2s; }
+.modal input, .modal textarea { width:100%; font-size:1rem; background:#fff; border:2px solid var(--green-pale); border-radius:14px; padding:9px 13px; color:var(--text); outline:none; margin-bottom:12px; display:block; transition:border-color .2s; font-family:'Mali',sans-serif !important; }
 .modal input:focus, .modal textarea:focus { border-color:var(--green-light); }
 .modal textarea { height:80px; resize:none; }
 .modal-btns { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
@@ -638,7 +644,7 @@ body {
     <span class="nc-icon"><img src="img/name1.jpg" alt="" onerror="this.style.opacity='0'"/></span>
     <h2> You're invited to Lucky Eunwoo Cafe! </h2>
     <p>Before you enter the cafe<br/>What would you like us to call you?</p>
-    <input id="visitorNameInput" class="name-input" type="text" placeholder="กรอกชื่อของคุณ..." maxlength="30"/>
+    <input id="visitorNameInput" class="name-input" type="text" placeholder="กรอกชื่่อของคุณ..." maxlength="30"/>
     <button class="name-submit-btn" onclick="submitName()">เข้าไปกันเลยย &lt;3 </button>
   </div>
 </div>
@@ -760,8 +766,8 @@ body {
   </div>
   <!-- PHOTO EXHIBITION — 11 frames | เปลี่ยนรูปที่ src="img/exhibit1.jpg" ถึง exhibit11.jpg -->
   <div class="exhibit-section" style="background:none">
-    <h2 class="exhibit-title">Photo Exhibition</h2>
-    <p class="exhibit-sub">A gallery dedicated to our shining star — Cha Eunwoo</p>
+    <h2 class="sec-hd">Wonderful Actor</h2>
+    <p class="sec-sd">A gallery dedicated to our shining star — Cha Eunwoo</p>
 
     <!-- Row 1 — 4 frames -->
     <div class="exhibit-rope-row">
@@ -816,9 +822,48 @@ body {
     <h2 class="sec-hd">Wishing Wall</h2>
     <button class="wall-card-btn" onclick="openWall()">
       <div class="wall-icon">💌</div>
-      <div><div class="wt1">Let's leave a birthday wish for Eunwoo! →</div><div class="wt2">Write on a post-it &amp; polaroids · drag freely · decorate the wall </div></div>
+      <div class="wt1">Let's leave a birthday wish for Eunwoo!</div>
     </button>
   </div>
+
+  <!-- PHOTO EXHIBITION — 8 frames | เปลี่ยนรูปที่ src="img/exhibit12.jpg" ถึง exhibit20.jpg -->
+  <div class="exhibit-section" style="background:none">
+    <h2 class="sec-hd"> Charming Idol </h2>
+    <p class="sec-sd">Wanna be your Star</p>
+
+    <!-- Row 1 — 5 frames -->
+    <div class="exhibit-rope-row">
+      <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
+        <div class="exhibit-frame lg"><img src="img/exhibit12.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="exhibit-frame-label"></div></div>
+      </div>
+      <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
+        <div class="exhibit-frame md"><img src="img/exhibit13.jpg" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="exhibit-frame-label"></div></div>
+      </div>
+      <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
+        <div class="exhibit-frame sm"><img src="img/exhibit14.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="exhibit-frame-label"></div></div>
+      </div>
+      <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
+        <div class="exhibit-frame md"><img src="img/exhibit15.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="exhibit-frame-label"></div></div>
+      </div>
+    </div>
+
+    <!-- Row 2 — 4 frames -->
+    <div class="exhibit-rope-row row2">
+      <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
+        <div class="exhibit-frame md"><img src="img/exhibit17.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="exhibit-frame-label"></div></div>
+      </div>
+      <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
+        <div class="exhibit-frame lg"><img src="img/exhibit18.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="exhibit-frame-label"></div></div>
+      </div>
+      <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
+        <div class="exhibit-frame md"><img src="img/exhibit19.jpg" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="exhibit-frame-label"></div></div>
+      </div>
+      <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
+        <div class="exhibit-frame lg"><img src="img/exhibit20.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="exhibit-frame-label"></div></div>
+      </div>
+    </div>
+  </div>
+  
 
   <!-- LUCKY CARD DRAW -->
   <div class="section" id="luckyCardSection">
@@ -890,7 +935,7 @@ body {
     </div>
   </div>
 
-  <!-- PHOTO EXHIBITION — 9 frames | เปลี่ยนรูปที่ src="img/exhibit12.jpg" ถึง exhibit20.jpg -->
+  <!-- PHOTO EXHIBITION — 8 frames | เปลี่ยนรูปที่ src="img/exhibit12.jpg" ถึง exhibit20.jpg -->
   <div class="exhibit-section" style="background:none">
 
     <!-- Row 1 — 5 frames -->
@@ -906,9 +951,6 @@ body {
       </div>
       <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
         <div class="exhibit-frame md"><img src="img/exhibit15.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="exhibit-frame-label"></div></div>
-      </div>
-      <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
-        <div class="exhibit-frame lg"><img src="img/exhibit16.jpg" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="exhibit-frame-label"></div></div>
       </div>
     </div>
 
@@ -967,7 +1009,6 @@ body {
   <div id="wallCanvas"></div>
   <div id="wallLoading" class="wall-loading-overlay">
     <div class="wall-loading-card">
-      <span class="wl-emoji">☘️</span>
       <div class="wl-ring"></div>
       <div class="wl-text">Loading the wall...</div>
     </div>
@@ -1073,14 +1114,12 @@ body {
 <!-- LUCKY CARD NOTIFICATION -->
 <div id="luckyCardNotif">
   <div class="lcn-card">
-    <div class="lcn-icon">🍀</div>
     <div class="lcn-body">
-      <div class="lcn-title">✦ How to play ✦</div>
+      <div class="lcn-title"> How to play </div>
       <div class="lcn-msg">
-        ร้องเพลง Astro หรือ เพลงของชาอึนอูมา 1 ท่อน<br>
-        ก่อนกดปุ่มทำนาย เพื่อความโชคดี! ✨
+        ร้องเพลง Astro หรือ เพลงของชาอึนอูมา 1 ท่อน ก่อนกดปุ่ม เพื่อความโชคดี! ✨
       </div>
-      <button class="lcn-confirm-btn" onclick="closeLuckyNotif()">ตกลง! ✨</button>
+      <button class="lcn-confirm-btn" onclick="closeLuckyNotif()">รับทราบ!</button>
     </div>
   </div>
 </div>
