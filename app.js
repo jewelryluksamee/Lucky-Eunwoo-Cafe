@@ -341,7 +341,8 @@ function buildSticky(item,idx){
 const STICKERS=[
   'sticker/1.png','sticker/2.png','sticker/3.png',
   'sticker/4.png','sticker/5.png','sticker/6.png','sticker/7.png',
-  'sticker/8.png','sticker/9.png','sticker/10.png','sticker/11.png','sticker/12.png'];
+  'sticker/8.png','sticker/9.png','sticker/10.png','sticker/11.png','sticker/12.png','sticker/13.png','sticker/14.png','sticker/15.png','sticker/16.png','sticker/17.png','sticker/18.png','sticker/19.png','sticker/20.png','sticker/21.png','sticker/22.png','sticker/23.png','sticker/24.png','sticker/25.png','sticker/26.png','sticker/27.png',
+];
 
 function openStickerModal(){
   const grid=document.getElementById('stickerGrid');grid.innerHTML='';
