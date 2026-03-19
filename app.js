@@ -217,7 +217,6 @@ function addStamp(){
     showStampNotif('🍀','Stamp Get!',`${stampCount} / ${MAX_STAMPS} stamps collected!`);
   }
 }
-function resetStamps(){stampCount=0;localStorage.setItem('luckyStamps','0');buildStampGrid();}
 buildStampGrid();
 
 // Auto-stamp when user scrolls to bottom of pgCafe
