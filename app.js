@@ -482,6 +482,7 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
 (function(){
   const hdrSlides=document.querySelectorAll('.cafe-hdr-slide');
   if(hdrSlides.length>1){
+    const FIRST_IDX=10; // s11.jpg is index 10 (0-based)
     function shuffle(arr){
       for(let i=arr.length-1;i>0;i--){
         const j=Math.floor(Math.random()*(i+1));
@@ -489,22 +490,32 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
       }
       return arr;
     }
-    let queue=shuffle([...Array(hdrSlides.length).keys()]);
+    function buildQueue(){
+      // every round starts with s11, then shuffle the rest
+      const rest=shuffle([...Array(hdrSlides.length).keys()].filter(i=>i!==FIRST_IDX));
+      return [FIRST_IDX,...rest];
+    }
+    const S11_DURATION=5500;  // s11.jpg stays longer
+    const SLIDE_DURATION=3000; // other slides
+    // First slide always s11
+    let queue=buildQueue();
     let pos=0;
-    let cur=queue[pos];
+    let cur=queue[pos]; pos++;
     hdrSlides[cur].classList.add('active');
-    setInterval(function(){
-      hdrSlides[cur].classList.remove('active');
-      pos++;
-      if(pos>=queue.length){
-        queue=shuffle([...Array(hdrSlides.length).keys()]);
-        // avoid starting next round with same slide that just ended
-        if(queue[0]===cur) queue.push(queue.shift());
-        pos=0;
-      }
-      cur=queue[pos];
-      hdrSlides[cur].classList.add('active');
-    },2500);
+    function next(){
+      const duration=cur===FIRST_IDX?S11_DURATION:SLIDE_DURATION;
+      setTimeout(function(){
+        hdrSlides[cur].classList.remove('active');
+        if(pos>=queue.length){
+          queue=buildQueue();
+          pos=0;
+        }
+        cur=queue[pos]; pos++;
+        hdrSlides[cur].classList.add('active');
+        next();
+      },duration);
+    }
+    next();
   }
 })();
 
