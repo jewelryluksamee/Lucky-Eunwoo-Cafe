@@ -480,14 +480,30 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
 
 // ══ HEADER SLIDESHOW ══
 (function(){
-  let hdrIdx=0;
   const hdrSlides=document.querySelectorAll('.cafe-hdr-slide');
   if(hdrSlides.length>1){
-    hdrSlides[0].classList.add('active');
+    function shuffle(arr){
+      for(let i=arr.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [arr[i],arr[j]]=[arr[j],arr[i]];
+      }
+      return arr;
+    }
+    let queue=shuffle([...Array(hdrSlides.length).keys()]);
+    let pos=0;
+    let cur=queue[pos];
+    hdrSlides[cur].classList.add('active');
     setInterval(function(){
-      hdrSlides[hdrIdx].classList.remove('active');
-      hdrIdx=(hdrIdx+1)%hdrSlides.length;
-      hdrSlides[hdrIdx].classList.add('active');
+      hdrSlides[cur].classList.remove('active');
+      pos++;
+      if(pos>=queue.length){
+        queue=shuffle([...Array(hdrSlides.length).keys()]);
+        // avoid starting next round with same slide that just ended
+        if(queue[0]===cur) queue.push(queue.shift());
+        pos=0;
+      }
+      cur=queue[pos];
+      hdrSlides[cur].classList.add('active');
     },2500);
   }
 })();
