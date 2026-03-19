@@ -640,8 +640,10 @@ body {
   /* 1. Expand the row container (was min(520px,96vw)) */
   .lw-win-door-row { width: 90vw; max-width: 920px; gap: 28px; }
 
-  /* 2. Reduce facade lower side padding so the row reaches near the edges */
-  .lw-facade-lower { padding-left: 4%; padding-right: 4%; }
+  /* 2. Reduce facade lower side padding so the row reaches near the edges.
+        Also push the door row to the bottom so it sits at ground level
+        instead of floating in the middle of a tall facade area.           */
+  .lw-facade-lower { padding-left: 4%; padding-right: 4%; justify-content: flex-end; }
 
   /* 3. Scale windows proportionally to fill the wider row (1.4×) */
   .lw-window    { width: 124px; }
