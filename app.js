@@ -483,7 +483,9 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
   const hdrSlides=document.querySelectorAll('.cafe-hdr-slide');
   if(hdrSlides.length<=1)return;
 
-  const FIRST_IDX=10; // s11.jpg
+  const FIRST_IDX=10;  // s11.jpg — always 1st
+  const SECOND_IDX=12; // s13.jpg — always 2nd
+  const TOTAL_SLIDES=34;
   const S11_DURATION=5500;
   const SLIDE_DURATION=3500;
   const container=document.querySelector('.cafe-hdr-slides');
@@ -493,7 +495,10 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
   const grade=document.createElement('div'); grade.className='hdr-colorgrade'; container.appendChild(grade);
 
   function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
-  function buildQueue(){return[FIRST_IDX,...shuffle([...Array(hdrSlides.length).keys()].filter(i=>i!==FIRST_IDX))];}
+  function buildQueue(){
+    const rest=shuffle([...Array(TOTAL_SLIDES).keys()].filter(i=>i!==FIRST_IDX&&i!==SECOND_IDX));
+    return[FIRST_IDX,SECOND_IDX,...rest];
+  }
 
   let kbFlip=false;
   function activate(idx,duration){
