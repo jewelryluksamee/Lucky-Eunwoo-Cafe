@@ -481,42 +481,49 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
 // ══ HEADER SLIDESHOW ══
 (function(){
   const hdrSlides=document.querySelectorAll('.cafe-hdr-slide');
-  if(hdrSlides.length>1){
-    const FIRST_IDX=10; // s11.jpg is index 10 (0-based)
-    function shuffle(arr){
-      for(let i=arr.length-1;i>0;i--){
-        const j=Math.floor(Math.random()*(i+1));
-        [arr[i],arr[j]]=[arr[j],arr[i]];
-      }
-      return arr;
-    }
-    function buildQueue(){
-      // every round starts with s11, then shuffle the rest
-      const rest=shuffle([...Array(hdrSlides.length).keys()].filter(i=>i!==FIRST_IDX));
-      return [FIRST_IDX,...rest];
-    }
-    const S11_DURATION=5500;  // s11.jpg stays longer
-    const SLIDE_DURATION=3000; // other slides
-    // First slide always s11
-    let queue=buildQueue();
-    let pos=0;
-    let cur=queue[pos]; pos++;
-    hdrSlides[cur].classList.add('active');
-    function next(){
-      const duration=cur===FIRST_IDX?S11_DURATION:SLIDE_DURATION;
-      setTimeout(function(){
-        hdrSlides[cur].classList.remove('active');
-        if(pos>=queue.length){
-          queue=buildQueue();
-          pos=0;
-        }
-        cur=queue[pos]; pos++;
-        hdrSlides[cur].classList.add('active');
-        next();
-      },duration);
-    }
-    next();
+  if(hdrSlides.length<=1)return;
+
+  const FIRST_IDX=10; // s11.jpg
+  const S11_DURATION=5500;
+  const SLIDE_DURATION=3500;
+  const container=document.querySelector('.cafe-hdr-slides');
+
+  // Grain + color grade overlays
+  const grain=document.createElement('div'); grain.className='hdr-grain'; container.appendChild(grain);
+  const grade=document.createElement('div'); grade.className='hdr-colorgrade'; container.appendChild(grade);
+
+  function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+  function buildQueue(){return[FIRST_IDX,...shuffle([...Array(hdrSlides.length).keys()].filter(i=>i!==FIRST_IDX))];}
+
+  let kbFlip=false;
+  function activate(idx,duration){
+    const sl=hdrSlides[idx];
+    const anim=kbFlip?'kb-out':'kb-in'; kbFlip=!kbFlip;
+    sl.style.animation='none';
+    sl.offsetHeight; // force reflow so animation restarts fresh
+    sl.style.animation=anim+' '+(duration+2000)+'ms ease-in-out forwards';
+    sl.classList.add('active');
   }
+  function deactivate(idx){
+    hdrSlides[idx].classList.remove('active');
+    // keep animation running so zoom doesn't snap during fade-out
+  }
+
+  let queue=buildQueue(), pos=0;
+  let cur=queue[pos]; pos++;
+  activate(cur,S11_DURATION);
+
+  function next(){
+    const duration=cur===FIRST_IDX?S11_DURATION:SLIDE_DURATION;
+    setTimeout(function(){
+      deactivate(cur);
+      if(pos>=queue.length){queue=buildQueue();pos=0;}
+      cur=queue[pos]; pos++;
+      activate(cur,cur===FIRST_IDX?S11_DURATION:SLIDE_DURATION);
+      next();
+    },duration);
+  }
+  next();
 })();
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('stickyModal');closeModal('stickerModal');closeModal('polaroidModal');}});
