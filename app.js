@@ -2,12 +2,19 @@
 const BIRTHDAY = new Date('2026-03-30T00:00:00'); // 📅 BIRTHDAY
 
 const TICKET_PHOTOS = [ // 🎟 TICKET_PHOTOS
-  { src:'c1.jpg', cap:'♡' },
-  { src:'c2.jpg', cap:'♡' },
-  { src:'c3.jpg', cap:'♡' },
-  { src:'c4.jpg', cap:'♡' },
-  { src:'c5.jpg', cap:'♡' },
-  { src:'images/ticket6.jpg', cap:'♡' },
+  { src:'tic/1.jpg', cap:'♡' },
+  { src:'tic/2.jpg', cap:'♡' },
+  { src:'tic/3.jpg', cap:'♡' },
+  { src:'tic/4.jpg', cap:'♡' },
+  { src:'tic/5.jpg', cap:'♡' },
+  { src:'tic/6.jpg', cap:'♡' },
+  { src:'tic/7.jpg', cap:'♡' },
+  { src:'tic/8.jpg', cap:'♡' },
+  { src:'tic/9.jpg', cap:'♡' },
+  { src:'tic/10.jpg', cap:'♡' },
+  { src:'tic/11.jpg', cap:'♡' },
+  { src:'tic/12.jpg', cap:'♡' },
+  { src:'tic/13.jpg', cap:'♡' }
 ];
 
 const MAX_STAMPS = 3;
@@ -96,11 +103,11 @@ function closeWall(){showPage('pgCafe');}
 
 // ══ LUCKY CARD DRAW ══
 const LUCKY_CARDS = [
-  { name:'Lucky Eunwoo ◡̈', img:'c1.jpg', msg:'เอ้ะๆๆ เหมือนคนแถวนี้้จะมีดวงกับเมนนะ!' },
-  { name:'Lucky Eunwoo ◡̈', img:'c2.jpg', msg:'วันนี้จะเจอแต่เรื่องดีแน่นอน รอรับได้เลยยยย~' },
-  { name:'Lucky Eunwoo ◡̈', img:'c3.jpg', msg:'ความสุขกำลังจะมาถึง เตรียมรับมันด้วยรอยยิ้มน้าาาาา ♡' },
-  { name:'Lucky Eunwoo ◡̈', img:'c4.jpg', msg:'อย่าหักโหมตัวเองมากไป พักผ่อนเยอะๆ ดูแลตัวเองด้วยน้า ♡' },
-  { name:'Lucky Eunwoo ◡̈', img:'c5.jpg', msg:'ความโชคดีอยู่ใกล้กว่าที่คิด ขอให้ทำอะไรก็สำเร็จ คิดอะไรก็สมปราถนา พ่อหมออึนอูเป็นกำลังใจให้อยู่นะ!' },
+  { name:'Lucky Eunwoo ◡̈', img:'lcard/c5.JPG', msg:'เอ้ะๆๆ เหมือนคนแถวนี้จะมีดวงกับเมนนะ!' },
+  { name:'Lucky Eunwoo ◡̈', img:'lcard/c1.JPG', msg:'วันนี้จะเจอแต่เรื่องดีแน่นอน รอรับได้เลยยยย~' },
+  { name:'Lucky Eunwoo ◡̈', img:'lcard/c4.JPG', msg:'ความสุขกำลังจะมาถึง เตรียมรับมันด้วยรอยยิ้มน้า ♡' },
+  { name:'Lucky Eunwoo ◡̈', img:'lcard/c2.JPG', msg:'อย่าหักโหมตัวเองมากไป พักผ่อนเยอะๆ ดูแลตัวเองด้วยน้า ♡' },
+  { name:'Lucky Eunwoo ◡̈', img:'lcard/c3.JPG', msg:'ความโชคดีอยู่ใกล้กว่าที่คิด ขอให้ทำอะไรก็สำเร็จ คิดอะไรก็สมปราถนา พ่อหมออึนอูเป็นกำลังใจให้อยู่นะ!' },
 ];
 
 let lcDrawn = false;
@@ -205,7 +212,7 @@ function addStamp(){
   localStorage.setItem('luckyStamps',stampCount);
   buildStampGrid();
   if(stampCount>=MAX_STAMPS){
-    showStampNotif('🎟️','Ticket Ready!','Your lucky ticket is waiting~ ✨');
+    showStampNotif('👀','Ticket is Ready!','Your lucky ticket is waiting ~ ');
   } else {
     showStampNotif('🍀','Stamp Get!',`${stampCount} / ${MAX_STAMPS} stamps collected!`);
   }

@@ -48,7 +48,7 @@ function onYouTubeIframeAPIReady() {
         if (e.data === YT.PlayerState.PLAYING) {
           isPlaying = true;
           var btn = document.getElementById('musicBtn');
-          if (btn) btn.textContent = 'Pause';
+          if (btn) btn.textContent = 'Stop';
         }
         if (e.data === YT.PlayerState.PAUSED) {
           isPlaying = false;
