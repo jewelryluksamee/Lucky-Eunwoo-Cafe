@@ -5,16 +5,16 @@ const TICKET_PHOTOS = [ // 🎟 TICKET_PHOTOS
   { src:'tic/1.jpg', cap:'♡' },
   { src:'tic/2.jpg', cap:'♡' },
   { src:'tic/3.jpg', cap:'♡' },
-  { src:'tic/4.jpg', cap:'♡' },
-  { src:'tic/5.jpg', cap:'♡' },
-  { src:'tic/6.jpg', cap:'♡' },
-  { src:'tic/7.jpg', cap:'♡' },
-  { src:'tic/8.jpg', cap:'♡' },
-  { src:'tic/9.jpg', cap:'♡' },
-  { src:'tic/10.jpg', cap:'♡' },
-  { src:'tic/11.jpg', cap:'♡' },
-  { src:'tic/12.jpg', cap:'♡' },
-  { src:'tic/13.jpg', cap:'♡' }
+  { src:'tic/4.JPG', cap:'♡' },
+  { src:'tic/5.JPG', cap:'♡' },
+  { src:'tic/6.JPG', cap:'♡' },
+  { src:'tic/7.JPG', cap:'♡' },
+  { src:'tic/8.JPG', cap:'♡' },
+  { src:'tic/9.JPG', cap:'♡' },
+  { src:'tic/10.JPG', cap:'♡' },
+  { src:'tic/11.JPG', cap:'♡' },
+  { src:'tic/12.JPG', cap:'♡' },
+  { src:'tic/13.JPG', cap:'♡' }
 ];
 
 const MAX_STAMPS = 3;
