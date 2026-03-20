@@ -7,7 +7,7 @@ const TICKET_PHOTOS = [ // 🎟 TICKET_PHOTOS
   { src:'tic/3.jpg', cap:'♡' },
   { src:'tic/4.JPG', cap:'♡' },
   { src:'tic/5.JPG', cap:'♡' },
-  { src:'tic/6.JPG', cap:'♡' },
+  { src:'tic/6.jpg', cap:'♡' },
   { src:'tic/7.JPG', cap:'♡' },
   { src:'tic/8.JPG', cap:'♡' },
   { src:'tic/9.JPG', cap:'♡' },
@@ -125,8 +125,6 @@ function lcBuildDeck(){
       <div class="lc-card-front">
         <img class="lcf-img" src="${c.img}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
         <div class="lcf-img-ph" style="display:none">✨</div>
-        <div class="lcf-name">${c.name}</div>
-        <div class="lcf-msg">${c.msg}</div>
       </div>
     </div>`;
     area.appendChild(card);
@@ -182,11 +180,11 @@ let stampCount=parseInt(localStorage.getItem('luckyStamps')||'0');
 // Auto-stamp triggers (one stamp per action type per session)
 let stampedForMessage=false;
 let stampedForCard=false;
-let stampedForScroll=false;
+let stampedForCake=false;
 function tryAutoStamp(trigger){
   if(trigger==='message'&&!stampedForMessage){stampedForMessage=true;addStamp();}
   else if(trigger==='card'&&!stampedForCard){stampedForCard=true;addStamp();}
-  else if(trigger==='scroll'&&!stampedForScroll){stampedForScroll=true;addStamp();}
+  else if(trigger==='cake'&&!stampedForCake){stampedForCake=true;addStamp();}
 }
 function buildStampGrid(){
   const grid=document.getElementById('stampGrid');if(!grid)return;grid.innerHTML='';
@@ -219,16 +217,6 @@ function addStamp(){
 }
 buildStampGrid();
 
-// Auto-stamp when user scrolls to bottom of pgCafe
-(function(){
-  const cafe=document.getElementById('pgCafe');
-  if(!cafe)return;
-  cafe.addEventListener('scroll',function(){
-    if(cafe.scrollTop+cafe.clientHeight>=cafe.scrollHeight-60){
-      tryAutoStamp('scroll');
-    }
-  },{passive:true});
-})();
 
 // ══ TICKET ══
 function shufflePick(arr,n){const copy=[...arr];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]];}return copy.slice(0,Math.min(n,copy.length));}

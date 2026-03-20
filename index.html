@@ -332,6 +332,53 @@ body {
 .lcn-title { font-size: .72rem; font-weight: 700; color: var(--green-mid); letter-spacing: .08em; text-transform: uppercase; }
 .lcn-msg { font-size: .88rem; font-weight: 600; color: var(--green-dark); line-height: 1.55; white-space: normal; }
 
+/* ════ BLOW CANDLE COUNTDOWN NOTIFICATION ════ */
+#blowNotif {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(130px);
+  z-index: 360; pointer-events: none;
+  transition: transform .45s cubic-bezier(.36,1.4,.64,1), opacity .35s;
+  opacity: 0;
+}
+#blowNotif.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+.bn-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 18px 32px;
+  box-shadow: 0 6px 28px rgba(180,80,100,.18), 0 1.5px 6px rgba(180,80,100,.10);
+  border: 1.5px solid rgba(210,140,160,.22);
+  min-width: 220px;
+  text-align: center;
+}
+.bn-label {
+  font-size: .78rem;
+  font-weight: 700;
+  color: #b84060;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.bn-count {
+  font-family: 'Mali', cursive;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #c0506a;
+  line-height: 1.1;
+  min-height: 2.8rem;
+  transition: transform .18s cubic-bezier(.34,1.6,.64,1), opacity .18s;
+}
+.bn-count.pop {
+  animation: bnPop .28s cubic-bezier(.34,1.6,.64,1);
+}
+@keyframes bnPop {
+  0%   { transform: scale(.7); opacity: .4; }
+  60%  { transform: scale(1.18); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 /* ════ STAMP NOTIFICATION ════ */
 #stampNotif {
   position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(120px);
@@ -519,10 +566,8 @@ body {
 .lc-card-back .lcb-icon { font-size:2rem; }
 .lc-card-back .lcb-txt { font-size:.52rem; color:rgba(255,255,255,.65); letter-spacing:2.5px; text-transform:uppercase; }
 .lc-card-front { background:#fff; border:2.5px solid #f9d0de; transform:rotateY(180deg); display:flex; flex-direction:column; align-items:center; box-shadow:3px 6px 20px rgba(0,0,0,.22); }
-.lc-card-front .lcf-img { width:100%; height:112px; object-fit:cover; display:block; background:var(--green-ghost); flex-shrink:0; }
-.lc-card-front .lcf-img-ph { width:100%; height:112px; display:flex; align-items:center; justify-content:center; font-size:2.4rem; flex-shrink:0; }
-.lc-card-front .lcf-name { font-size:.72rem; font-weight:600; color:#2d5a3d; padding:6px 8px 2px; text-align:center; line-height:1.3; }
-.lc-card-front .lcf-msg { font-size:.62rem; color:#4a6e55; padding:0 8px 8px; text-align:center; line-height:1.4; }
+.lc-card-front .lcf-img { width:100%; height:100%; object-fit:cover; display:block; background:var(--green-ghost); flex-shrink:0; border-radius:12px; }
+.lc-card-front .lcf-img-ph { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:2.4rem; flex-shrink:0; }
 .card-draw-btns { text-align:center; }
 .card-draw-btn { background:linear-gradient(135deg,var(--green),var(--green-dark)); color:#fff; font-size:1.05rem; font-weight:600; padding:13px 44px; border:none; border-radius:var(--pill); cursor:pointer; box-shadow:0 6px 20px rgba(45,90,61,.3); transition:transform .18s; }
 .card-draw-btn:hover { transform:translateY(-4px) scale(1.04); }
@@ -770,7 +815,7 @@ body {
 /* ─── HEADING ─── */
 .cake-title {
   font-family: 'Mali', cursive;
-  font-size: clamp(1.3rem, 4vw, 1.65rem);
+  font-size: clamp(1.9rem, 4vw, 1.65rem);
   background: linear-gradient(135deg, #c0506a 0%, #e0788a 50%, #c85070 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1250,46 +1295,46 @@ body {
   <div class="auto-gallery-section">
     <div class="scroll-track-wrap">
       <div class="scroll-track">
-        <div class="scroll-pol"><img src="img/name1.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="img/name2.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="img/name1.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="img/name1.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="img/name1.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="img/name1.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g1.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g8.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g9.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g10.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g11.jpg" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g12.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/1.JPG"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/2.JPG"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/3.JPG"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/4.JPG"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/5.JPG"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/6.JPG"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/7.JPG"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/8.JPG"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/9.JPG"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/10.JPG" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/11.JPG" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/12.JPG" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
       </div>
       <div class="scroll-track">
-        <div class="scroll-pol"><img src="img/name1.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g2.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g3.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g4.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g5.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g6.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g7.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g8.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g9.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g10.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g11.jpg" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g12.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/13.JPG"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/14.JPG"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/15.JPG"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/16.JPG"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/17.JPG"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/18.JPG"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/19.JPG"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/20.JPG"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/21.JPG"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/22.JPG" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/23.JPG" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/24.JPG" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
       </div>
       <div class="scroll-track">
-        <div class="scroll-pol"><img src="images/g1.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g2.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g3.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g4.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g5.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g6.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g7.jpg"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g8.jpg"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g9.jpg"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g10.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g11.jpg" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
-        <div class="scroll-pol"><img src="images/g12.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/25.JPG"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/26.JPG"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/27.JPG"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/28.JPG"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/29.JPG"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/30.JPG"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/31.JPG"  alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/32.JPG"  alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/33.JPG"  alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/34.JPG" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/35.JPG" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="scap"></div></div>
+        <div class="scroll-pol"><img src="sc/36.JPG" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="scap"></div></div>
       </div>
     </div>
   </div>
@@ -1300,32 +1345,32 @@ body {
     <!-- Row 1 — 5 frames -->
     <div class="exhibit-rope-row">
       <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
-        <div class="exhibit-frame lg"><img src="img/1.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/></div>
+        <div class="exhibit-frame lg"><img src="img/1.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="exhibit-frame-label" style="color:#ccc;cursor:default"></div></div>
       </div>
       <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
-        <div class="exhibit-frame md"><img src="img/2.jpg" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/></div>
+        <div class="exhibit-frame md"><img src="img/2.jpg" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="exhibit-frame-label" style="color:#ccc;cursor:default"></div></div>
       </div>
       <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
-        <div class="exhibit-frame sm"><img src="img/6.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/></div>
+        <div class="exhibit-frame sm"><img src="img/6.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="exhibit-frame-label" style="color:#ccc;cursor:default"></div></div>
       </div>
       <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
-        <div class="exhibit-frame md"><img src="img/4.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/></div>
+        <div class="exhibit-frame md"><img src="img/4.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.removeAttribute('src')"/><div class="exhibit-frame-label" style="color:#ccc;cursor:default"></div></div>
       </div>
     </div>
 
     <!-- Row 2 — 5 frames -->
     <div class="exhibit-rope-row row2">
       <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
-        <div class="exhibit-frame md"><img src="img/5.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/></div>
+        <div class="exhibit-frame md"><img src="img/5.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="exhibit-frame-label" style="color:#ccc;cursor:default"></div></div>
       </div>
        <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
-        <div class="exhibit-frame md"><img src="img/3.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/></div>
+        <div class="exhibit-frame md"><img src="img/3.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="exhibit-frame-label" style="color:#ccc;cursor:default"></div></div>
       </div>
       <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
-        <div class="exhibit-frame md"><img src="img/7.jpg" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/></div>
+        <div class="exhibit-frame md"><img src="img/7.jpg" alt="" onerror="this.style.background='var(--blush)';this.removeAttribute('src')"/><div class="exhibit-frame-label" style="color:#ccc;cursor:default"></div></div>
       </div>
       <div class="exhibit-hang"><div class="exhibit-clip"></div><div class="exhibit-string"></div>
-        <div class="exhibit-frame lg"><img src="img/8.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/></div>
+        <div class="exhibit-frame lg"><img src="img/8.jpg" alt="" onerror="this.style.background='var(--warm)';this.removeAttribute('src')"/><div class="exhibit-frame-label" style="color:#ccc;cursor:default"></div></div>
       </div>
   
     </div>
@@ -1358,13 +1403,13 @@ body {
     </div>
     <div class="cake-stage">
 
-      <p class="cake-title">🎂 Happy Birthday, Eunwoo! 🎂</p>
+      <p class="cake-title">มาเป่าเค้กพร้อมอึนอูกันเถอะ!</p>
 
       <div class="cake-scene">
         <!-- Eunwoo portrait: sits behind the cake -->
         <div class="eunwoo-portrait">
-          <img id="euImg1" src="img/1.jpg" alt="Cha Eunwoo">
-          <img id="euImg2" src="img/2.jpg" alt="Cha Eunwoo reaction" class="hidden">
+          <img id="euImg1" src="img/9.jpg" alt="Cha Eunwoo">
+          <img id="euImg2" src="img/10.jpg" alt="Cha Eunwoo reaction" class="hidden">
         </div>
 
         <!-- SVG Birthday Cake -->
@@ -1624,6 +1669,14 @@ body {
   </div>
 </div>
 
+<!-- BLOW CANDLE COUNTDOWN NOTIFICATION -->
+<div id="blowNotif">
+  <div class="bn-card">
+    <div class="bn-label">นับพร้อมกันนะ</div>
+    <div class="bn-count" id="blowCount">3</div>
+  </div>
+</div>
+
 <!-- STAMP NOTIFICATION -->
 <div id="stampNotif">
   <div class="sn-card">
@@ -1709,27 +1762,53 @@ function blowCandles() {
     }
   }
 
-  /* Staggered: flicker → out → smoke */
-  ['cf1', 'cf2', 'cf3'].forEach(function(id, i) {
-    var flame = document.getElementById(id);
-    setTimeout(function() {
-      flame.classList.add('flickering');
+  function doBlowAnimation() {
+    /* Staggered: flicker → out → smoke */
+    ['cf1', 'cf2', 'cf3'].forEach(function(id, i) {
+      var flame = document.getElementById(id);
       setTimeout(function() {
-        flame.classList.remove('flickering');
-        flame.classList.add('out');
-        spawnSmoke(flameCx[i], flameCy[i]);
-      }, 270 + Math.random() * 120);
-    }, i * 230 + Math.random() * 70);
-  });
+        flame.classList.add('flickering');
+        setTimeout(function() {
+          flame.classList.remove('flickering');
+          flame.classList.add('out');
+          spawnSmoke(flameCx[i], flameCy[i]);
+        }, 270 + Math.random() * 120);
+      }, i * 230 + Math.random() * 70);
+    });
 
-  /* Crossfade image + message */
+    /* Crossfade image + message */
+    setTimeout(function() {
+      document.getElementById('euImg1').classList.add('hidden');
+      document.getElementById('euImg2').classList.remove('hidden');
+      var msg = document.getElementById('cakeMessage');
+      msg.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+      msg.classList.add('show');
+      if (typeof tryAutoStamp === 'function') tryAutoStamp('cake');
+    }, 950);
+  }
+
+  /* Show countdown notification then blow */
+  var notif = document.getElementById('blowNotif');
+  var countEl = document.getElementById('blowCount');
+  var steps = ['3', '2', '1', 'ขึ้น'];
+
+  function setCount(text) {
+    countEl.classList.remove('pop');
+    void countEl.offsetWidth; /* reflow to restart animation */
+    countEl.textContent = text;
+    countEl.classList.add('pop');
+  }
+
+  setCount('3');
+  notif.classList.add('show');
+
+  setTimeout(function() { setCount('2'); }, 1000);
+  setTimeout(function() { setCount('1'); }, 2000);
+  setTimeout(function() { setCount('ขึ้น'); }, 3000);
   setTimeout(function() {
-    document.getElementById('euImg1').classList.add('hidden');
-    document.getElementById('euImg2').classList.remove('hidden');
-    var msg = document.getElementById('cakeMessage');
-    msg.textContent = msgs[Math.floor(Math.random() * msgs.length)];
-    msg.classList.add('show');
-  }, 950);
+    notif.classList.remove('show');
+    doBlowAnimation();
+  }, 4000);
 }
 
 function closeLuckyNotif() {
