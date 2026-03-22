@@ -188,15 +188,14 @@ function resetLuckyDraw(){
 lcBuildDeck();
 
 // ══ STAMP CARD ══
-let stampCount=parseInt(localStorage.getItem('luckyStamps')||'0');
-// Auto-stamp triggers (one stamp per action type per session)
-let stampedForMessage=false;
-let stampedForCard=false;
-let stampedForCake=false;
+let stampCount=parseInt(sessionStorage.getItem('luckyStamps')||'0');
+let stampedForMessage=sessionStorage.getItem('luckyStamp_msg')==='1';
+let stampedForCard=sessionStorage.getItem('luckyStamp_card')==='1';
+let stampedForCake=sessionStorage.getItem('luckyStamp_cake')==='1';
 function tryAutoStamp(trigger){
-  if(trigger==='message'&&!stampedForMessage){stampedForMessage=true;addStamp();}
-  else if(trigger==='card'&&!stampedForCard){stampedForCard=true;addStamp();}
-  else if(trigger==='cake'&&!stampedForCake){stampedForCake=true;addStamp();}
+  if(trigger==='message'&&!stampedForMessage){stampedForMessage=true;sessionStorage.setItem('luckyStamp_msg','1');addStamp();}
+  else if(trigger==='card'&&!stampedForCard){stampedForCard=true;sessionStorage.setItem('luckyStamp_card','1');addStamp();}
+  else if(trigger==='cake'&&!stampedForCake){stampedForCake=true;sessionStorage.setItem('luckyStamp_cake','1');addStamp();}
 }
 function buildStampGrid(){
   const grid=document.getElementById('stampGrid');if(!grid)return;grid.innerHTML='';
@@ -219,7 +218,7 @@ function showStampNotif(icon,title,msg){
 function addStamp(){
   if(stampCount>=MAX_STAMPS)return;
   stampCount++;
-  localStorage.setItem('luckyStamps',stampCount);
+  sessionStorage.setItem('luckyStamps',stampCount);
   buildStampGrid();
   if(stampCount>=MAX_STAMPS){
     showStampNotif('👀','Ticket is Ready!','Your lucky ticket is waiting ~ ');
@@ -233,9 +232,6 @@ buildStampGrid();
 // ══ TICKET ══
 function shufflePick(arr,n){const copy=[...arr];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]];}return copy.slice(0,Math.min(n,copy.length));}
 function showTicket(){
-  localStorage.removeItem('luckyStamps');
-  stampCount=0;
-  buildStampGrid();
   document.getElementById('ticketName').textContent=visitorName||'Guest';
   const now=new Date();
   document.getElementById('ticketDate').textContent=now.toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'})+' · '+now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
@@ -256,10 +252,10 @@ function closeTicket(e){const overlay=document.getElementById('ticketOverlay');i
 // wallItems = items fetched from API (stickies + stickers)
 // localPolaroids = polaroids stored locally (image upload stays offline)
 let wallItems=[];
-let localPolaroids=JSON.parse(localStorage.getItem('luckyWall_pol')||'[]');
+let localPolaroids=JSON.parse(sessionStorage.getItem('luckyWall_pol')||'[]');
 let dragOX=0,dragOY=0;
 
-function savePolaroids(){try{localStorage.setItem('luckyWall_pol',JSON.stringify(localPolaroids));}catch(e){}}
+function savePolaroids(){try{sessionStorage.setItem('luckyWall_pol',JSON.stringify(localPolaroids));}catch(e){}}
 function deterministicRot(id,range){let h=0;for(const c of String(id))h=(h*31+c.charCodeAt(0))&0x7fffffff;return((h%(range*200))-range*100)/100;}
 function expandCanvas(){
   const canvas=document.getElementById('wallCanvas');
