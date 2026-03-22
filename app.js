@@ -8,13 +8,25 @@ const TICKET_PHOTOS = [ // 🎟 TICKET_PHOTOS
   { src:'tic/4.JPG', cap:'♡' },
   { src:'tic/5.JPG', cap:'♡' },
   { src:'tic/6.jpg', cap:'♡' },
-  { src:'tic/7.JPG', cap:'♡' },
-  { src:'tic/8.JPG', cap:'♡' },
-  { src:'tic/9.JPG', cap:'♡' },
-  { src:'tic/10.JPG', cap:'♡' },
-  { src:'tic/11.JPG', cap:'♡' },
-  { src:'tic/12.JPG', cap:'♡' },
-  { src:'tic/13.JPG', cap:'♡' }
+  { src:'tic/7.jpg', cap:'♡' },
+  { src:'tic/8.jpg', cap:'♡' },
+  { src:'tic/9.jpg', cap:'♡' },
+  { src:'tic/10.jpg', cap:'♡' },
+  { src:'tic/11.jpg', cap:'♡' },
+  { src:'tic/12.jpg', cap:'♡' },
+  { src:'tic/13.jpg', cap:'♡' },
+  { src:'tic/14.jpg', cap:'♡' },
+  { src:'tic/15.jpg', cap:'♡' },
+  { src:'tic/16.jpg', cap:'♡' },
+  { src:'tic/17.jpg', cap:'♡' },
+  { src:'tic/18.jpg', cap:'♡' },
+  { src:'tic/19.jpg', cap:'♡' },
+  { src:'tic/20.jpg', cap:'♡' },
+  { src:'tic/21.jpg', cap:'♡' },
+  { src:'tic/22.jpg', cap:'♡' },
+  { src:'tic/23.jpg', cap:'♡' },
+  { src:'tic/24.jpg', cap:'♡' },
+  { src:'tic/25.jpg', cap:'♡' }
 ];
 
 const MAX_STAMPS = 3;
@@ -188,7 +200,7 @@ function tryAutoStamp(trigger){
 }
 function buildStampGrid(){
   const grid=document.getElementById('stampGrid');if(!grid)return;grid.innerHTML='';
-  for(let i=0;i<MAX_STAMPS;i++){const cell=document.createElement('div');cell.className='stamp-cell'+(i<stampCount?' stamped':'');cell.textContent=i<stampCount?'👀':String(i+1);grid.appendChild(cell);}
+  for(let i=0;i<MAX_STAMPS;i++){const cell=document.createElement('div');cell.className='stamp-cell'+(i<stampCount?' stamped':'');cell.innerHTML=i<stampCount?'<img src="tic/st1.png" alt="stamp" style="width:80%;height:80%;object-fit:cover;border-radius:50%"/>':String(i+1);grid.appendChild(cell);}
   document.getElementById('stampProgress').innerHTML=`Stamps: <strong>${stampCount} / ${MAX_STAMPS}</strong>`;
   const btn=document.getElementById('stampMainBtn');
   if(btn){btn.style.display=stampCount>=MAX_STAMPS?'':'none';btn.textContent='See your Ticket!!';}
@@ -231,7 +243,6 @@ function showTicket(){
     strip.appendChild(pol);
   });
   const stampRow=document.getElementById('ticketStamps');stampRow.innerHTML='';
-  for(let i=0;i<MAX_STAMPS;i++){const s=document.createElement('span');s.className='ticket-s';s.textContent='🍀';stampRow.appendChild(s);}
   const bc=document.getElementById('ticketBarcode');bc.innerHTML='';
   [28,18,26,14,30,22,18,28,16,24,30,18,26,20,28,14,24,18,30,22].forEach(h=>{const bar=document.createElement('span');bar.style.height=h+'px';bc.appendChild(bar);});
   document.getElementById('ticketOverlay').classList.add('show');
