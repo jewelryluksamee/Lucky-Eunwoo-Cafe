@@ -199,7 +199,7 @@ function tryAutoStamp(trigger){
 }
 function buildStampGrid(){
   const grid=document.getElementById('stampGrid');if(!grid)return;grid.innerHTML='';
-  for(let i=0;i<MAX_STAMPS;i++){const cell=document.createElement('div');cell.className='stamp-cell'+(i<stampCount?' stamped':'');cell.innerHTML=i<stampCount?'<img src="tic/st1.png" alt="stamp" style="width:80%;height:80%;object-fit:cover;border-radius:50%"/>':String(i+1);grid.appendChild(cell);}
+  for(let i=0;i<MAX_STAMPS;i++){const cell=document.createElement('div');cell.className='stamp-cell'+(i<stampCount?' stamped':'');cell.innerHTML=i<stampCount?'<img src="tic/st1.jpg" alt="stamp" style="width:80%;height:80%;object-fit:cover;border-radius:50%"/>':String(i+1);grid.appendChild(cell);}
   document.getElementById('stampProgress').innerHTML=`Stamps: <strong>${stampCount} / ${MAX_STAMPS}</strong>`;
   const btn=document.getElementById('stampMainBtn');
   if(btn){btn.style.display=stampCount>=MAX_STAMPS?'':'none';btn.textContent='See your Ticket!!';}
