@@ -234,7 +234,7 @@ function shufflePick(arr,n){const copy=[...arr];for(let i=copy.length-1;i>0;i--)
 function showTicket(){
   document.getElementById('ticketName').textContent=visitorName||'Guest';
   const now=new Date();
-  document.getElementById('ticketDate').textContent=now.toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'})+' · '+now.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('ticketDate').textContent=now.toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'})+' · '+now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
   const strip=document.getElementById('ticketPhotos');strip.innerHTML='';
   shufflePick(TICKET_PHOTOS,3).forEach((photo,i)=>{
     const pol=document.createElement('div');pol.className='ticket-pol';pol.style.transform=`rotate(${[-3,0.5,2.5][i]}deg)`;if(i===1)pol.style.marginTop='-6px';
