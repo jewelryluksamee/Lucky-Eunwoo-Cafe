@@ -188,7 +188,7 @@ function resetLuckyDraw(){
 lcBuildDeck();
 
 // ══ STAMP CARD ══
-let stampCount=parseInt(localStorage.getItem('luckyStamps')||'0');
+let stampCount=0;
 // Auto-stamp triggers (one stamp per action type per session)
 let stampedForMessage=false;
 let stampedForCard=false;
@@ -219,7 +219,6 @@ function showStampNotif(icon,title,msg){
 function addStamp(){
   if(stampCount>=MAX_STAMPS)return;
   stampCount++;
-  localStorage.setItem('luckyStamps',stampCount);
   buildStampGrid();
   if(stampCount>=MAX_STAMPS){
     showStampNotif('👀','Ticket is Ready!','Your lucky ticket is waiting ~ ');
