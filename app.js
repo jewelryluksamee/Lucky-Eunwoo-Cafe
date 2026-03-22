@@ -188,7 +188,7 @@ function resetLuckyDraw(){
 lcBuildDeck();
 
 // ══ STAMP CARD ══
-let stampCount=0;
+let stampCount=parseInt(localStorage.getItem('luckyStamps')||'0');
 // Auto-stamp triggers (one stamp per action type per session)
 let stampedForMessage=false;
 let stampedForCard=false;
@@ -219,6 +219,7 @@ function showStampNotif(icon,title,msg){
 function addStamp(){
   if(stampCount>=MAX_STAMPS)return;
   stampCount++;
+  localStorage.setItem('luckyStamps',stampCount);
   buildStampGrid();
   if(stampCount>=MAX_STAMPS){
     showStampNotif('👀','Ticket is Ready!','Your lucky ticket is waiting ~ ');
@@ -232,6 +233,9 @@ buildStampGrid();
 // ══ TICKET ══
 function shufflePick(arr,n){const copy=[...arr];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]];}return copy.slice(0,Math.min(n,copy.length));}
 function showTicket(){
+  localStorage.removeItem('luckyStamps');
+  stampCount=0;
+  buildStampGrid();
   document.getElementById('ticketName').textContent=visitorName||'Guest';
   const now=new Date();
   document.getElementById('ticketDate').textContent=now.toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'})+' · '+now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
