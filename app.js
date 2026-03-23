@@ -40,6 +40,11 @@ document.getElementById('lwTicker').textContent = lwMsg + lwMsg;
 var cafeTicker = document.getElementById('cafeTicker');
 if (cafeTicker) cafeTicker.textContent = lwMsg + lwMsg;
 
+// ══ DUPLICATE SCROLL TRACKS for seamless loop ══
+document.querySelectorAll('.scroll-track').forEach(function(track){
+  track.innerHTML += track.innerHTML;
+});
+
 // ══ LANDING FALLING ITEMS ══
 const lwFcs=['☘️','ᯓ★','♡','♥︎','★','⭐','🍵','👀','🐰','☁️'];
 const lwRoot=document.getElementById('pgLanding');

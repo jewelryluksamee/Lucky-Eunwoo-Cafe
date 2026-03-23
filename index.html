@@ -284,7 +284,6 @@ body {
 .scroll-track-wrap::before { left:0;  background:linear-gradient(90deg,var(--warm),transparent); }
 .scroll-track-wrap::after  { right:0; background:linear-gradient(-90deg,var(--warm),transparent); }
 .scroll-track { display:flex; gap:18px; width:max-content; animation:scrollLeft 36s linear infinite; padding:10px 0; }
-.scroll-track:hover { animation-play-state:paused; }
 @keyframes scrollLeft { 0%{ transform:translateX(0); } 100%{ transform:translateX(-50%); } }
 .scroll-pol { background:#fff; padding:7px 7px 32px; border-radius:2px; box-shadow:4px 6px 20px rgba(0,0,0,.14); flex-shrink:0; width:150px; position:relative; transition:transform .2s; border:1px solid #111; }
 .scroll-pol:hover { transform:scale(1.06) rotate(1deg); }
