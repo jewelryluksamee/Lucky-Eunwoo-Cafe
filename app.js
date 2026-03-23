@@ -117,8 +117,16 @@ function enterCafe(){
   }
   showPage('pgCafe');
 }
-function openWall(){showPage('pgWall');renderWall();}
-function closeWall(){showPage('pgCafe');}
+function openWall(){
+  showPage('pgWall');renderWall();
+  var n=document.getElementById('wallHintNotif');
+  if(n){n.classList.add('show');setTimeout(function(){n.classList.remove('show');},5000);}
+}
+function closeWall(){
+  var n=document.getElementById('wallHintNotif');
+  if(n){n.classList.remove('show');}
+  showPage('pgCafe');
+}
 
 // ══ LUCKY CARD DRAW ══
 const LUCKY_CARDS = [

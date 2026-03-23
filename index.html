@@ -104,13 +104,27 @@ body {
    PAGE 1 — LANDING
 ════════════════════════════════════════ */
 #pgLanding {
-  background: #f2ede0;
+  background: radial-gradient(circle, rgba(74,124,95,.07) 1.5px, transparent 1.5px), #f2ede0;
+  background-size: 20px 20px, 100% 100%;
   display: flex; flex-direction: column; align-items: center;
   overflow-y: auto; overflow-x: hidden;
 }
 
+/* ── Landing bunting ── */
+.lw-bunting { width:100%; position:relative; height:38px; display:flex; align-items:flex-start; justify-content:center; overflow:visible; z-index:5; }
+.lw-bunting::before { content:''; position:absolute; top:6px; left:0; right:0; height:1.5px; background:#111; }
+.lw-bunting-flags { display:flex; width:100%; justify-content:space-around; padding:0 8px; position:relative; z-index:1; }
+.lw-bf { width:0; height:0; border-left:12px solid transparent; border-right:12px solid transparent; border-top:20px solid var(--lbf-c,#f472b6); flex-shrink:0; filter:drop-shadow(0 1px 0 #111) drop-shadow(1px 0 0 #111) drop-shadow(-1px 0 0 #111); }
+
+/* ── Landing balloons ── */
+.lw-balloons { position:absolute; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+.lw-balloon { position:absolute; opacity:.2; animation:floatY var(--bd,4s) ease-in-out infinite var(--bdl,0s); }
+.lw-balloon:nth-child(1){left:1%;top:20%;}  .lw-balloon:nth-child(2){left:3%;top:52%;}
+.lw-balloon:nth-child(3){left:.5%;top:75%;} .lw-balloon:nth-child(4){right:1%;top:18%;}
+.lw-balloon:nth-child(5){right:3%;top:50%;} .lw-balloon:nth-child(6){right:.5%;top:78%;}
+
 .lw-ticker-wrap { width:100%; background:#2d5a3d; overflow:hidden; white-space:nowrap; padding:8px 0; z-index:30; flex-shrink:0; border-bottom:2px solid #1e3d28; }
-.lw-ticker-track { display:inline-block; animation:lwScroll 32s linear infinite; font-size:.78rem; letter-spacing:1.8px; color:rgba(255,255,255,.9); font-weight:500; }
+.lw-ticker-track { display:inline-block; animation:lwScroll 32s linear infinite; font-size:.78rem; letter-spacing:1.8px; color:rgba(255,255,255,.9); font-weight:500; will-change:transform; }
 @keyframes lwScroll { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
 .lw-awning-stripes { width:100%; height:100px; background:repeating-linear-gradient(90deg,#3a7a4a 0px,#3a7a4a 40px,#f0e8d8 40px,#f0e8d8 60px); position:relative; }
 .lw-awning-stripes::before { content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.13) 0%,rgba(0,0,0,.03) 70%,transparent 100%); }
@@ -283,7 +297,7 @@ body {
 .scroll-track-wrap::before,.scroll-track-wrap::after { content:''; position:absolute; top:0; bottom:0; z-index:2; width:80px; pointer-events:none; }
 .scroll-track-wrap::before { left:0;  background:linear-gradient(90deg,var(--warm),transparent); }
 .scroll-track-wrap::after  { right:0; background:linear-gradient(-90deg,var(--warm),transparent); }
-.scroll-track { display:flex; gap:18px; width:max-content; animation:scrollLeft 36s linear infinite; padding:10px 0; }
+.scroll-track { display:flex; gap:18px; width:max-content; animation:scrollLeft 36s linear infinite; padding:10px 0; will-change:transform; }
 @keyframes scrollLeft { 0%{ transform:translateX(0); } 100%{ transform:translateX(-50%); } }
 .scroll-pol { background:#fff; padding:7px 7px 32px; border-radius:2px; box-shadow:4px 6px 20px rgba(0,0,0,.14); flex-shrink:0; width:150px; position:relative; transition:transform .2s; border:1px solid #111; }
 .scroll-pol:hover { transform:scale(1.06) rotate(1deg); }
@@ -508,6 +522,26 @@ body {
   font-family:var(--f-cute)!important;
   font-size:.68rem; color:#90b8d0; letter-spacing:.8px;
 }
+
+/* ════ WALL HINT NOTIFICATION ════ */
+#wallHintNotif {
+  position:fixed; top:56px; left:50%; transform:translateX(-50%) translateY(-120px);
+  z-index:400; pointer-events:none;
+  transition:transform .45s cubic-bezier(.36,1.4,.64,1), opacity .35s;
+  opacity:0;
+}
+#wallHintNotif.show { transform:translateX(-50%) translateY(0); opacity:1; }
+.whn-card {
+  background:#fff; border:1px solid #111; border-radius:24px;
+  padding:14px 24px 14px 18px;
+  box-shadow:0 8px 32px rgba(0,0,0,.1), 0 2px 8px rgba(0,0,0,.06);
+  display:flex; align-items:center; gap:14px;
+  font-size:.88rem; font-weight:600; color:#111; line-height:1.55;
+}
+.whn-icon { font-size:2rem; flex-shrink:0; }
+.whn-body { display:flex; flex-direction:column; gap:2px; }
+.whn-title { font-size:.72rem; font-weight:700; color:#111; letter-spacing:.08em; text-transform:uppercase; }
+.whn-msg { font-size:.88rem; font-weight:600; color:#111; }
 
 /* ════ PAGE 3 — MESSAGE WALL ════ */
 #pgWall        { background:transparent; overflow-y:auto; overflow-x:auto; -webkit-overflow-scrolling:touch; z-index:30; }
@@ -1223,7 +1257,30 @@ body {
   <div class="lw-awning-stripes"></div>
   <div class="lw-awning-bottom-bar"></div>
 
+  <!-- landing balloons -->
+  <div class="lw-balloons" aria-hidden="true">
+    <div class="lw-balloon" style="--bd:3.8s;--bdl:0s"><svg width="70" height="115" viewBox="0 0 44 72"><ellipse cx="22" cy="22" rx="18" ry="20" fill="#f472b6"/><polygon points="22,40 19,46 25,46" fill="#f472b6"/><line x1="22" y1="46" x2="20" y2="72" stroke="#c0507a" stroke-width="1.2" stroke-dasharray="2,2"/></svg></div>
+    <div class="lw-balloon" style="--bd:4.4s;--bdl:.6s"><svg width="70" height="115" viewBox="0 0 44 72"><ellipse cx="22" cy="22" rx="18" ry="20" fill="#60a5fa"/><polygon points="22,40 19,46 25,46" fill="#60a5fa"/><line x1="22" y1="46" x2="24" y2="72" stroke="#3b82c4" stroke-width="1.2" stroke-dasharray="2,2"/></svg></div>
+    <div class="lw-balloon" style="--bd:3.5s;--bdl:1.2s"><svg width="70" height="115" viewBox="0 0 44 72"><ellipse cx="22" cy="22" rx="18" ry="20" fill="#facc15"/><polygon points="22,40 19,46 25,46" fill="#facc15"/><line x1="22" y1="46" x2="21" y2="72" stroke="#b8960a" stroke-width="1.2" stroke-dasharray="2,2"/></svg></div>
+    <div class="lw-balloon" style="--bd:4.1s;--bdl:.3s"><svg width="70" height="115" viewBox="0 0 44 72"><ellipse cx="22" cy="22" rx="18" ry="20" fill="#c084fc"/><polygon points="22,40 19,46 25,46" fill="#c084fc"/><line x1="22" y1="46" x2="23" y2="72" stroke="#8b5cf6" stroke-width="1.2" stroke-dasharray="2,2"/></svg></div>
+    <div class="lw-balloon" style="--bd:4.6s;--bdl:.9s"><svg width="70" height="115" viewBox="0 0 44 72"><ellipse cx="22" cy="22" rx="18" ry="20" fill="#4ade80"/><polygon points="22,40 19,46 25,46" fill="#4ade80"/><line x1="22" y1="46" x2="20" y2="72" stroke="#22a855" stroke-width="1.2" stroke-dasharray="2,2"/></svg></div>
+    <div class="lw-balloon" style="--bd:3.9s;--bdl:1.5s"><svg width="70" height="115" viewBox="0 0 44 72"><ellipse cx="22" cy="22" rx="18" ry="20" fill="#fb923c"/><polygon points="22,40 19,46 25,46" fill="#fb923c"/><line x1="22" y1="46" x2="24" y2="72" stroke="#c2610a" stroke-width="1.2" stroke-dasharray="2,2"/></svg></div>
+  </div>
+
   <div class="lw-body">
+    <!-- bunting -->
+    <div class="lw-bunting" aria-hidden="true">
+      <div class="lw-bunting-flags">
+        <div class="lw-bf" style="--lbf-c:#f472b6"></div><div class="lw-bf" style="--lbf-c:#fb923c"></div>
+        <div class="lw-bf" style="--lbf-c:#facc15"></div><div class="lw-bf" style="--lbf-c:#4ade80"></div>
+        <div class="lw-bf" style="--lbf-c:#60a5fa"></div><div class="lw-bf" style="--lbf-c:#c084fc"></div>
+        <div class="lw-bf" style="--lbf-c:#f472b6"></div><div class="lw-bf" style="--lbf-c:#fb923c"></div>
+        <div class="lw-bf" style="--lbf-c:#facc15"></div><div class="lw-bf" style="--lbf-c:#4ade80"></div>
+        <div class="lw-bf" style="--lbf-c:#60a5fa"></div><div class="lw-bf" style="--lbf-c:#c084fc"></div>
+        <div class="lw-bf" style="--lbf-c:#f472b6"></div><div class="lw-bf" style="--lbf-c:#fb923c"></div>
+        <div class="lw-bf" style="--lbf-c:#facc15"></div><div class="lw-bf" style="--lbf-c:#4ade80"></div>
+      </div>
+    </div>
     <div class="lw-deco-band">
       <div class="dl"></div>♡&nbsp;03301997&nbsp;♡<div class="dr"></div>
     </div>
@@ -1785,6 +1842,16 @@ body {
   </footer>
 </div><!-- /pgCafe -->x
 
+
+<!-- WALL HINT NOTIFICATION -->
+<div id="wallHintNotif">
+  <div class="whn-card">
+    <div class="whn-body">
+      <div class="whn-title">Wishing Wall</div>
+      <div class="whn-msg">Place item &amp; lift finger for 2s<br>before adding the next one</div>
+    </div>
+  </div>
+</div>
 
 <!-- PAGE 3 — MESSAGE WALL -->
 <div class="page hidden gone" id="pgWall">
