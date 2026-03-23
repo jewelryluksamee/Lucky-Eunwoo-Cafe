@@ -189,7 +189,7 @@ body {
 ════════════════════════════════════════ */
 #pgCafe { background: var(--cream); overflow-y: auto; overflow-x: hidden; display: block; }
 .cafe-hdr { color:#fff; text-align:center; padding:0; position:relative; overflow:hidden; background:#2d5a3d; }
-.cafe-hdr-slides { position:relative; z-index:0; overflow:hidden; }
+.cafe-hdr-slides { position:relative; z-index:0; overflow:hidden; height:50vh; }
 .cafe-hdr-slide { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 1.2s ease-in-out; }
 .cafe-hdr-slide--full { position:relative; inset:auto; background:none !important; max-height:50vh; overflow:hidden; display:flex; align-items:flex-end; }
 .cafe-hdr-slide--full img { width:100%; height:auto; display:block; }
@@ -1236,7 +1236,6 @@ body {
 <div class="page hidden gone" id="pgCafe">
   <header class="cafe-hdr">
     <div class="cafe-hdr-slides">
-      <div class="cafe-hdr-slide cafe-hdr-slide--full"><img src="slide/head.jpg" alt=""></div>
       <div class="cafe-hdr-slide" style="background-image:url('slide/s1.jpg')"></div>
       <div class="cafe-hdr-slide" style="background-image:url('slide/s2.jpg')"></div>
       <div class="cafe-hdr-slide" style="background-image:url('slide/s3.jpg')"></div>
@@ -1273,6 +1272,7 @@ body {
       <div class="cafe-hdr-slide" style="background-image:url('slide/s34.jpg')"></div>
       <div class="cafe-hdr-slide" style="background-image:url('slide/s35.jpg')"></div>
       <div class="cafe-hdr-slide" style="background-image:url('slide/s36.jpg')"></div>
+      <div class="cafe-hdr-slide" style="background-image:url('slide/s37.jpg')"></div>
     </div>
     <div id="hdrSparks"></div>
     <button id="musicBtn" onclick="toggleMusic()">🎵 Play</button>

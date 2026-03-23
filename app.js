@@ -491,10 +491,7 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
   const hdrSlides=document.querySelectorAll('.cafe-hdr-slide');
   if(hdrSlides.length<=1)return;
 
-  const FIRST_IDX=0;   // head.jpg — always 1st
-  const SECOND_IDX=11; // s11.jpg — always 2nd
-  const TOTAL_SLIDES=35;
-  const S11_DURATION=8000;
+  const TOTAL_SLIDES=hdrSlides.length;
   const SLIDE_DURATION=3500;
   const container=document.querySelector('.cafe-hdr-slides');
 
@@ -504,8 +501,7 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
 
   function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
   function buildQueue(){
-    const rest=shuffle([...Array(TOTAL_SLIDES).keys()].filter(i=>i!==FIRST_IDX&&i!==SECOND_IDX));
-    return[FIRST_IDX,SECOND_IDX,...rest];
+    return shuffle([...Array(TOTAL_SLIDES).keys()]);
   }
 
   let kbFlip=false;
@@ -513,28 +509,26 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
     const sl=hdrSlides[idx];
     const anim=kbFlip?'kb-out':'kb-in'; kbFlip=!kbFlip;
     sl.style.animation='none';
-    sl.offsetHeight; // force reflow so animation restarts fresh
+    sl.offsetHeight;
     sl.style.animation=anim+' '+(duration+2000)+'ms ease-in-out forwards';
     sl.classList.add('active');
   }
   function deactivate(idx){
     hdrSlides[idx].classList.remove('active');
-    // keep animation running so zoom doesn't snap during fade-out
   }
 
   let queue=buildQueue(), pos=0;
   let cur=queue[pos]; pos++;
-  activate(cur,S11_DURATION);
+  activate(cur,SLIDE_DURATION);
 
   function next(){
-    const duration=cur===FIRST_IDX?S11_DURATION:SLIDE_DURATION;
     setTimeout(function(){
       deactivate(cur);
       if(pos>=queue.length){queue=buildQueue();pos=0;}
       cur=queue[pos]; pos++;
-      activate(cur,cur===FIRST_IDX?S11_DURATION:SLIDE_DURATION);
+      activate(cur,SLIDE_DURATION);
       next();
-    },duration);
+    },SLIDE_DURATION);
   }
   next();
 })();
