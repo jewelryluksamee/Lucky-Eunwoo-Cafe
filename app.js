@@ -524,16 +524,19 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
 
   let queue=buildQueue(), pos=0;
   let cur=queue[pos]; pos++;
-  activate(cur,SLIDE_DURATION);
+  let isFirst=true;
+  activate(cur,FIRST_DURATION);
 
   function next(){
+    const dur=isFirst?FIRST_DURATION:SLIDE_DURATION;
+    isFirst=false;
     setTimeout(function(){
       deactivate(cur);
-      if(pos>=queue.length){queue=buildQueue();pos=0;}
+      if(pos>=queue.length){queue=buildQueue();pos=0;isFirst=true;}
       cur=queue[pos]; pos++;
-      activate(cur,SLIDE_DURATION);
+      activate(cur,isFirst?FIRST_DURATION:SLIDE_DURATION);
       next();
-    },SLIDE_DURATION);
+    },dur);
   }
   next();
 })();
