@@ -37,6 +37,8 @@ const API_BASE='https://backend-lucky-eunwoo-cafe.vercel.app';
 // ══ LANDING TICKER ══
 const lwMsg = 'Happy Lee Dongmin Day \u2003 차은우 \u2003 30 March 2026 \u2003 Aroha ♡ Astro \u2003 Lucky Eunwoo ☘︎  \u2003 Our Shining Star \u2003 19970330 \u2003 ♡ ♥︎ ♡ ♥︎ ♡ ♥︎ ♡ ♥︎ \u2003 Birthday Cafe \u2003 ᯓ★ ';
 document.getElementById('lwTicker').textContent = lwMsg + lwMsg;
+var cafeTicker = document.getElementById('cafeTicker');
+if (cafeTicker) cafeTicker.textContent = lwMsg + lwMsg;
 
 // ══ LANDING FALLING ITEMS ══
 const lwFcs=['☘️','ᯓ★','♡','♥︎','★','⭐','🍵','👀','🐰','☁️'];
@@ -133,7 +135,7 @@ function lcBuildDeck(){
     card.style.setProperty('--br',LC_ANGLES[i]+'deg');
     card.style.cssText+=`left:calc(50% + ${LC_OFFSETS[i]}px - 60px);top:24px;transform:rotate(${LC_ANGLES[i]}deg);z-index:${i+1};`;
     card.innerHTML=`<div class="lc-card-inner">
-      <div class="lc-card-back"><div class="lcb-icon">☘️</div><div class="lcb-txt">Lucky Eunwoo</div></div>
+      <div class="lc-card-back"><img class="lcb-bg" src="lcard/back.jpg" alt="" onerror="this.style.display='none'"/></div>
       <div class="lc-card-front">
         <img class="lcf-img" src="${c.img}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
         <div class="lcf-img-ph" style="display:none">✨</div>
@@ -168,6 +170,7 @@ function luckyDraw(){
           document.getElementById('cardResMsg').textContent=c.msg;
           ph.style.display='none'; img.style.display='block'; img.src=c.img;
           img.onerror=()=>{img.style.display='none';ph.style.display='flex';ph.textContent='✨';};
+          document.querySelector('.card-draw-main').style.display='none';
           result.classList.remove('vis'); void result.offsetWidth; result.classList.add('vis');
           result.scrollIntoView({behavior:'smooth',block:'nearest'});
           tryAutoStamp('card');
@@ -182,6 +185,7 @@ function resetLuckyDraw(){
   document.getElementById('cardDrawBtn').disabled=false;
   document.getElementById('cardDrawHint').textContent='ให้อึนอูทำนายกันนนนนน!';
   document.getElementById('cardResult').classList.remove('vis');
+  document.querySelector('.card-draw-main').style.display='';
   lcBuildDeck();
 }
 
