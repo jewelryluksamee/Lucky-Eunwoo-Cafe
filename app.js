@@ -493,6 +493,7 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
 
   const TOTAL_SLIDES=hdrSlides.length;
   const SLIDE_DURATION=3500;
+  const FIRST_DURATION=6000;
   const container=document.querySelector('.cafe-hdr-slides');
 
   // Grain + color grade overlays
