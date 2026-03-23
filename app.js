@@ -487,10 +487,10 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
   const hdrSlides=document.querySelectorAll('.cafe-hdr-slide');
   if(hdrSlides.length<=1)return;
 
-  const FIRST_IDX=10;  // s11.jpg — always 1st
-  const SECOND_IDX=12; // s13.jpg — always 2nd
-  const TOTAL_SLIDES=34;
-  const S11_DURATION=5500;
+  const FIRST_IDX=0;   // head.jpg — always 1st
+  const SECOND_IDX=11; // s11.jpg — always 2nd
+  const TOTAL_SLIDES=35;
+  const S11_DURATION=8000;
   const SLIDE_DURATION=3500;
   const container=document.querySelector('.cafe-hdr-slides');
 
