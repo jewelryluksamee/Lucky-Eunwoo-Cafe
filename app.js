@@ -499,6 +499,15 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
   const grain=document.createElement('div'); grain.className='hdr-grain'; container.appendChild(grain);
   const grade=document.createElement('div'); grade.className='hdr-colorgrade'; container.appendChild(grade);
 
+  // find s13 index
+  const FIRST_IDX=[...hdrSlides].findIndex(s=>s.style.backgroundImage&&s.style.backgroundImage.includes('s13.jpg'));
+
+  function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+  function buildQueue(){
+    const rest=shuffle([...Array(TOTAL_SLIDES).keys()].filter(i=>i!==FIRST_IDX));
+    return FIRST_IDX>=0?[FIRST_IDX,...rest]:rest;
+  }
+
   let kbFlip=false;
   function activate(idx,duration){
     const sl=hdrSlides[idx];
@@ -512,13 +521,15 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
     hdrSlides[idx].classList.remove('active');
   }
 
-  let cur=0;
+  let queue=buildQueue(), pos=0;
+  let cur=queue[pos]; pos++;
   activate(cur,SLIDE_DURATION);
 
   function next(){
     setTimeout(function(){
       deactivate(cur);
-      cur=(cur+1)%TOTAL_SLIDES;
+      if(pos>=queue.length){queue=buildQueue();pos=0;}
+      cur=queue[pos]; pos++;
       activate(cur,SLIDE_DURATION);
       next();
     },SLIDE_DURATION);
