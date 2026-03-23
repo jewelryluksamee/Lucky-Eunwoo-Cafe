@@ -48,12 +48,12 @@ function onYouTubeIframeAPIReady() {
         if (e.data === YT.PlayerState.PLAYING) {
           isPlaying = true;
           var btn = document.getElementById('musicBtn');
-          if (btn) btn.textContent = ' ⏸ Stop Music';
+          if (btn) btn.textContent = 'Stop Music';
         }
         if (e.data === YT.PlayerState.PAUSED) {
           isPlaying = false;
           var btn = document.getElementById('musicBtn');
-          if (btn) btn.textContent = '▶ Play Music';
+          if (btn) btn.textContent = 'Play Music';
         }
       }
     }

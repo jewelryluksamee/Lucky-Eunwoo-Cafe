@@ -830,11 +830,7 @@ body {
   .scroll-pol         { width: 180px; }
   .scroll-pol img     { height: 155px; }
 
-  /* — Quote — */
-  .quote-section { max-width: 680px; }
-
   /* — Stamp card — */
-  .stamp-section      { max-width: 620px; }
   .stamp-grid         { max-width: 340px; gap: 18px; }
   .stamp-cell         { width: 92px; height: 92px; font-size: 2rem; }
 
@@ -846,6 +842,53 @@ body {
   .exhibit-frame.md img { height: 152px; }
   .exhibit-frame.sm   { width: 132px; }
   .exhibit-frame.sm img { height: 120px; }
+}
+
+/* ════ IPAD PORTRAIT (768px – 834px) ════ */
+@media (min-width: 768px) and (max-width: 834px) and (orientation: portrait) {
+
+  /* Banner */
+  .cafe-hdr-slides { height: 44vh; }
+
+  /* Headings */
+  .sec-hd { font-size: clamp(2.6rem, 6vw, 3.8rem); }
+
+  /* Sections padding */
+  .section { padding: 44px 36px; }
+  .cake-section { padding: 40px 36px 48px; }
+  .quote-section { max-width: none; width: 100%; padding: 44px max(36px, calc((100vw - 680px) / 2)); }
+  .stamp-section { max-width: none; width: 100%; padding: 44px max(36px, calc((100vw - 500px) / 2)); }
+
+  /* Polaroid grid */
+  .pol-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .pol-card img { height: 175px; }
+
+  /* Lucky card */
+  .card-draw-bg { flex-direction: column; align-items: center; }
+
+  /* Exhibit frames */
+  .exhibit-rope-row { gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .exhibit-frame.lg { width: 160px; }
+  .exhibit-frame.lg img { height: 148px; }
+  .exhibit-frame.md { width: 136px; }
+  .exhibit-frame.md img { height: 124px; }
+  .exhibit-frame.sm { width: 110px; }
+  .exhibit-frame.sm img { height: 100px; }
+
+  /* Cake section portrait */
+  .cake-scene { transform: scale(.9); }
+  .hbd-bg-text { font-size: clamp(3rem, 9vw, 6rem); }
+
+  /* Balloon positions */
+  .balloon:nth-child(1), .balloon:nth-child(3),
+  .balloon:nth-child(4), .balloon:nth-child(6) { display: none; }
+
+  /* Scroll gallery */
+  .scroll-pol { width: 160px; }
+  .scroll-pol img { height: 140px; }
+
+  /* Drink menu */
+  .drink-menu-grid { grid-template-columns: repeat(3, 1fr); }
 }
 </style>
 
