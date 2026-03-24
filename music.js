@@ -35,6 +35,7 @@ function onYouTubeIframeAPIReady() {
     events: {
       onReady: function() {
         ytReady = true;
+        ytPlayer.setVolume(50);
         // ถ้า startMusic() ถูกเรียกก่อน API พร้อม ให้เริ่มเล่นทันที
         if (window._pendingPlay) {
           window._pendingPlay = false;
