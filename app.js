@@ -141,6 +141,15 @@ let lcDrawn = false;
 const LC_ANGLES  = [-12, -6, 0, 6, 12];
 const LC_OFFSETS = [-56,-28, 0,28, 56];
 
+let lcDeck = [];
+function lcNextIdx(){
+  if(lcDeck.length===0){
+    lcDeck=[...Array(LUCKY_CARDS.length).keys()];
+    for(let i=lcDeck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[lcDeck[i],lcDeck[j]]=[lcDeck[j],lcDeck[i]];}
+  }
+  return lcDeck.pop();
+}
+
 function lcBuildDeck(){
   const area=document.getElementById('cardDeckArea'); area.innerHTML='';
   LUCKY_CARDS.forEach((c,i)=>{
@@ -165,7 +174,7 @@ function luckyDraw(){
   LUCKY_CARDS.forEach((_,i)=>{const card=document.getElementById('lcCard'+i);card.style.animation=`shuffleWiggle .55s ease ${i*.07}s 2`;});
   setTimeout(()=>{
     hint.textContent='อึนอูเลือกการ์ดให้แล้วนะ เปิดดูเลย! ';
-    const idx=Math.floor(Math.random()*LUCKY_CARDS.length);
+    const idx=lcNextIdx();
     LUCKY_CARDS.forEach((_,i)=>{
       const card=document.getElementById('lcCard'+i); card.style.animation='';
       if(i!==idx){const dir=LC_OFFSETS[i]>=0?1:-1;card.style.transition='transform .5s cubic-bezier(.4,0,.2,1), opacity .4s';card.style.transform=`translateX(${dir*180}px) rotate(${LC_ANGLES[i]*2}deg) translateY(40px)`;card.style.opacity='0';}
