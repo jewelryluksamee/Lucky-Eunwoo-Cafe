@@ -132,7 +132,7 @@ function closeWall(){
 const LUCKY_CARDS = [
   { name:'Lucky Eunwoo ◡̈', img:'lcard/c5.JPG', msg:'เอ้ะๆๆ เหมือนคนแถวนี้จะมีดวงกับเมนนะ!' },
   { name:'Lucky Eunwoo ◡̈', img:'lcard/c1.JPG', msg:'วันนี้จะเจอแต่เรื่องดีแน่นอน รอรับได้เลยยยย~' },
-  { name:'Lucky Eunwoo ◡̈', img:'lcard/c4.JPG', msg:'ความสุขกำลังจะมาถึง เตรียมรับมันด้วยรอยยิ้มน้า ♡' },
+  { name:'Lucky Eunwoo ◡̈', img:'lcard/c4.jpg', msg:'ความสุขกำลังจะมาถึง เตรียมรับมันด้วยรอยยิ้มน้า ♡' },
   { name:'Lucky Eunwoo ◡̈', img:'lcard/c2.JPG', msg:'อย่าหักโหมตัวเองมากไป พักผ่อนเยอะๆ ดูแลตัวเองด้วยน้า ♡' },
   { name:'Lucky Eunwoo ◡̈', img:'lcard/c3.JPG', msg:'ความโชคดีอยู่ใกล้กว่าที่คิด ขอให้ทำอะไรก็สำเร็จ คิดอะไรก็สมปราถนา พ่อหมออึนอูเป็นกำลังใจให้อยู่นะ!' },
 ];
