@@ -363,7 +363,8 @@ const STICKERS=[
   'sticker/1.png','sticker/2.png','sticker/3.png',
   'sticker/4.png','sticker/5.png','sticker/6.png','sticker/7.png',
   'sticker/8.png','sticker/9.png','sticker/10.png','sticker/11.png','sticker/12.png','sticker/13.png','sticker/14.png','sticker/15.png','sticker/16.png','sticker/17.png','sticker/18.png','sticker/19.png','sticker/20.png','sticker/21.png','sticker/22.png','sticker/23.png','sticker/24.png','sticker/25.png','sticker/26.png',
-  'sticker/27.png','sticker/28.png','sticker/29.png','sticker/30.png','sticker/31.png','sticker/32.png','sticker/33.png'
+  'sticker/27.png','sticker/28.png','sticker/29.png','sticker/30.png','sticker/31.png','sticker/32.png','sticker/33.png','sticker/34.png','sticker/35.png','sticker/36.png','sticker/37.png','sticker/38.png','sticker/39.png','sticker/40.png','sticker/41.png','sticker/42.png','sticker/43.png','sticker/44.png','sticker/45.png','sticker/46.png',
+  'sticker/47.png','sticker/48.png','sticker/49.png','sticker/50.png','sticker/51.png','sticker/52.png','sticker/53.png','sticker/54.png','sticker/55.png','sticker/56.png','sticker/57.png','sticker/58.png','sticker/59.png','sticker/60.png'
 ];
 
 function openStickerModal(){
