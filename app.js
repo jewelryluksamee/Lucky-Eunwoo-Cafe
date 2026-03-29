@@ -63,13 +63,14 @@ setInterval(spawnLwFC,1900);
 let visitorName='';
 function submitName(){
   const val=document.getElementById('visitorNameInput').value.trim();
-  if(!val){alert('โรฮ่าจ๋าา กรอกชื่อก่อนน้า~');return;}
+  if(!val){alert(typeof t==='function'?t('name-alert'):'กรอกชื่อก่อนน้า~');return;}
   visitorName=val;
   const overlay=document.getElementById('nameOverlay');
   overlay.style.transition='opacity .5s';
   overlay.style.opacity='0';
   overlay.style.pointerEvents='none';
   setTimeout(()=>overlay.style.display='none',500);
+  const lb=document.getElementById('langToggle'); if(lb)lb.style.display='none';
   document.getElementById('greetingNameText').textContent=val;
   document.getElementById('greetingBanner').style.display='block';
   // 🎵 เริ่มเพลงทันทีที่กด "เข้าไปกันเลยย"
@@ -170,10 +171,10 @@ function lcBuildDeck(){
 function luckyDraw(){
   if(lcDrawn)return; lcDrawn=true;
   const btn=document.getElementById('cardDrawBtn'); btn.disabled=true;
-  const hint=document.getElementById('cardDrawHint'); hint.textContent='กำลังสับไพ่...รอแป๊บนะ!';
+  const hint=document.getElementById('cardDrawHint'); hint.textContent=typeof t==='function'?t('card-hint-shuffle'):'กำลังสับไพ่...รอแป๊บนะ!';
   LUCKY_CARDS.forEach((_,i)=>{const card=document.getElementById('lcCard'+i);card.style.animation=`shuffleWiggle .55s ease ${i*.07}s 2`;});
   setTimeout(()=>{
-    hint.textContent='อึนอูเลือกการ์ดให้แล้วนะ เปิดดูเลย! ';
+    hint.textContent=typeof t==='function'?t('card-hint-pick'):'อึนอูเลือกการ์ดให้แล้วนะ เปิดดูเลย! ';
     const idx=lcNextIdx();
     LUCKY_CARDS.forEach((_,i)=>{
       const card=document.getElementById('lcCard'+i); card.style.animation='';
@@ -205,7 +206,7 @@ function luckyDraw(){
 function resetLuckyDraw(){
   lcDrawn=false;
   document.getElementById('cardDrawBtn').disabled=false;
-  document.getElementById('cardDrawHint').textContent='ให้อึนอูทำนายกันนนนนน!';
+  document.getElementById('cardDrawHint').textContent=typeof t==='function'?t('card-hint'):'ให้อึนอูทำนายกันนนนนน!';
   document.getElementById('cardResult').classList.remove('vis');
   document.querySelector('.card-draw-main').style.display='';
   lcBuildDeck();
@@ -565,4 +566,107 @@ document.querySelectorAll('.scroll-track').forEach(track=>{
 })();
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('stickyModal');closeModal('stickerModal');closeModal('polaroidModal');}});
-['stickyModal','stickerModal','polaroidModal'].forEach(id=>{document.getElementById(id).addEventListener('click',function(e){if(e.target===this)closeModal(id);});});
+['stickyModal','stickerModal','polaroidModal'].forEach(id=>{document.getElementById(id)?.addEventListener('click',function(e){if(e.target===this)closeModal(id);});});
+
+// ══ I18N ══
+let _lang = localStorage.getItem('lang') || 'th';
+
+const I18N = {
+  th: {
+    'lang-btn':            '🇹🇭 TH',
+    'invite-title':        "You're invited to Lucky Eunwoo Cafe!",
+    'invite-sub':          'ก่อนที่จะเข้าไปในคาเฟ่<br/>อยากให้เราเรียกคุณว่าอะไรดี?',
+    'name-ph':             'กรอกชื่อของคุณ...',
+    'enter-btn':           'เข้าไปกันเลยย <3',
+    'greeting-sub':        'เพื่อน ๆ โรฮ่ารออยู่น้า ถ้าพร้อมแล้วก็เข้าไปกันเถอะ! •ᴗ•',
+    'door-knock':          ' ก้อก <br> ก้อก',
+    'sec-shining-sub':     'ขอบคุณที่เติบโตมาอย่างดีเลยนะ เด็กชายอีดงมิน &lt;3',
+    'sec-actor-sub':       'ซีรีส์ที่แกตั้งใจเล่น เราดูจนครบแล้วนะ :-)',
+    'sec-idol-sub':        'Wanna be your STAR --- สวัสดีกั๊บ พวกเราอาสโทรก๊าบบ 𖤐',
+    'card-btn':            'เริ่มทำนายกันเล๊ยย!',
+    'card-hint':           'ให้อึนอูทำนายกันนนนนน!',
+    'card-hint-shuffle':   'กำลังสับไพ่...รอแป๊บนะ!',
+    'card-hint-pick':      'อึนอูเลือกการ์ดให้แล้วนะ เปิดดูเลย! ',
+    'cake-title':          "Let's celebrate with Eunwoo!",
+    'blow-btn':            'เป่าเค้กกันเถอะ!',
+    'quote-main':          'อย่ากังวลอะไรเลยนะ เธอไม่ได้อยู่คนเดียว อย่ากลัวไปเลย เพราะต่อจากนี้อะโรฮ่าจะคอยอยู่เคียงข้างดงมินเอง :-)',
+    'delete-warn':         'ปล.อย่าลบของคนอื่นน้าาา',
+    'blow-count-label':    'นับพร้อมกันนะ',
+    'lcn-title':           'Message from พ่อหมออึนอู',
+    'lcn-msg':             'จงร้องเพลง Astro หรือ เพลงของชาอึนอูมา 1 ท่อน ก่อนกดปุ่มทำนาย เพื่อความโชคดี! ✨',
+    'lcn-btn':             'รับทราบ!',
+    'name-alert':          'โรฮ่าจ๋าา กรอกชื่อก่อนน้า~',
+  },
+  en: {
+    'lang-btn':            '🇬🇧 EN',
+    'invite-title':        "You're invited to Lucky Eunwoo Cafe!",
+    'invite-sub':          'Before you enter the cafe<br/>What would you like us to call you?',
+    'name-ph':             'Your name...',
+    'enter-btn':           "Let's go <3",
+    'greeting-sub':        'AROHA friends are waiting! Ready to go in? •ᴗ•',
+    'door-knock':          ' knock <br> knock',
+    'sec-shining-sub':     'Thank you for growing up so well, Lee Dongmin &lt;3',
+    'sec-actor-sub':       'Every drama you put your heart into — we watched them all :-)',
+    'sec-idol-sub':        'Wanna be your STAR --- Hello, We are ASTRO 𖤐',
+    'card-btn':            "Let's Draw a Card!",
+    'card-hint':           "Let Eunwoo tell your fortune!",
+    'card-hint-shuffle':   'Shuffling cards... just a moment!',
+    'card-hint-pick':      'Eunwoo has chosen your card! Open it! ',
+    'cake-title':          "Let's celebrate with Eunwoo!",
+    'blow-btn':            'Blow the candles!',
+    'quote-main':          "Don't worry, you're not alone. Don't be afraid — from now on, AROHA will always be right by Dongmin's side :-)",
+    'delete-warn':         "Please don't delete others' items!",
+    'blow-count-label':    "Count together!",
+    'lcn-title':           'Message from Eunwoo!',
+    'lcn-msg':             'Sing 1 verse of an Astro or Cha Eunwoo song before drawing your card for extra luck! ✨',
+    'lcn-btn':             'Got it!',
+    'name-alert':          'Please enter your name first~',
+  }
+};
+
+const LUCKY_CARDS_MSG = {
+  th: [
+    'เอ้ะๆๆ เหมือนคนแถวนี้จะมีดวงกับเมนนะ!',
+    'วันนี้จะเจอแต่เรื่องดีแน่นอน รอรับได้เลยยยย~',
+    'ความสุขกำลังจะมาถึง เตรียมรับมันด้วยรอยยิ้มน้า ♡',
+    'อย่าหักโหมตัวเองมากไป พักผ่อนเยอะๆ ดูแลตัวเองด้วยน้า ♡',
+    'ความโชคดีอยู่ใกล้กว่าที่คิด ขอให้ทำอะไรก็สำเร็จ คิดอะไรก็สมปราถนา พ่อหมออึนอูเป็นกำลังใจให้อยู่นะ!',
+  ],
+  en: [
+    "Looks like someone here has great luck with the menu today!",
+    "Today will be filled with nothing but good things — just wait for them~",
+    "Happiness is on its way. Welcome it with a smile ♡",
+    "Don't push yourself too hard. Rest well and take care of yourself ♡",
+    "Good luck is closer than you think. May everything you do succeed! Eunwoo is cheering for you!",
+  ]
+};
+
+function t(key){ return (I18N[_lang] || I18N.th)[key] || key; }
+
+function applyLang(lang){
+  _lang = lang;
+  localStorage.setItem('lang', lang);
+  const btn = document.getElementById('langToggle');
+  if(btn) btn.textContent = t('lang-btn');
+  // innerHTML keys (allow <br>)
+  const htmlKeys = new Set(['invite-sub','door-knock','sec-shining-sub']);
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    const val = t(key);
+    if(htmlKeys.has(key)) el.innerHTML = val;
+    else el.textContent = val;
+  });
+  // placeholders
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    el.placeholder = t(el.getAttribute('data-i18n-ph'));
+  });
+  // lucky card messages
+  (LUCKY_CARDS_MSG[lang] || LUCKY_CARDS_MSG.th).forEach((msg,i)=>{
+    if(LUCKY_CARDS[i]) LUCKY_CARDS[i].msg = msg;
+  });
+}
+
+function toggleLang(){ applyLang(_lang === 'th' ? 'en' : 'th'); }
+
+// Init
+applyLang(_lang);

@@ -1225,9 +1225,20 @@ body {
   cursor: default;
   transform: none !important;
 }
+/* ════ LANG TOGGLE ════ */
+#langToggle {
+  position: fixed; top: 14px; right: 16px; z-index: 9999;
+  background: #fff; border: 1.5px solid #111; border-radius: 999px;
+  padding: 6px 14px; font-size: .82rem; font-weight: 700; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12); transition: transform .15s, background .15s;
+  letter-spacing: .03em; line-height: 1;
+}
+#langToggle:hover { transform: translateY(-2px); background: var(--green-ghost); }
 </style>
 </head>
 <body>
+
+<button id="langToggle" onclick="toggleLang()">🇬🇧 EN</button>
 
 <div id="floaties"></div>
 
@@ -1244,10 +1255,10 @@ body {
 <div id="nameOverlay">
   <div class="name-card">
     <span class="nc-icon"><img src="img/name1.jpg" alt="" onerror="this.style.opacity='0'"/></span>
-    <h2> You're invited to Lucky Eunwoo Cafe! </h2>
-    <p>Before you enter the cafe<br/>What would you like us to call you?</p>
-    <input id="visitorNameInput" class="name-input" type="text" placeholder="กรอกชื่่อของคุณ..." maxlength="30"/>
-    <button class="name-submit-btn" onclick="submitName()">เข้าไปกันเลยย &lt;3 </button>
+    <h2 data-i18n="invite-title"> You're invited to Lucky Eunwoo Cafe! </h2>
+    <p data-i18n="invite-sub">Before you enter the cafe<br/>What would you like us to call you?</p>
+    <input id="visitorNameInput" class="name-input" type="text" placeholder="กรอกชื่อของคุณ..." data-i18n-ph="name-ph" maxlength="30"/>
+    <button class="name-submit-btn" onclick="submitName()" data-i18n="enter-btn">เข้าไปกันเลยย &lt;3 </button>
   </div>
 </div>
 
@@ -1302,7 +1313,7 @@ body {
       </div>
       <div id="greetingBanner" class="lw-greeting">
         <span class="lw-greeting-hi">Hellooo คุณ <span id="greetingNameText" style="font-weight:800"></span></span>
-        <span class="lw-greeting-sub">เพื่อน ๆ โรฮ่ารออยู่น้า ถ้าพร้อมแล้วก็เข้าไปกันเถอะ! •ᴗ•</span>
+        <span class="lw-greeting-sub" data-i18n="greeting-sub">เพื่อน ๆ โรฮ่ารออยู่น้า ถ้าพร้อมแล้วก็เข้าไปกันเถอะ! •ᴗ•</span>
       </div>
     </div>
     <div class="lw-facade-lower">
@@ -1310,7 +1321,7 @@ body {
         <div class="lw-window"><div class="lw-win-glass"><div class="lw-win-pane"></div><div class="lw-win-pane"></div><div class="lw-win-pane"></div><div class="lw-win-pane"></div></div><div class="lw-win-sill"></div></div>
         <div class="lw-door-col">
           <div class="lw-door-msg-wrap">
-            <div class="lw-door-msg"><span> ก้อก <br> ก้อก</span></div>
+            <div class="lw-door-msg"><span data-i18n="door-knock"> ก้อก <br> ก้อก</span></div>
           </div>
           <div class="lw-door-inner">
             <div class="lw-double-door" onclick="enterCafe()">
@@ -1387,7 +1398,7 @@ body {
   <!-- GALLERY -->
   <div class="section" style="background:linear-gradient(160deg,#b8d8f8,#d0e8fc)">
     <h2 class="sec-hd">Shining Eunwoo</h2>
-    <p class="sec-sd">ขอบคุณที่เติบโตมาอย่างดีเลยนะ เด็กชายอีดงมิน &lt;3 </p>
+    <p class="sec-sd" data-i18n="sec-shining-sub">ขอบคุณที่เติบโตมาอย่างดีเลยนะ เด็กชายอีดงมิน &lt;3 </p>
     <div class="pol-grid">
       <div class="pol-card"><img src="kid/k1.jpg" alt="" onerror="this.style.background='var(--green-ghost)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
       <div class="pol-card"><img src="kid/k2.jpg" alt="" onerror="this.style.background='var(--blush)';this.style.height='166px';this.removeAttribute('src')"/><div class="cap"></div></div>
@@ -1400,7 +1411,7 @@ body {
   <!-- PHOTO EXHIBITION — 11 frames | เปลี่ยนรูปที่ src="img/exhibit1.jpg" ถึง exhibit11.jpg -->
   <div class="exhibit-section" style="background:linear-gradient(160deg,#f8f0a0,#faf8c0)">
     <h2 class="sec-hd">Wonderful Actor</h2>
-    <p class="sec-sd">ซีรีส์ที่แกตั้งใจเล่น เราดูจนครบแล้วนะ :-)</p>
+    <p class="sec-sd" data-i18n="sec-actor-sub">ซีรีส์ที่แกตั้งใจเล่น เราดูจนครบแล้วนะ :-)</p>
 
     <!-- Row 1 — 4 frames -->
     <div class="exhibit-rope-row">
@@ -1459,7 +1470,7 @@ body {
   <!-- PHOTO EXHIBITION — 8 frames | เปลี่ยนรูปที่ src="img/exhibit12.jpg" ถึง exhibit20.jpg -->
   <div class="exhibit-section" style="background:linear-gradient(160deg,#d8c8f0,#e8d8f8)">
     <h2 class="sec-hd"> Charming Idol </h2>
-    <p class="sec-sd">Wanna be your STAR --- สวัสดีกั๊บ พวกเราอาสโทรก๊าบบ 𖤐</p>
+    <p class="sec-sd" data-i18n="sec-idol-sub">Wanna be your STAR --- สวัสดีกั๊บ พวกเราอาสโทรก๊าบบ 𖤐</p>
 
     <!-- Row 1 — 5 frames -->
     <div class="exhibit-rope-row">
@@ -1503,9 +1514,9 @@ body {
       <div class="card-draw-main">
         <div class="card-deck-area" id="cardDeckArea"></div>
         <div class="card-draw-btns">
-          <button class="card-draw-btn" id="cardDrawBtn" onclick="luckyDraw()">เริ่มทำนายกันเล๊ยย!</button>
+          <button class="card-draw-btn" id="cardDrawBtn" onclick="luckyDraw()" data-i18n="card-btn">เริ่มทำนายกันเล๊ยย!</button>
         </div>
-        <div class="card-draw-hint" id="cardDrawHint">ให้อึนอูทำนายกันนนนนน!</div>
+        <div class="card-draw-hint" id="cardDrawHint" data-i18n="card-hint">ให้อึนอูทำนายกันนนนนน!</div>
       </div>
       <div class="drink-result" id="cardResult">
         <div class="res-name" id="cardResName"></div>
@@ -1655,7 +1666,7 @@ body {
     <div class="cake-stage">
       <div class="hbd-bg-text" id="hbdBgText">Happy Birthday<br>Cha Eunwoo</div>
 
-      <p class="cake-title">Let's celebrate with Eunwoo!</p>
+      <p class="cake-title" data-i18n="cake-title">Let's celebrate with Eunwoo!</p>
 
       <div class="cake-scene">
         <!-- Eunwoo portrait: sits behind the cake -->
@@ -1807,7 +1818,7 @@ body {
         </svg>
       </div>
 
-      <button class="blow-btn" id="blowBtn" onclick="blowCandles()">เป่าเค้กกันเถอะ!</button>
+      <button class="blow-btn" id="blowBtn" onclick="blowCandles()" data-i18n="blow-btn">เป่าเค้กกันเถอะ!</button>
     </div>
   </div>
   </div>
@@ -1816,7 +1827,7 @@ body {
   <div class="quote-section" style="background:linear-gradient(160deg,#98d0b0,#b5e0c5)">
     <div class="quote-box">
       <p style=" font-weight: bold;  font-family:var(--f-cute)!important; font-size:clamp(1.2rem,3vw,1.55rem); color:var(--green-dark); line-height:1.75; margin-bottom:14px; ">아무 걱정 마 혼자가 아냐 Don't be afraid 이젠 내가 널 지킬게 </p>
-      <p class="quote-text">อย่ากังวลอะไรเลยนะ เธอไม่ได้อยู่คนเดียว อย่ากลัวไปเลย เพราะต่อจากนี้อะโรฮ่าจะคอยอยู่เคียงข้างดงมินเอง :-)</p>
+      <p class="quote-text" data-i18n="quote-main">อย่ากังวลอะไรเลยนะ เธอไม่ได้อยู่คนเดียว อย่ากลัวไปเลย เพราะต่อจากนี้อะโรฮ่าจะคอยอยู่เคียงข้างดงมินเอง :-)</p>
       <span class="quote-author">Song : Memories - Cha-Eunwoo</span>
     </div>
   </div>
@@ -1933,7 +1944,7 @@ body {
   <div class="modal" style="text-align:center;max-width:340px;">
     <div style="font-size:2rem;margin-bottom:10px;">🗑️</div>
     <h3 style="font-size:1.4rem;margin-bottom:8px;">Delete this?</h3>
-    <p style="color:var(--green-mid);font-size:.95rem;margin-bottom:20px;">ปล.อย่าลบของคนอื่นน้าาา</p>
+    <p style="color:var(--green-mid);font-size:.95rem;margin-bottom:20px;" data-i18n="delete-warn">ปล.อย่าลบของคนอื่นน้าาา</p>
     <div class="modal-btns">
       <button class="btn-ok" style="background:linear-gradient(135deg,#e05a5a,#b83232);" onclick="confirmDelete()">Delete</button>
       <button class="btn-cancel" onclick="closeModal('deleteConfirmModal')">Cancel</button>
@@ -1944,7 +1955,7 @@ body {
 <!-- BLOW CANDLE COUNTDOWN NOTIFICATION -->
 <div id="blowNotif">
   <div class="bn-card">
-    <div class="bn-label">นับพร้อมกันนะ</div>
+    <div class="bn-label" data-i18n="blow-count-label">นับพร้อมกันนะ</div>
     <div class="bn-count" id="blowCount">3</div>
   </div>
 </div>
@@ -1964,11 +1975,11 @@ body {
 <div id="luckyCardNotif">
   <div class="lcn-card">
     <div class="lcn-body">
-      <div class="lcn-title"> Message from พ่อหมออึนอู</div>
-      <div class="lcn-msg">
+      <div class="lcn-title" data-i18n="lcn-title"> Message from พ่อหมออึนอู</div>
+      <div class="lcn-msg" data-i18n="lcn-msg">
         จงร้องเพลง Astro หรือ เพลงของชาอึนอูมา 1 ท่อน ก่อนกดปุ่มทำนาย เพื่อความโชคดี! ✨
       </div>
-      <button class="lcn-confirm-btn" onclick="closeLuckyNotif()">รับทราบ!</button>
+      <button class="lcn-confirm-btn" onclick="closeLuckyNotif()" data-i18n="lcn-btn">รับทราบ!</button>
     </div>
   </div>
 </div>
