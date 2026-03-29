@@ -615,7 +615,7 @@ const I18N = {
     'cake-title':          "Let's celebrate with Eunwoo!",
     'blow-btn':            'Blow the candles!',
     'quote-main':          "Don't worry, you're not alone. Don't be afraid — from now on, AROHA will always be right by Dongmin's side :-)",
-    'delete-warn':         "Please don't delete others' items!",
+    'delete-warn':         "Please don't delete others items!",
     'blow-count-label':    "Count together!",
     'lcn-title':           'Message from Eunwoo!',
     'lcn-msg':             'Sing 1 verse of an Astro or Cha Eunwoo song before drawing your card for extra luck! ✨',
