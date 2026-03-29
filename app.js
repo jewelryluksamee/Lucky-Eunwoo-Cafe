@@ -633,7 +633,7 @@ const LUCKY_CARDS_MSG = {
     'ความโชคดีอยู่ใกล้กว่าที่คิด ขอให้ทำอะไรก็สำเร็จ คิดอะไรก็สมปราถนา พ่อหมออึนอูเป็นกำลังใจให้อยู่นะ!',
   ],
   en: [
-    "Looks like someone here has great luck with the menu today!",
+    "Looks like someone here has great luck with your bias today!",
     "Today will be filled with nothing but good things — just wait for them~",
     "Happiness is on its way. Welcome it with a smile ♡",
     "Don't push yourself too hard. Rest well and take care of yourself ♡",
