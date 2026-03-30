@@ -308,9 +308,22 @@ function hideActionLoader(){
   if(el)el.classList.remove('show');
 }
 
+let _wallCacheTs=0;
+const WALL_CACHE_TTL=30000; // 30 seconds
+
 async function renderWall(){
   const canvas=document.getElementById('wallCanvas');canvas.innerHTML='';
   const loading=document.getElementById('wallLoading');
+  const now=Date.now();
+
+  if(now-_wallCacheTs<WALL_CACHE_TTL&&wallItems.length>0){
+    // use cached data — skip network request
+    const allItems=[...wallItems,...localPolaroids];
+    allItems.forEach((item,i)=>{if(item.type==='sticky')buildSticky(item,i);if(item.type==='sticker')buildWallSticker(item);if(item.type==='polaroid')buildWallPolaroid(item);});
+    expandCanvas();
+    return;
+  }
+
   if(loading)loading.classList.remove('hidden');
   try{
     const res=await fetch(`${API_BASE}/api/wall`);
@@ -318,6 +331,7 @@ async function renderWall(){
       const data=await res.json();
       const arr=Array.isArray(data)?data:(data.items||data.wall||data.data||[]);
       wallItems=arr.map(item=>({...item,rot:item.rot??deterministicRot(item.id,item.type==='sticker'?15:6)}));
+      _wallCacheTs=now;
     }
   }catch(e){console.warn('Wall API unavailable',e);wallItems=[];}
   const allItems=[...wallItems,...localPolaroids];
@@ -363,6 +377,7 @@ async function addSticky(){
 }
 function buildSticky(item,idx){
   const el=document.createElement('div');el.className='sticky c'+(1+idx%5);
+  el.dataset.itemId=item.id;
   el.style.cssText=`background:${item.color};left:${item.x}px;top:${item.y}px;transform:rotate(${item.rot}deg)`;
   el.innerHTML=`<div class="sticky-tape"></div><div class="sticky-author">${esc(item.author)}</div><div class="sticky-text">${esc(item.text)}</div><button class="sticky-del" onclick="deleteItem('${item.id}',event)">✕</button>`;
   makeDraggable(el,item);document.getElementById('wallCanvas').appendChild(el);
@@ -405,6 +420,7 @@ async function addSticker(src){
 }
 function buildWallSticker(item){
   const el=document.createElement('div');el.className='wall-sticker';
+  el.dataset.itemId=item.id;
   el.style.cssText=`left:${item.x}px;top:${item.y}px;width:${item.size}px;height:${item.size}px;transform:rotate(${item.rot}deg)`;
   el.innerHTML=`<img src="${item.src}" alt=""/><button class="wall-sticker-del" onclick="deleteItem('${item.id}',event)">✕</button>`;
   makeDraggable(el,item);document.getElementById('wallCanvas').appendChild(el);
@@ -441,6 +457,7 @@ function addPolaroid(){
 }
 function buildWallPolaroid(item){
   const el=document.createElement('div');el.className='wall-pol';
+  el.dataset.itemId=item.id;
   el.style.cssText=`left:${item.x}px;top:${item.y}px;transform:rotate(${item.rot}deg);width:150px;`;
   const capLine=item.caption?`<div class="pol-cap">${esc(item.caption)}</div>`:'';
   const authLine=item.author?`<div style="position:absolute;bottom:${item.caption?'17px':'4px'};left:0;right:0;text-align:center;font-family:var(--f-hand);font-size:.7rem;color:#aaa;">${esc(item.author)}</div>`:'';
@@ -499,7 +516,9 @@ async function confirmDelete(){
     savePolaroids();
   }
   hideActionLoader();
-  renderWall();
+  const domEl=document.querySelector(`[data-item-id="${itemId}"]`);
+  if(domEl)domEl.remove();
+  expandCanvas();
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
